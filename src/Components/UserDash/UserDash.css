@@ -1,0 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+    background-image: url('../../images/black\ walp.jpg'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    background-position: center; 
+    /* background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); */
+}
+
+/* .navuser {
+    background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+
+} */
+
+
+
+div.test {
+    /* background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%); */
+    padding: 10px;
+    padding-top: 60px !important;
+}
+
+/* Style the main filter container */
+/* Update the filter container with a glass effect */
+div.filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: linear-gradient(109.6deg, rgba(84, 95, 109, 0.5) 11.2%, rgba(113, 147, 183, 0.5) 51.2%, rgba(95, 91, 91, 0.5) 98.6%);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(50px); /* Glass effect */
+    -webkit-backdrop-filter: blur(50px); /* For Safari support */
+    max-width: 800px;
+    margin: 20px auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for glass effect */
+}
+
+
+div.filter:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* Style the filter-select form */
+form.filter-select {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    text-transform: capitalize;
+}
+
+/* Style each select element */
+form.filter-select select {
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background: linear-gradient(to right, #ffffff, #f0f4f8);
+    /* background-color: #fff; */
+    font-size: 14px;
+    color: #333;
+    max-width: 200px;
+    flex: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Focus styling for select elements */
+form.filter-select select:focus {
+    border-color:#880000;
+    box-shadow: 0 0 5px rgba(127, 5, 19, 0.5);
+    outline: none;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #880000 !important;
+    
+}
+form.filter-select select:hover {
+    background-color: #f3060a;
+}
+
+/* Style the second form with search input and button */
+div.filter form:last-of-type {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Style the input field */
+div.filter form:last-of-type input[type='text'] {
+    flex: 1;
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #f4f4f4;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+div.filter form:last-of-type input[type='text']::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* Focus styling for the input field */
+div.filter form:last-of-type input[type='text']:focus {
+    border-color: rgba(127, 5, 19, 0.5);
+    box-shadow: 0 0 8px rgba(177, 15, 15, 0.6);
+    outline: none;
+}
+
+/* Style the search button */
+div.filter form:last-of-type button {
+    padding: 10px 20px;
+    border: none;
+    background: linear-gradient(to right, #880000, #aa192c);
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for the button */
+
+div.filter form:last-of-type button:hover {
+    background: linear-gradient(to right, #880000, #aa192c);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+.gym-text {
+    background: linear-gradient(45deg, #ffd700, #ffcc00, #ffaa00, #ffd700);
+    /* Gold gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+form.filter-select select:valid {
+    background-color: #e0f4ff;
+    color: rgba(127, 5, 19, 0.5);
+}
+
+.gradient-button {
+    color: #ffaa00;
+    /* Initial text color */
+    background-color: transparent;
+    /* Transparent background */
+    border: 2px solid transparent;
+    /* Transparent border for gradient */
+    border-image: linear-gradient(45deg, #ffd700, #ffcc00, #ffaa00, #ffd700);
+    /* Gradient for border */
+    border-image-slice: 1;
+    /* Ensures gradient spans the full border */
+    padding: 10px 20px;
+    /* Adjust padding for spacing */
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    /* Smooth transitions for hover */
+}
+
+.gradient-button:hover {
+    background: linear-gradient(45deg, #ffd700, #ffcc00, #ffaa00, #ffd700);
+    /* Gradient for background on hover */
+    color: black;
+    /* Change text color to white on hover */
+}
+
+.icon-button {
+    color: white;
+    /* Default icon color */
+    background-color: transparent;
+    /* Transparent background */
+    border: 2px solid transparent;
+    /* No border initially */
+    border-radius: 50%;
+    /* Fully rounded button */
+    padding: 12px;
+    /* Increased padding for better proportions */
+    font-size: 1.5rem;
+    /* Larger icon size */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.icon-button:hover {
+    background: linear-gradient(45deg, #ffd700, #ffcc00, #ffaa00, #ffd700);
+    /* Gold gradient background */
+    color: black;
+    /* Change icon color to black on hover */
+    border-color: #ffaa00;
+    /* Optional: Add a subtle border */
+    transform: scale(1.1);
+    /* Slightly enlarge the button on hover */
+}
+
+.navitems:hover {
+    background: linear-gradient(45deg, #ffd700, #ffcc00, #ffaa00, #ffd700);
+    /* Gold gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Style pour le champ date (input type='date') */
+input[type='date'] {
+    padding: 10px 15px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background: linear-gradient(to right, #ffffff, #f0f4f8);
+    font-size: 14px;
+    color: #333;
+    max-width: 200px;
+    flex: 1;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+/* Focus styling pour le champ date */
+input[type='date']:focus {
+    border-color: #880000;
+    box-shadow: 0 0 5px rgba(127, 5, 19, 0.5);
+    outline: none;
+    font-weight: bold;
+    color: #880000;
+}
+
+/* Hover styling pour le champ date */
+input[type='date']:hover {
+    background-color: #f3060a;
+    color: rgb(182, 40, 40);
+    transition: background 0.3s ease;
+}
+
+.filter-date:focus + .date-placeholder,
+.filter-date:not(:placeholder-shown) + .date-placeholder {
+  display: none; /* Cache le placeholder si l'utilisateur saisit une valeur */
+}

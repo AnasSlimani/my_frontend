@@ -1,0 +1,8 @@
+.carDETAIL{
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 66%, rgba(7,78,92,1) 100%);
+}
+
+.specification{
+    color: aliceblue;
+}
