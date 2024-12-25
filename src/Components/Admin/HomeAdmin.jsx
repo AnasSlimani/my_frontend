@@ -1,4 +1,7 @@
-import React from 'react'
+// import React from 'react'
+
+import React, { useState, useEffect } from 'react';
+
 import 
 { BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, BsFillBellFill}
  from 'react-icons/bs'
@@ -9,6 +12,29 @@ import
  import { FaCar, FaUsers, FaUserShield, FaCalendarCheck, FaDollarSign } from 'react-icons/fa';
 
 function HomeAdmin() {
+
+
+
+  const [clientsCount, setClientsCount] = useState(0);
+
+    useEffect(() => {
+        // Appel à l'API avec fetch
+        const fetchClientsCount = async () => {
+            try {
+                const response = await fetch('http://localhost:8082/api/utilisateur/count'); // URL du backend
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la récupération des données');
+                }
+                const data = await response.json(); // Assurez-vous que la réponse est au format JSON
+                setClientsCount(data); // Mettez à jour l'état avec le nombre de clients
+            } catch (error) {
+                console.error('Erreur lors de la récupération du nombre de clients:', error);
+            }
+        };
+
+        fetchClientsCount();
+    }, []); // [] pour n'exécuter qu'une fois lors du montage
+
 
     const data = [
         {
@@ -82,7 +108,7 @@ function HomeAdmin() {
                     <h3>Clients</h3>
                     <FaUsers className='card_icon'/>
                 </div>
-                <h1>33</h1>
+                <h1>{clientsCount}</h1>
             </div>
             <div className='card text-black'>
                 <div className='card-inner'>

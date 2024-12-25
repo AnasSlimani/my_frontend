@@ -75,9 +75,14 @@ function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
                 </a>
             </li>
             <li className='sidebar-list-item logout'>
-          <a href="#" onClick={handleLogout}>
+            <Link to="/" >
             <BsBoxArrowRight className='icon' /> Logout
-          </a>
+                </Link>
+          {/* <a href="#" onClick={handleLogout}>
+            <BsBoxArrowRight className='icon' /> Logout
+          </a> */}
+
+
         </li>
         </ul>
     </aside>
