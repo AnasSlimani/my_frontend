@@ -1,16 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../../Components/Admin/Admin.css';
 
 import HeaderAdmin from '../../Components/Admin/HeaderAdmin'
 import SideBarAdmin from '../../Components/Admin/SideBarAdmin'
 import HomeAdmin from '../../Components/Admin/HomeAdmin'
+import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
 
 function AdminDash() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false)
 
+  const navigate = useNavigate();
+
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle)
   }
+
+  useEffect(()=>{
+    const token = localStorage.getItem("jwtToken");
+    const decodedToken = jwtDecode(token);
+    const role = decodedToken.role;
+    if (role != "ADMIN"){
+        navigate("/error");
+    }
+  },[]);
 
   return (
     <div className='grid-container'>

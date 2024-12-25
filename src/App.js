@@ -9,6 +9,7 @@ import CarDetail from './pages/CarDetails/CarDetail';
 import GestionClient from './Components/Admin/GestionClient';
 import FormAddUser from './Components/Admin/FormAddUser';
 import UpdateUser from './Components/Admin/UpdateUser';
+import ErrorPage from './pages/ErrorPage';
 
 function App(){
   
@@ -29,6 +30,7 @@ function App(){
         <Route path="/admin/clients" element={<GestionClient />} />
         <Route path="/admin/clients/FormAddUser" element={<FormAddUser />} />
         <Route path="/admin/clients/UpdateUser/:id" element={<UpdateUser />} />
+        <Route path="/error" element={<ErrorPage />} />
       </Routes>
     </Router>
     </>

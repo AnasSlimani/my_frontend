@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import "./SignUp.css";
 import { useNavigate } from 'react-router-dom';
 
+import {jwtDecode} from 'jwt-decode' ;
+
 export default function SignUp() {
 
     const [loginForm, setLoginForm] = useState({
@@ -39,7 +41,15 @@ export default function SignUp() {
                 console.log(token);
                 localStorage.setItem("jwtToken", token); // Store JWT in localStorage
                 
-                navigate("/signup");
+                const decodedToken = jwtDecode(token);
+                const role = decodedToken.role;
+                console.log(role);
+                if (role == "ADMIN"){
+                    navigate("/admin")
+                }else(
+                    navigate("/signup")
+                )
+                
             } else if (response.status === 401) {
                 alert("User not found");
                 navigate("/login");
