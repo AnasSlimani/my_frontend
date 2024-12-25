@@ -9,6 +9,7 @@ function FormAddUser() {
     email: '',
     phone: '',
     role: '',
+    password :''
   });
 
   const [errors, setErrors] = useState({});
@@ -36,7 +37,7 @@ function FormAddUser() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const token = localStorage.getItem("jwtToken");
     if (!validateForm()) {
       return; // Arrête si le formulaire n'est pas valide
     }
@@ -47,6 +48,7 @@ function FormAddUser() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formData),
       });
@@ -126,6 +128,21 @@ function FormAddUser() {
             />
             <Form.Control.Feedback type="invalid">
               {errors.email}
+            </Form.Control.Feedback>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Enter Password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              isInvalid={!!errors.password}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.password}
             </Form.Control.Feedback>
           </Form.Group>
 

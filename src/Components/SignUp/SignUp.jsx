@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import "./SignUp.css";
 import { useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+
 
 export default function SignUp() {
 
@@ -18,6 +20,7 @@ export default function SignUp() {
             [name]: value
         });
     };
+
 
     const handelSignupForm = (event) => {
         // Placeholder for signup form handling logic
@@ -38,8 +41,15 @@ export default function SignUp() {
                 const token = await response.text(); // Assuming token is returned as plain text
                 console.log(token);
                 localStorage.setItem("jwtToken", token); // Store JWT in localStorage
+                const decodedToken = jwtDecode(token);
+                const role = decodedToken.role;
+                console.log(role);
+                if (role == "ADMIN"){
+                    navigate("/admin")
+                }else(
+                    navigate("/signup")
+                )
                 
-                navigate("/signup");
             } else if (response.status === 401) {
                 alert("User not found");
                 navigate("/login");
