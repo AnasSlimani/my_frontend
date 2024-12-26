@@ -6,12 +6,12 @@
     align-items: center;
     min-height: 100vh;
     font-family: 'Jost', sans-serif;
-    background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+    background: linear-gradient(to bottom, #c10707 10%, #3b0b0b 40%, #070708);
 }
 
 .maine {
-    width: 350px;
-    height: 500px;
+    width: 400px;
+    height: 450px;
     background: red;
     overflow: hidden;
     background: url("../../images/login_background.jpg") no-repeat center / cover ;
@@ -44,26 +44,61 @@
 
 
 .inpute {
-    width: 60%;
+    width: 43%;
     height: 40px;
     background: #e0dede;
-    justify-content: center;
-    display: flex;
-    margin: 20px auto;
     padding: 10px;
     border: none;
     outline: none;
     border-radius: 5px; 
 }
 
+.logine .labele {
+    margin-bottom: 30px;
+}
+
+.logine .inpute {
+    width: 40%;
+    height: 40px;
+    background: #e0dede;
+    justify-content: center; 
+    display: flex;
+    margin:  10px auto; 
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px; 
+}
+
+.forget-password-link {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+  
+}
+
+.input-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    /* Adjust spacing between inputs */
+    margin-bottom: 20px; /* Add spacing between rows */  
+    
+}
+
 .btnlogin {
-    width: 60%;
+    width: 40%;
     height: 40px;
     margin: 10px auto;
     justify-content: center;
     display: block;
     color: #fff;
-    background: #583b8a;
+    background: #CC0000;
     font-size: 1em;
     font-weight: bold;
     margin-top: 20px;
@@ -75,7 +110,7 @@
 }
 
 .btnlogin:hover {
-    background: #6d44b8;   /* this doesn't work */
+    background: #de4444;   /* this doesn't work */
 }
 
 .logine {
@@ -87,8 +122,9 @@
 }
 
 .logine .labele {
-    color: #573b8a;
+    color: #CC0000;
     transform: scale(.6);
+ 
 }
 
 #chk:checked ~ .logine {

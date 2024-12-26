@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import "./SignUp.css";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { Try } from '@mui/icons-material';
 
 
 export default function SignUp() {
@@ -10,6 +11,14 @@ export default function SignUp() {
         email: '',
         password: ''
     });
+
+    const [signUpForm, setSignUpForm] = useState({
+        "firstName" : '',
+        "email" : '',
+        "password" : '',
+    })
+
+    const [confirmedPassword, setConfirmedPassword] = useState('');
 
     const navigate = useNavigate();
 
@@ -24,6 +33,11 @@ export default function SignUp() {
 
     const handelSignupForm = (event) => {
         // Placeholder for signup form handling logic
+        const {name, value} = event.target;
+        setSignUpForm({
+            ...signUpForm,
+            [name]: value
+        });        
     };
 
     const handelLogInButton = async (e) => {
@@ -68,6 +82,30 @@ export default function SignUp() {
     const handelSignUpButton = async (e) => {
         e.preventDefault();
         // Placeholder for signup logic
+        console.log(signUpForm);
+        console.log("confirmed password : " + confirmedPassword);
+        if (confirmedPassword != signUpForm.password) {
+            alert("Password Mismatch")
+            navigate("/login");
+        }
+        else {
+            try {
+                const response = await fetch("http://localhost:8082/api/utilisateur/checkuserbyemail", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(signUpForm)
+                });
+                
+                    console.log( await response.text());
+                    
+                
+            } catch (error) {
+                
+            }
+        }
+        
     };
 
     return (
@@ -80,10 +118,17 @@ export default function SignUp() {
                         <label htmlFor="chk" aria-hidden="true" className='labele'>
                             Sign up
                         </label>
-                        <input className='inpute' type="text" name="txt" placeholder="User name" required onChange={handelSignupForm} />
-                        <input className='inpute' type="email" name="email" placeholder="Email" required onChange={handelSignupForm} />
-                        <input className='inpute' type="password" name="password" placeholder="Password" required />
-                        <button className='btnlogin' onClick={handelSignUpButton}>Sign up</button>
+                        <div className='input-container'>
+                            <div className='input-row'>
+                                <input className='inpute' type="text" name="firstName" placeholder="First name" required onChange={handelSignupForm} />
+                                <input className='inpute' type="email" name="email" placeholder="Email" required onChange={handelSignupForm} />
+                            </div>
+                        <div className='input-row'>
+                            <input className='inpute' type="password" name="password" placeholder="Password" required onChange={handelSignupForm}/>
+                            <input className='inpute' type="password" name="confirmedPassword" placeholder="Confirm Password" required onChange={(event) => {setConfirmedPassword(event.target.value)}}/>
+                        </div>    
+                            <button className='btnlogin' onClick={handelSignUpButton}>Sign up</button>
+                        </div>
                     </form>
                 </div>
 
@@ -95,7 +140,10 @@ export default function SignUp() {
                         <input className='inpute' type="email" name="email" placeholder="Email" required onChange={handelLoginForm} />
                         <input className='inpute' type="password" name="password" placeholder="Password" required onChange={handelLoginForm} />
                         <button className='btnlogin' onClick={handelLogInButton}>Log in</button>
+                        
                     </form>
+                        {/* must add a change password route  */}
+                    < Link to={"#"} className='forget-password-link'> Forgot your password ?</Link>
                 </div>
             </div>
         </section>
