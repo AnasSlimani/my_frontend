@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import "./SignUp.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import { Try } from '@mui/icons-material';
 
 
 export default function SignUp() {
@@ -16,6 +15,7 @@ export default function SignUp() {
         "firstName" : '',
         "email" : '',
         "password" : '',
+        "role" : "CLIENT"
     })
 
     const [confirmedPassword, setConfirmedPassword] = useState('');
@@ -97,8 +97,37 @@ export default function SignUp() {
                     },
                     body: JSON.stringify(signUpForm)
                 });
-                
-                    console.log( await response.text());
+                    if (response.ok) {
+                        const userExist = await response.text();
+                        console.log(userExist);
+                        
+                        if (userExist == "true") {
+                            alert("User already exist !!")
+                            navigate(0);
+                        }else {
+                            alert("user does not exist")
+                            try {
+                                const response = await fetch("http://localhost:8082/api/utilisateur/addUser", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify(signUpForm)
+                                });
+                                if (response.ok) {
+                                    alert("User added with succes")
+                                    navigate(0)
+                                    // navigate("/login")
+                                }
+                            } catch (error) {
+                                console.log(error);
+                                
+                            }
+                           
+                        }
+                        
+                    }
+                    
                     
                 
             } catch (error) {
