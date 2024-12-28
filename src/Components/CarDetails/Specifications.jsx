@@ -37,7 +37,7 @@ export default function Specifications(props) {
         fetchCar();
     }, []);
     return (
-        <div className='p-5 rounded-xl border-2 shadow-md mt-3 specification ' >
+        <div className='p-5 rounded-xl border-2 shadow-md mt-3 text-black lighgrey ' >
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3 font-bold">
                     <span className="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full">

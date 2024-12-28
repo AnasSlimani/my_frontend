@@ -33,11 +33,11 @@ export default function Pricing(props) {
         }, [CARid, navigate, token]);
         
     return (
-    <div className='p-10 rounded-xl border-2 shadow-md' >
-        <h2 className='text-white' >Our Price : </h2>
-        <h2 className='font-bold text-4xl text-white mt-2 ' > {car.prix} DH </h2>
+    <div className='p-10 rounded-xl border-2 shadow-md text-black lighgrey ' >
+        <h2 >Our Price : </h2>
+        <h2 className='font-bold text-4xl  mt-2 ' > {car.prix} DH </h2>
 
-        <Button className='w-full bg-white text-primary mt-3' size='lg' ><MdOutlineLocalOffer className='text-lg mr-2 text-primary' />RESERVE</Button>
+        <Button className='w-full bg-white text-black mt-3' size='lg' ><MdOutlineLocalOffer className='text-lg mr-2 text-black' />RESERVE</Button>
     </div>
   )
 }

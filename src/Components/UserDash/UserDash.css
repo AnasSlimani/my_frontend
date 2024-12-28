@@ -9,24 +9,18 @@ body {
     background-repeat: no-repeat; 
     background-attachment: fixed; 
     background-position: center; 
-    /* background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e); */
 }
 
-/* .navuser {
-    background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
 
-} */
 
 
 
 div.test {
-    /* background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%); */
     padding: 10px;
     padding-top: 60px !important;
 }
 
-/* Style the main filter container */
-/* Update the filter container with a glass effect */
+
 div.filter {
     display: flex;
     flex-direction: column;

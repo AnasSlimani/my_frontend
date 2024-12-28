@@ -1,0 +1,216 @@
+.logo img{
+    width: 100px;
+}
+
+header nav {
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Sépare le logo et les liens du bouton Sign Up */
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    background-color: transparent;
+    transition: 0.6s ease-in-out;
+    padding: 0 20px;
+}
+
+header nav.active{
+	box-shadow: 5px 10px 30px rgba(0, 0, 0, 0.157);
+	background-color: #00000000;
+}
+header nav ul{
+	display: flex;
+    list-style: none;
+}
+.active{
+    background-color: #FF1414;
+    color:#ffffff;
+	box-shadow: 5px 10px 30px rgba(198, 64, 64, 0.411);
+	transition: all ease 0.2s;
+}
+.active:hover{
+    background-color: #000000;
+    color:#ffffff;
+	box-shadow: 5px 10px 30px rgba(198, 64, 64, 0.411);
+	transition: all ease 0.2s;
+}
+header nav ul li a{
+    font-family: 'Lato';
+	height:40px;
+	line-height: 43px;
+	margin: 3px;
+	padding: 0px 22px;
+	display: flex;
+	font-size: 0.9rem;
+	text-transform: uppercase;
+	font-weight: 500;
+	color:#ffffff;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    transition: 0.2s ease-in-out;
+}
+header nav ul li a:hover{
+	background-color: #FF1414;
+    color:#ffffff;
+	box-shadow: 5px 10px 30px rgba(255, 2, 2, 0.336);
+	transition: all ease 0.2s;
+}
+.menu {
+    display: flex;
+    margin-left: 20px; /* Évite que le menu soit collé au logo */
+}
+.sign-up-btn {
+    font-family: 'Lato';
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #FF1414;
+    padding: 10px 20px;
+    border-radius: 3px;
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacement entre le texte et l'icône */
+}
+
+.sign-up-btn:hover {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.sign-up-btn i {
+    font-size: 1.2rem; /* Ajustez la taille de l'icône si nécessaire */
+}
+.panier-btn {
+    font-family: 'Lato';
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #FF1414;
+    padding: 10px 20px;
+    border-radius: 3px;
+    transition: 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacement entre le texte et l'icône */
+}
+
+.panier-btn:hover {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.panier-btn i {
+    font-size: 1.2rem; /* Ajustez la taille de l'icône si nécessaire */
+}
+
+header nav .menu-btn,
+.menu-icon{
+		display:none;
+	}
+
+    .buttonss{
+        display: flex;
+        gap: 10px;
+    }
+
+    @media(max-width:1100px){.menu-icon{
+        display:block;}
+            nav{
+                justify-content: space-between;
+                height: 65px;
+                padding: 0px 30px;
+            }
+            .logo img{
+                width:70px;
+            }
+            .header-btns{
+                margin: 0;
+            }
+            .pr-btns{
+                margin: 0;
+            }
+            .menu{
+                display:none;
+                position:absolute;
+                top:65px;
+                left:0px;
+                background-color:#000000;
+                border-bottom:4px solid #FF1414;
+                width:100%;
+                padding:0px;
+                margin:0px;
+            }
+            .menu li{
+                width:100%;
+            }
+            nav .menu li a{
+                width:100%;
+                height:40px;
+                justify-content: center;
+                align-items: center;
+                margin:0px;
+                padding: 25px;
+                border:1px solid rgba(38,38,38,0.03);
+            }
+            nav .menu-icon{
+                cursor:pointer;
+                float:right;
+                padding:28px 20px;
+                position:relative;
+                user-select: none;
+            }
+            nav .menu-icon .nav-icon{
+                background-color:#ffffff;
+                display:block;
+                height:2px;
+                position:relative;
+                transition: background 0.2s ease-out;
+                width:24px;
+            }
+            nav .menu-icon .nav-icon:before,
+            nav .menu-icon .nav-icon:after{
+                background:rgb(255, 255, 255);
+                content:'';
+                display:block;
+                height:100%;
+                position:absolute;
+                transition:all ease-out 0.2s;
+                width:100%;
+            }
+            nav .menu-icon .nav-icon:before{
+                top:6px;
+            }
+            nav .menu-icon .nav-icon:after{
+                top:-6px;
+            }
+            nav .menu-btn:checked ~ .menu-icon .nav-icon{
+                background:transparent;
+            }
+            nav .menu-btn:checked ~ .menu-icon .nav-icon:before{
+                transform: rotate(-45deg);
+                top:0;
+            }
+            nav .menu-btn:checked ~ .menu-icon .nav-icon:after{
+                transform: rotate(45deg);
+                top:0;
+            }
+            nav .menu-btn{
+                display:none;
+            }
+            nav .menu-btn:checked ~ .menu{
+                display:block;
+            }}
+            @media(max-width:400px){
+                .a-box{
+                    width: 100%;
+                    height:400px;
+                }
+            }

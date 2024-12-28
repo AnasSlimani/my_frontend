@@ -27,7 +27,7 @@ export default function Description(props) {
 
     return (
         <div>
-            <div className='p-10 rounded-xl shadow-md mt-6 border-2 text-white ' >
+            <div className='p-10 rounded-xl shadow-md mt-6 border-2 text-black lighgrey ' >
                 <h2 className='my-2 font-bold text-2xl' >Description</h2>
                 <p> {car.description} </p>
             </div>

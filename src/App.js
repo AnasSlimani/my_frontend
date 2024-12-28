@@ -10,7 +10,11 @@ import GestionClient from './Components/Admin/GestionClient';
 import FormAddUser from './Components/Admin/FormAddUser';
 import UpdateUser from './Components/Admin/UpdateUser';
 import ErrorPage from './pages/ErrorPage';
+<<<<<<< HEAD
 import ForgetPasswd from './pages/forgetPasswordLogin/ForgetPasswd';
+=======
+import Booking from './pages/booking/Booking'
+>>>>>>> 872fa8430f4d7ad94922bff0b5799c9bbb7ae97f
 
 function App(){
   
@@ -32,7 +36,11 @@ function App(){
         <Route path="/admin/clients/FormAddUser" element={<FormAddUser />} />
         <Route path="/admin/clients/UpdateUser/:id" element={<UpdateUser />} />
         <Route path="/error" element={<ErrorPage />} />
+<<<<<<< HEAD
         <Route path="/forgetpassword" element={<ForgetPasswd />} />
+=======
+        <Route path="/booking" element={<Booking />} />
+>>>>>>> 872fa8430f4d7ad94922bff0b5799c9bbb7ae97f
 
       </Routes>
     </Router>

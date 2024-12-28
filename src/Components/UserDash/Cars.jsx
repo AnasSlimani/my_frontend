@@ -3,10 +3,10 @@ import './Cars.css'
 import ReservationForm from './ReservationForm';
 import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
+import { isAuthenticated, UsersInfos } from '../../Components/auth/Authentification';
 
 const Cars = ({ filters }) => {
-  const [showForm, setShowForm] = useState(false);
-  const [selectedCar, setSelectedCar] = useState('');
+
   const [cars, setCars] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
@@ -35,14 +35,24 @@ const Cars = ({ filters }) => {
             console.log("Error fetching the cars: ", error);
         }
     };
-
     fetchCars();
 }, [filters]);
 
-  const handleReserveClick = (carName) => {
-    setSelectedCar(carName);
-    setShowForm(true);
-  };
+const handleReserve = (car) => {
+  if (!isAuthenticated()) {
+    alert("Please login to reserve a car");
+    navigate("/login");
+    return;
+  }
+
+  
+  try {
+     
+  } catch (error) {
+    console.error('Error adding car to cart:', error);
+    alert('Failed to add car to cart');
+  }
+};
 
   return (
     <div className="containere">
@@ -57,18 +67,13 @@ const Cars = ({ filters }) => {
               <h2 className="card__title"><img src={`http://localhost:8082${car.logoPath}`} alt="Car Logo" className="iconse" />{car.marque} {car.modele} </h2>
               <div className="buttons">
                 <Link to={'/CarDetail/'+car.id}><a href="#" className="card__button">Read More</a></Link> 
-                <button onClick={() => handleReserveClick(`${car.marque} ${car.modele}`)}>RESERVE</button>
+                <button onClick={() => handleReserve(car)}>RESERVE</button>
               </div>
             </div>
           </article>
         ))}
       </div>
-      {showForm && (
-        <ReservationForm
-          carName={selectedCar}
-          onClose={() => setShowForm(false)}
-        />
-      )}
+      
     </div>
   )
 }
