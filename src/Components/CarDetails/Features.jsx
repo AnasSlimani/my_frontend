@@ -34,7 +34,7 @@ export default function Features(props) {
     
 
     return (
-        <div className='p-10 border-2 shadow-md rounded-xl my-7 text-white'>
+        <div className='p-10 border-2 shadow-md rounded-xl my-7 text-black lighgrey'>
             <h2 className='font-bold text-2xl features'>Features</h2>
             <div className='grid grid-cols-2 md:grid-cols-3 mt-3 lg:grid-cols-4 gap-8'>
                 {features.map(([key, value]) => (

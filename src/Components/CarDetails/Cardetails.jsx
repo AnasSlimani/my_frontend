@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Cardetails = (props) => {
   const idCar = props.idCar;
+  
   return (
     <>
       <CarNavBare />
@@ -27,7 +28,7 @@ const Cardetails = (props) => {
             {/* Image Gallery */}
               <ImageGallery ID={idCar} />
             {/* Description */}
-              <Description ID={idCar} />
+              <Description ID={idCar} style={ { backgroundColor: 'black'  } } />
             {/* Features List */}
               <Features ID={idCar} />
           </div>
