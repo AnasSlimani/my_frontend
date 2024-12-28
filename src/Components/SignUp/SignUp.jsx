@@ -13,7 +13,9 @@ export default function SignUp() {
 
     const [signUpForm, setSignUpForm] = useState({
         "firstName" : '',
+        "lastName" : '',
         "email" : '',
+        "phone" : '',
         "password" : '',
         "role" : "CLIENT"
     })
@@ -66,7 +68,7 @@ export default function SignUp() {
                 
             } else if (response.status === 401) {
                 alert("User not found");
-                navigate("/login");
+                navigate(0);
             }
         } catch (error) {
             console.error("Error while logging in:", error);
@@ -86,7 +88,7 @@ export default function SignUp() {
         console.log("confirmed password : " + confirmedPassword);
         if (confirmedPassword != signUpForm.password) {
             alert("Password Mismatch")
-            navigate("/login");
+            navigate(0);
         }
         else {
             try {
@@ -99,13 +101,13 @@ export default function SignUp() {
                 });
                     if (response.ok) {
                         const userExist = await response.text();
-                        console.log(userExist);
+                        console.log("status : " + userExist);
                         
-                        if (userExist == "true") {
+                        if (userExist) {
                             alert("User already exist !!")
                             navigate(0);
                         }else {
-                            alert("user does not exist")
+                            
                             try {
                                 const response = await fetch("http://localhost:8082/api/utilisateur/addUser", {
                                     method: "POST",
@@ -150,8 +152,14 @@ export default function SignUp() {
                         <div className='input-container'>
                             <div className='input-row'>
                                 <input className='inpute' type="text" name="firstName" placeholder="First name" required onChange={handelSignupForm} />
+                                <input className='inpute' type="text" name="lastName" placeholder="Last name" required onChange={handelSignupForm} />
+                            </div>
+
+                            <div className='input-row'>
+                                <input className='inpute' type="text" name="phone" placeholder="Phone" maxLength={20} minLength={10} required onChange={handelSignupForm} />
                                 <input className='inpute' type="email" name="email" placeholder="Email" required onChange={handelSignupForm} />
                             </div>
+
                         <div className='input-row'>
                             <input className='inpute' type="password" name="password" placeholder="Password" required onChange={handelSignupForm}/>
                             <input className='inpute' type="password" name="confirmedPassword" placeholder="Confirm Password" required onChange={(event) => {setConfirmedPassword(event.target.value)}}/>
@@ -161,7 +169,7 @@ export default function SignUp() {
                     </form>
                 </div>
 
-                <div className="logine">
+                <div className="logine" >
                     <form>
                         <label htmlFor="chk" aria-hidden="true" className='labele'>
                             Login
@@ -172,7 +180,11 @@ export default function SignUp() {
                         
                     </form>
                         {/* must add a change password route  */}
-                    < Link to={"#"} className='forget-password-link'> Forgot your password ?</Link>
+                    <Link to={`/forgetpassword`} 
+                        state= {{ email: loginForm.email }} 
+                        className='forget-password-link'> 
+                            Forgot your password ?
+                    </Link>
                 </div>
             </div>
         </section>
