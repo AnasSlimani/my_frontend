@@ -4,10 +4,12 @@ import ReservationForm from './ReservationForm';
 import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated, UsersInfos } from '../../Components/auth/Authentification';
+import { use } from 'react';
 
 const Cars = ({ filters }) => {
 
   const [cars, setCars] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
   const navigate = useNavigate();
   useEffect(() => {
     const fetchCars = async () => {
@@ -47,7 +49,37 @@ const handleReserve = (car) => {
 
   
   try {
-     
+    const token = isAuthenticated();
+     const decodedToken = UsersInfos();
+     const { id, FirstName: firstName, LastName: lastName, sub: email, role } = decodedToken;
+     // Creating the new object
+     const user = { id, firstName, lastName, email, role };
+    //  console.log(user);
+     const reserve = async ()=> {
+        
+      const combineForm = {
+        status: "entretient",
+        utilisateur: user, // Keep the full user object
+        vehicule: car, // Assuming `car` already has the desired structure
+      };
+
+        console.log(combineForm);
+        const response = await fetch("http://localhost:8082/api/reservation/addreservation",{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`, // Include the Bearer token here
+          },
+          body : JSON.stringify(combineForm),
+        })
+        if (response.ok) {
+          alert("reservation added");
+        }else {
+          console.log(response.status);
+        }
+        
+     }
+     reserve();
   } catch (error) {
     console.error('Error adding car to cart:', error);
     alert('Failed to add car to cart');

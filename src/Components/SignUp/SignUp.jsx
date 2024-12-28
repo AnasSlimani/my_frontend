@@ -44,6 +44,8 @@ export default function SignUp() {
 
     const handelLogInButton = async (e) => {
         e.preventDefault();
+        console.log(loginForm);
+        
         try {
             const response = await fetch("http://localhost:8082/api/utilisateur/login", {
                 method: "POST",
