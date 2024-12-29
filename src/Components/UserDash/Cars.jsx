@@ -4,10 +4,11 @@ import {Link} from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated, UsersInfos } from '../../Components/auth/Authentification';
 
-const Cars = ({ filters }) => {
+const Cars = ({ filters, onReserve }) => {
 
   const [cars, setCars] = useState([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchCars = async () => {
         try {
@@ -37,16 +38,13 @@ const Cars = ({ filters }) => {
     fetchCars();
 }, [filters]);
 
-const handleReserve = (car) => {
+const handleReserve = async (car) => {
   if (!isAuthenticated()) {
     alert("Please login to reserve a car");
     navigate("/login");
-    console.log('you are not logged in');
-    
     return;
   }
 
-  console.log('you are logged in')
   try {
      const token = isAuthenticated();
      const decodedToken = UsersInfos();
@@ -72,9 +70,10 @@ const handleReserve = (car) => {
           body : JSON.stringify(combineForm),
         })
         if (response.ok) {
-          alert("reservation added");
+          onReserve(car); 
         }else {
           console.log(response.status);
+          alert("Failed to add reservation");
         }
         
      }
