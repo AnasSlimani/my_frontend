@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import "./SignUp.css";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+
 
 import {jwtDecode} from 'jwt-decode' ;
 
@@ -10,6 +12,17 @@ export default function SignUp() {
         email: '',
         password: ''
     });
+
+    const [signUpForm, setSignUpForm] = useState({
+        "firstName" : '',
+        "lastName" : '',
+        "email" : '',
+        "phone" : '',
+        "password" : '',
+        "role" : "CLIENT"
+    })
+
+    const [confirmedPassword, setConfirmedPassword] = useState('');
 
     const navigate = useNavigate();
 
@@ -21,8 +34,14 @@ export default function SignUp() {
         });
     };
 
+
     const handelSignupForm = (event) => {
         // Placeholder for signup form handling logic
+        const {name, value} = event.target;
+        setSignUpForm({
+            ...signUpForm,
+            [name]: value
+        });        
     };
 
     const handelLogInButton = async (e) => {
@@ -40,7 +59,6 @@ export default function SignUp() {
                 const token = await response.text(); // Assuming token is returned as plain text
                 console.log(token);
                 localStorage.setItem("jwtToken", token); // Store JWT in localStorage
-                
                 const decodedToken = jwtDecode(token);
                 const role = decodedToken.role;
                 console.log(role);
@@ -50,9 +68,21 @@ export default function SignUp() {
                     navigate("/signup")
                 )
                 
+<<<<<<< HEAD
+                const decodedToken = jwtDecode(token);
+                const role = decodedToken.role;
+                console.log(role);
+                if (role == "ADMIN"){
+                    navigate("/admin")
+                }else(
+                    navigate("/signup")
+                )
+                
+=======
+>>>>>>> 04771d952c37caf7242d60bd6b3ec0115f4d6112
             } else if (response.status === 401) {
                 alert("User not found");
-                navigate("/login");
+                navigate(0);
             }
         } catch (error) {
             console.error("Error while logging in:", error);
@@ -68,6 +98,59 @@ export default function SignUp() {
     const handelSignUpButton = async (e) => {
         e.preventDefault();
         // Placeholder for signup logic
+        console.log(signUpForm);
+        console.log("confirmed password : " + confirmedPassword);
+        if (confirmedPassword != signUpForm.password) {
+            alert("Password Mismatch")
+            navigate(0);
+        }
+        else {
+            try {
+                const response = await fetch("http://localhost:8082/api/utilisateur/checkuserbyemail", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(signUpForm)
+                });
+                    if (response.ok) {
+                        const userExist = await response.text();
+                        console.log("status : " + userExist);
+                        
+                        if (userExist) {
+                            alert("User already exist !!")
+                            navigate(0);
+                        }else {
+                            
+                            try {
+                                const response = await fetch("http://localhost:8082/api/utilisateur/addUser", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify(signUpForm)
+                                });
+                                if (response.ok) {
+                                    alert("User added with succes")
+                                    navigate(0)
+                                    // navigate("/login")
+                                }
+                            } catch (error) {
+                                console.log(error);
+                                
+                            }
+                           
+                        }
+                        
+                    }
+                    
+                    
+                
+            } catch (error) {
+                
+            }
+        }
+        
     };
 
     return (
@@ -80,14 +163,27 @@ export default function SignUp() {
                         <label htmlFor="chk" aria-hidden="true" className='labele'>
                             Sign up
                         </label>
-                        <input className='inpute' type="text" name="txt" placeholder="User name" required onChange={handelSignupForm} />
-                        <input className='inpute' type="email" name="email" placeholder="Email" required onChange={handelSignupForm} />
-                        <input className='inpute' type="password" name="password" placeholder="Password" required />
-                        <button className='btnlogin' onClick={handelSignUpButton}>Sign up</button>
+                        <div className='input-container'>
+                            <div className='input-row'>
+                                <input className='inpute' type="text" name="firstName" placeholder="First name" required onChange={handelSignupForm} />
+                                <input className='inpute' type="text" name="lastName" placeholder="Last name" required onChange={handelSignupForm} />
+                            </div>
+
+                            <div className='input-row'>
+                                <input className='inpute' type="text" name="phone" placeholder="Phone" maxLength={20} minLength={10} required onChange={handelSignupForm} />
+                                <input className='inpute' type="email" name="email" placeholder="Email" required onChange={handelSignupForm} />
+                            </div>
+
+                        <div className='input-row'>
+                            <input className='inpute' type="password" name="password" placeholder="Password" required onChange={handelSignupForm}/>
+                            <input className='inpute' type="password" name="confirmedPassword" placeholder="Confirm Password" required onChange={(event) => {setConfirmedPassword(event.target.value)}}/>
+                        </div>    
+                            <button className='btnlogin' onClick={handelSignUpButton}>Sign up</button>
+                        </div>
                     </form>
                 </div>
 
-                <div className="logine">
+                <div className="logine" >
                     <form>
                         <label htmlFor="chk" aria-hidden="true" className='labele'>
                             Login
@@ -95,7 +191,14 @@ export default function SignUp() {
                         <input className='inpute' type="email" name="email" placeholder="Email" required onChange={handelLoginForm} />
                         <input className='inpute' type="password" name="password" placeholder="Password" required onChange={handelLoginForm} />
                         <button className='btnlogin' onClick={handelLogInButton}>Log in</button>
+                        
                     </form>
+                        {/* must add a change password route  */}
+                    <Link to={`/forgetpassword`} 
+                        state= {{ email: loginForm.email }} 
+                        className='forget-password-link'> 
+                            Forgot your password ?
+                    </Link>
                 </div>
             </div>
         </section>

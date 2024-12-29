@@ -49,6 +49,8 @@ const Cars = ({ filters }) => {
       <div className="card__container">
         {cars.map(car => (
           <article className="card__article" key={car.id} >
+            {console.log(car.imagepath)
+            }
             <img src={`http://localhost:8082${car.imagepath}`} alt="image" className="card__img" />
             <div className="card__data">
               <span className="card__description">Prix : {car.prix} , Etat : {car.status}</span>

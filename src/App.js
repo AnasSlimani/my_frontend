@@ -15,6 +15,7 @@ import FormAddVehicle from './Components/Admin/FormAddVehicle';
 import UpdateVehicule from './Components/Admin/UpdateVehicule';
 
 
+import ForgetPasswd from './pages/forgetPasswordLogin/ForgetPasswd';
 
 function App(){
   
@@ -39,6 +40,8 @@ function App(){
         <Route path="/admin/clients/UpdateUser/:id" element={<UpdateUser />} />
         <Route path="/admin/vehicules/UpdateVehicule/:id" element={<UpdateVehicule />} />
         <Route path="/error" element={<ErrorPage />} />
+        <Route path="/error" element={<ErrorPage />} />
+        <Route path="/forgetpassword" element={<ForgetPasswd />} />
       </Routes>
     </Router>
     </>
