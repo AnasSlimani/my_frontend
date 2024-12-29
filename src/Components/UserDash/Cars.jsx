@@ -63,7 +63,7 @@ const handleReserve = (car) => {
         vehicule: car, // Assuming `car` already has the desired structure
       };
 
-        console.log(combineForm);
+        // console.log(combineForm);
         const response = await fetch("http://localhost:8082/api/reservation/addreservation",{
           method: "POST",
           headers: {
@@ -74,6 +74,9 @@ const handleReserve = (car) => {
         })
         if (response.ok) {
           alert("reservation added");
+          const inseredReservation = await response.text();
+          console.log(JSON.parse(inseredReservation).id);
+          
         }else {
           console.log(response.status);
         }

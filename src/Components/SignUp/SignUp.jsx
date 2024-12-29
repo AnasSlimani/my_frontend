@@ -170,7 +170,7 @@ export default function SignUp() {
                         </div>
                     </form>
                 </div>
-
+        
                 <div className="logine" >
                     <form>
                         <label htmlFor="chk" aria-hidden="true" className='labele'>
