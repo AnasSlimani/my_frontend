@@ -1,145 +1,58 @@
+.main {
+  display: flex;
+  gap: 0px;
+  height: fit-content;
+}
 
+.cars-section {
+  flex: 10; 
+  transition: flex 0.5s ease;
+}
 
-  .main {
-    display: flex;
-    gap: 0px;
-    height: fit-content;
-  }
-  
-  
-  .cars-section {
-    flex: 10; 
-    transition: flex 0.5s ease;
-  }
-  
-  .cars-section.open {
-    flex: 8; 
-  }
-  
+.cars-section.open {
+  flex: 7; /* Adjusted to account for larger cart */
+}
 
-
-
-/* Main container for the cart */
 .panier-section {
-    flex: 2;
-    background: linear-gradient(135deg, #1e1e2f, #34344a); /* Gradient background */
-    color: white;
-    border-left: 2px solid #4a90e2;
-    border-radius: 10px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    justify-content: space-between; /* Space between content */
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.5);
-    height: 800px; /* Fixed height */
-    overflow-y: auto; /* Scrollable if content is too much */
-    position: relative;
+  flex: 3; /* Increased from 2 to 3 */
+  background: #ffffff;
+  border-left: 1px solid #e5e7eb;
+  box-shadow: -4px 0 15px rgba(0, 0, 0, 0.1);
+  height: calc(100vh - 64px);
+  overflow: hidden;
+  position: relative;
+  min-width: 420px;
+  max-width: 480px;
+  border-radius: 8px;
 }
 
-/* Close button */
-.close-panier {
-    position: absolute; /* Align relative to .panier-section */
-    top: 10px;
-    left: 10px; /* Adjust to the left */
-    background: none;
-    border: none;
-    font-size: 20px;
-    color: #ff4c4c;
-    cursor: pointer;
-    transition: transform 0.3s ease, color 0.3s ease;
+.panier-section.show {
+  animation: slideIn 0.3s ease forwards;
 }
 
-.close-panier:hover {
-    transform: scale(1.2);
-    color: #ff6666;
+.panier-section.hide {
+  animation: slideOut 0.3s ease forwards;
 }
 
-  
-  /* Title */
-  .panier-title {
-    text-align: center;
-    color: #ffffff;
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
   }
-  
-  /* Separator */
-  hr {
-    border: none;
-    border-top: 1px solid #555;
-    margin-bottom: 15px;
+  to {
+    transform: translateX(0);
+    opacity: 1;
   }
-  
-  /* Items container */
-  .panier-items {
-    flex: 1; /* Grow to take available space */
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    overflow-y: auto; /* Scrollable when items exceed space */
 }
-  
-  /* Individual item card */
-  .panier-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: linear-gradient(to right, #2d2d3f, #444459); /* Dark gradient */
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
   }
-  
-  .panier-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  to {
+    transform: translateX(100%);
+    opacity: 0;
   }
-  
-  /* Item information */
-  .item-info p {
-    margin: 5px 0;
-    font-size: 14px;
-    color: #f1f1f1;
-  }
-  
-  .item-info strong {
-    color: #4da8ff; /* Light blue for labels */
-  }
-  
-  /* Remove item button */
-  .remove-item {
-    background: none;
-    border: none;
-    color: #ff4c4c;
-    font-size: 18px;
-    cursor: pointer;
-    transition: transform 0.3s ease, color 0.3s ease;
-  }
-  
-  .remove-item:hover {
-    transform: scale(1.2);
-    color: #ff6666;
-  }
-  
-  /* Validate button */
-  .validate-btn {
-    margin-top: auto;
-    padding: 10px 20px;
-    margin-top: 20px;
-    border: none;
-    background: #4da8ff;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease, transform 0.2s ease;
-  }
-  
-  .validate-btn:hover {
-    background: #3388cc;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 10px rgba(77, 168, 255, 0.4);
-  }
-  
+}
+

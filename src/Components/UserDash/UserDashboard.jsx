@@ -10,6 +10,9 @@ const UserDashboard = () => {
   const [showPanier, setShowPanier] = useState(false);
   const [filters, setFilters] = useState({});
   const [reservedCars, setReservedCars] = useState([]);
+  const handleReservationDelete = (deletedReservationId) => {
+    setReservedCars(prevCars => prevCars.filter(car => car.id !== deletedReservationId));
+  };
 
   const togglePanier = () => {
     setShowPanier(!showPanier);
@@ -68,8 +71,12 @@ const UserDashboard = () => {
         </div>
         {showPanier && (
           <div className={`panier-section ${showPanier ? 'show' : 'hide'}`}>
-            <Panier onTogglePanier={togglePanier} reservedCars={reservedCars} />
-          </div>        
+            <Panier
+              onTogglePanier={togglePanier}
+              reservedCars={reservedCars}
+              onReservationDelete={handleReservationDelete}
+            />
+          </div>
         )}
       </div>
     </div>
