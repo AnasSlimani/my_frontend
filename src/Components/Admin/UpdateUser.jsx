@@ -10,6 +10,7 @@ function UpdateUser() {
     email: '',
     phone: '',
     role: '',
+    password:''
   });
 
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ function UpdateUser() {
           email: data.email,
           phone: data.phone,
           role: data.role,
+          password: data.password
         });
       } catch (err) {
         console.error('Erreur fetching user data:', err.message);
@@ -44,12 +46,14 @@ function UpdateUser() {
   };
 
   const handleSubmit = async (e) => {
+    const token = localStorage.getItem("jwtToken");
     e.preventDefault();
     try {
       const response = await fetch(`http://localhost:8082/api/utilisateur/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization':`Bearer ${token}`
         },
         body: JSON.stringify(formData),
       });
