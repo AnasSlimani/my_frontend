@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import "./SignUp.css";
 import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import { Try } from '@mui/icons-material';
 
 
 export default function SignUp() {
@@ -14,8 +13,11 @@ export default function SignUp() {
 
     const [signUpForm, setSignUpForm] = useState({
         "firstName" : '',
+        "lastName" : '',
         "email" : '',
+        "phone" : '',
         "password" : '',
+        "role" : "CLIENT"
     })
 
     const [confirmedPassword, setConfirmedPassword] = useState('');
@@ -66,7 +68,7 @@ export default function SignUp() {
                 
             } else if (response.status === 401) {
                 alert("User not found");
-                navigate("/login");
+                navigate(0);
             }
         } catch (error) {
             console.error("Error while logging in:", error);
@@ -86,7 +88,7 @@ export default function SignUp() {
         console.log("confirmed password : " + confirmedPassword);
         if (confirmedPassword != signUpForm.password) {
             alert("Password Mismatch")
-            navigate("/login");
+            navigate(0);
         }
         else {
             try {
@@ -97,8 +99,37 @@ export default function SignUp() {
                     },
                     body: JSON.stringify(signUpForm)
                 });
-                
-                    console.log( await response.text());
+                    if (response.ok) {
+                        const userExist = await response.text();
+                        console.log("status : " + userExist);
+                        
+                        if (userExist) {
+                            alert("User already exist !!")
+                            navigate(0);
+                        }else {
+                            
+                            try {
+                                const response = await fetch("http://localhost:8082/api/utilisateur/addUser", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify(signUpForm)
+                                });
+                                if (response.ok) {
+                                    alert("User added with succes")
+                                    navigate(0)
+                                    // navigate("/login")
+                                }
+                            } catch (error) {
+                                console.log(error);
+                                
+                            }
+                           
+                        }
+                        
+                    }
+                    
                     
                 
             } catch (error) {
@@ -121,8 +152,14 @@ export default function SignUp() {
                         <div className='input-container'>
                             <div className='input-row'>
                                 <input className='inpute' type="text" name="firstName" placeholder="First name" required onChange={handelSignupForm} />
+                                <input className='inpute' type="text" name="lastName" placeholder="Last name" required onChange={handelSignupForm} />
+                            </div>
+
+                            <div className='input-row'>
+                                <input className='inpute' type="text" name="phone" placeholder="Phone" maxLength={20} minLength={10} required onChange={handelSignupForm} />
                                 <input className='inpute' type="email" name="email" placeholder="Email" required onChange={handelSignupForm} />
                             </div>
+
                         <div className='input-row'>
                             <input className='inpute' type="password" name="password" placeholder="Password" required onChange={handelSignupForm}/>
                             <input className='inpute' type="password" name="confirmedPassword" placeholder="Confirm Password" required onChange={(event) => {setConfirmedPassword(event.target.value)}}/>
@@ -132,7 +169,7 @@ export default function SignUp() {
                     </form>
                 </div>
 
-                <div className="logine">
+                <div className="logine" >
                     <form>
                         <label htmlFor="chk" aria-hidden="true" className='labele'>
                             Login
@@ -143,7 +180,11 @@ export default function SignUp() {
                         
                     </form>
                         {/* must add a change password route  */}
-                    < Link to={"#"} className='forget-password-link'> Forgot your password ?</Link>
+                    <Link to={`/forgetpassword`} 
+                        state= {{ email: loginForm.email }} 
+                        className='forget-password-link'> 
+                            Forgot your password ?
+                    </Link>
                 </div>
             </div>
         </section>

@@ -11,7 +11,7 @@
 
 .maine {
     width: 400px;
-    height: 450px;
+    height: 500px;
     background: red;
     overflow: hidden;
     background: url("../../images/login_background.jpg") no-repeat center / cover ;
@@ -79,7 +79,21 @@
 .input-container {
     display: flex;
     flex-direction: column;
+   
   
+}
+
+.forget-passwd-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px ;
+    text-align: center;
+}
+
+.change-passwd-title {
+    text-align: center;
 }
 
 .input-row {
@@ -124,7 +138,6 @@
 .logine .labele {
     color: #CC0000;
     transform: scale(.6);
- 
 }
 
 #chk:checked ~ .logine {
