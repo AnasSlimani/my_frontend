@@ -10,6 +10,11 @@ import GestionClient from './Components/Admin/GestionClient';
 import FormAddUser from './Components/Admin/FormAddUser';
 import UpdateUser from './Components/Admin/UpdateUser';
 import ErrorPage from './pages/ErrorPage';
+import GestionVehicules from './Components/Admin/GestionVehicules';
+import FormAddVehicle from './Components/Admin/FormAddVehicle';
+import UpdateVehicule from './Components/Admin/UpdateVehicule';
+
+
 
 function App(){
   
@@ -28,8 +33,11 @@ function App(){
         <Route path="/login" element={<SignUp />} />
         <Route path="/CarDetail/:id" element={<CarDetail />} />
         <Route path="/admin/clients" element={<GestionClient />} />
+        <Route path="/admin/vehicules" element={<GestionVehicules />} />
+        <Route path="/admin/vehicules/FormAddVehicle" element={<FormAddVehicle />} />
         <Route path="/admin/clients/FormAddUser" element={<FormAddUser />} />
         <Route path="/admin/clients/UpdateUser/:id" element={<UpdateUser />} />
+        <Route path="/admin/vehicules/UpdateVehicule/:id" element={<UpdateVehicule />} />
         <Route path="/error" element={<ErrorPage />} />
       </Routes>
     </Router>
