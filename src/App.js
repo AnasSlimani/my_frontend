@@ -16,6 +16,7 @@ import UpdateVehicule from './Components/Admin/UpdateVehicule';
 
 
 import ForgetPasswd from './pages/forgetPasswordLogin/ForgetPasswd';
+import ProfilAdmin from './Components/Admin/ProfilAdmin';
 
 function App(){
   
@@ -34,6 +35,8 @@ function App(){
         <Route path="/login" element={<SignUp />} />
         <Route path="/CarDetail/:id" element={<CarDetail />} />
         <Route path="/admin/clients" element={<GestionClient />} />
+        <Route path="/admin/clients/ProfilAdmin/:id" element={<ProfilAdmin />} />
+
         <Route path="/admin/vehicules" element={<GestionVehicules />} />
         <Route path="/admin/vehicules/FormAddVehicle" element={<FormAddVehicle />} />
         <Route path="/admin/clients/FormAddUser" element={<FormAddUser />} />

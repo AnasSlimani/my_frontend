@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import "./SignUp.css";
 import { Link, useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-
 
 import {jwtDecode} from 'jwt-decode' ;
+
+
 
 export default function SignUp() {
 
@@ -68,18 +68,8 @@ export default function SignUp() {
                     navigate("/signup")
                 )
                 
-<<<<<<< HEAD
-                const decodedToken = jwtDecode(token);
-                const role = decodedToken.role;
-                console.log(role);
-                if (role == "ADMIN"){
-                    navigate("/admin")
-                }else(
-                    navigate("/signup")
-                )
-                
-=======
->>>>>>> 04771d952c37caf7242d60bd6b3ec0115f4d6112
+
+
             } else if (response.status === 401) {
                 alert("User not found");
                 navigate(0);
