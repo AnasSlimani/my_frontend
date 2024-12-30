@@ -41,9 +41,15 @@ function GestionClient() {
 
   const handleDelete = async (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
+
+      const token = localStorage.getItem("jwtToken");
+
       try {
         const response = await fetch(`http://localhost:8082/api/utilisateur/${id}`, {
           method: "DELETE",
+          headers: {
+            "Authorization":`Bearer ${token}`
+        },
         });
   
         if (response.ok) {

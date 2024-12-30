@@ -23,10 +23,16 @@ function GestionVehicules() {
   }, []);
 
   const handleDelete = async (id) => {
+
+    const token = localStorage.getItem("jwtToken");
+    
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce véhicule ?")) {
       try {
         const response = await fetch(`http://localhost:8082/api/vehicules/deleteVehicule/${id}`, {
           method: "DELETE",
+          headers: {
+            "Authorization":`Bearer ${token}`
+        },
         });
 
         if (response.ok) {

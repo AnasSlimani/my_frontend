@@ -42,6 +42,8 @@ function FormAddUser() {
       return;
     }
 
+    
+
     try {
       const response = await fetch('http://localhost:8082/api/utilisateur/addUser', {
         method: 'POST',
