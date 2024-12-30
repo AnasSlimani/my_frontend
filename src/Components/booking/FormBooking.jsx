@@ -1,18 +1,75 @@
 import React, { useState } from 'react'
 import './form-booking.css'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function FormBooking() {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const location = useLocation();
-  const carDetails = location.state?.carDetails || {};
+  const carDetails = location.state?.carDetails.vehicule || {};
+  const reservationId = location.state?.carDetails.id || {};
+  const navigate = useNavigate();
 
+
+  const reserve = async ()=> {
+      const token = localStorage.getItem("jwtToken");
+      try {
+        console.log(token);
+        const response1 = await fetch(`http://localhost:8082/api/reservation/reservecar/${reservationId}/${startDate}/${endDate}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+        });
+        
+
+        if (response1.ok){
+          const reservation1 = await response1.json() ;
+          console.log(reservation1); 
+        }    
+      }catch(error) {
+          console.log("error while reservig car " + error);     
+      }
+  }
+
+  const handelConfirmPaiment = async (event) => {
+    const token = localStorage.getItem("jwtToken");
+    event.preventDefault();
+    console.log("car id : " + carDetails.id);
+    console.log("starting date enterd  : " + startDate);
+    console.log("ending  date enterd : " + endDate);
+
+    try {
+      const response = await fetch(`http://localhost:8082/api/reservation/checkconflect/${carDetails.id}/${startDate}/${endDate}`,{
+        headers: {
+          "Authorization":`Bearer ${token}`
+          }});
+      if(response.ok){
+          const reservation = await response.json() ;  
+          const nbrReservationConflect = reservation.length;     
+          if (nbrReservationConflect != 0) {
+            alert("vehicule deja reserve , choisir une autre ")
+            navigate("/signup");
+          }
+          else {
+            reserve();
+          }
+      }
+    } catch (error) {
+        console.log(error);
+      
+    }
+    
+  }
+
+
+  
   return (
     <div className="booking-container mt-20">
       <div className="booking-wrapper">
         {/* Car Details Card */}
-        <div className="car-details-card">
+        <div className="car-details-card">q
           <div className="car-header">
             <h2 className="car-title ">{carDetails.marque} {carDetails.modele}</h2>
             <div className="price-tag">
@@ -57,7 +114,7 @@ export default function FormBooking() {
             <p>Complétez les informations ci-dessous</p>
           </div>
 
-          <form className="booking-form">
+          <form className="booking-form" onSubmit={handelConfirmPaiment}>
             <div className="form-grid">
               <div className="form-group">
                 <label htmlFor="startDate">Date de début</label>

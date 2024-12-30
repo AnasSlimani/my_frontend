@@ -7,7 +7,6 @@ const Panier = ({ onTogglePanier, reservedCars, onReservationDelete }) => {
   const [selectedCarId, setSelectedCarId] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
-  
   const handleCarSelection = (reservationId) => {
     setSelectedCarId(reservationId);
   };
@@ -17,10 +16,10 @@ const Panier = ({ onTogglePanier, reservedCars, onReservationDelete }) => {
     setTotalPrice(selectedCar ? selectedCar.vehicule.prix : 0);
   }, [selectedCarId, reservedCars]);
   
-  const handleValidateReservation = () => {
+  const handleValidateReservation = () => { 
     if (selectedCarId) {
       const selectedCar = reservedCars.find(car => car.id === selectedCarId);
-      navigate('/booking', { state: { carDetails: selectedCar.vehicule } });
+      navigate('/booking', { state: { carDetails: selectedCar } });
     }
   };
 
