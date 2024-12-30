@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../images/car-logo.png';
-import { Link } from 'react-router-dom';
 import '../UserDash/nave.css';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 function NavBare({ onTogglePanier }) {
   const navigate = useNavigate();
-
   const [nav, setNav] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
 
   const changeBackground = () => {
     if (window.scrollY >= 50) {
@@ -19,8 +19,17 @@ function NavBare({ onTogglePanier }) {
 
   window.addEventListener('scroll', changeBackground);
 
-  const SignUpClick = () => {
-    navigate('/login');
+  const handleAuth = () => {
+    if (isAuthenticated) {
+      logout();
+      navigate('/');
+    } else {
+      navigate('/login');
+    }
+  };
+
+  const handleProfile = () => {
+    navigate('/profile');
   };
 
   return (
@@ -42,13 +51,18 @@ function NavBare({ onTogglePanier }) {
         </ul>
 
         <div className='buttonss'>
-          {/* Bouton Panier avec logique */}
-          <button className='panier-btn' onClick={onTogglePanier}>
-            Panier <i className='fas fa-shopping-cart'></i>
-          </button>
-
-          <button onClick={SignUpClick} className='sign-up-btn'>
-            Sign Up <i className='fas fa-user-circle'></i>
+          {isAuthenticated && (
+            <>
+              <button className='panier-btn' onClick={onTogglePanier}>
+                Panier <i className='fas fa-shopping-cart'></i>
+              </button>
+              <button className='profile-btn' onClick={handleProfile}>
+                Profile <i className='fas fa-user'></i>
+              </button>
+            </>
+          )}
+          <button onClick={handleAuth} className={isAuthenticated ? 'logout-btn' : 'sign-up-btn'}>
+            {isAuthenticated ? 'Logout' : 'Sign Up'} <i className={`fas fa-${isAuthenticated ? 'sign-out-alt' : 'user-circle'}`}></i>
           </button>
         </div>
       </nav>
@@ -57,3 +71,4 @@ function NavBare({ onTogglePanier }) {
 }
 
 export default NavBare;
+

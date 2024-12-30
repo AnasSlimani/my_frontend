@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../images/car-logo.png';
-import { Link } from 'react-router-dom';
 import './bookingNav.css';
-import { useNavigate } from 'react-router-dom';
+import { AuthButtons, BackButton } from '../shared/NavButtons';
+import { useAuth } from '../../context/AuthContext';
 
-function BookingNav({ onTogglePanier }) {
+function BookingNav() {
   const navigate = useNavigate();
-
   const [nav, setNav] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   const changeBackground = () => {
     if (window.scrollY >= 50) {
@@ -19,11 +20,13 @@ function BookingNav({ onTogglePanier }) {
 
   window.addEventListener('scroll', changeBackground);
 
-  const SignUpClick = () => {
-    navigate('/login');
+  const handleBack = () => {
+    navigate('/signup');
   };
-  const onBACK = () =>{
-    navigate('/signup')
+
+  if (!isAuthenticated) {
+    navigate('/login');
+    return null;
   }
 
   return (
@@ -45,16 +48,8 @@ function BookingNav({ onTogglePanier }) {
         </ul>
 
         <div className='buttonss'>
-          {/* Bouton Panier avec logique */}
-          <button className='panier-btn' onClick={onBACK}>
-            Back <i class="fa-solid fa-backward"></i>
-          </button>
-          <button className='panier-btn' onClick={onTogglePanier}>
-            Panier <i className='fas fa-shopping-cart'></i>
-          </button>
-        <button onClick={SignUpClick} className='sign-up-btn'>
-            Sign Up <i className='fas fa-user-circle'></i>
-          </button>
+          <BackButton onClick={handleBack} />
+          <AuthButtons />
         </div>
       </nav>
     </header>
@@ -62,3 +57,4 @@ function BookingNav({ onTogglePanier }) {
 }
 
 export default BookingNav;
+

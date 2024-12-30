@@ -20,7 +20,7 @@ const Panier = ({ onTogglePanier, reservedCars, onReservationDelete }) => {
   const handleValidateReservation = () => {
     if (selectedCarId) {
       const selectedCar = reservedCars.find(car => car.id === selectedCarId);
-      navigate('/booking', { state: { carDetails: selectedCar.vehicule } });
+      navigate('/booking', { state: { carDetails: selectedCar } });
     }
   };
 
