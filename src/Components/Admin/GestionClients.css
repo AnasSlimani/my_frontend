@@ -1,0 +1,88 @@
+.dashboard-main {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+  }
+  
+  .dashboard-content {
+    padding: 32px;
+  }
+  
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .dashboard-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #212529;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .dashboard-icon {
+    color: #4263eb;
+  }
+  
+  .dashboard-subtitle {
+    color: #6c757d;
+    margin: 0;
+  }
+  
+  .add-user-btn {
+    background-color: #4263eb !important;
+    border: none;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .add-user-btn:hover {
+    background-color: #364fc7 !important;
+    transform: translateY(-1px);
+  }
+  
+  .btn-icon {
+    font-size: 1.1rem;
+  }
+  
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    color: #6c757d;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-content {
+      padding: 16px;
+    }
+  
+    .dashboard-header {
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+  
+    .add-user-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  
+  
