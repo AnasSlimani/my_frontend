@@ -1,10 +1,15 @@
 import React, { useState } from 'react'
 import './form-booking.css'
 import { useLocation , useNavigate } from 'react-router-dom';
+import ReservationConflictWindow from './ReservationConflictWindow';
+import PaymentSuccessWindow from './PaymentSuccessWindow';
 
 export default function FormBooking() {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [showReservationConflict, setShowReservationConflict] = useState(false);
+  const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
+  const [conflictEndDate, setConflictEndDate] = useState('');
   const location = useLocation();
   const carDetails = location.state?.carDetails.vehicule || {};
   const reservationId = location.state?.carDetails.id || {};
@@ -42,27 +47,28 @@ const handelConfirmPaiment = async (event) => {
   console.log("ending date entered: " + endDate);
 
   try {
-      const response = await fetch(`http://localhost:8082/api/reservation/checkconflect/${carDetails.id}/${startDate}/${endDate}`, {
-          headers: {
-              "Authorization": `Bearer ${token}`, 
-          },
-      });
+    const response = await fetch(`http://localhost:8082/api/reservation/checkconflect/${carDetails.id}/${startDate}/${endDate}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`, 
+      },
+    });
 
-      if (response.ok) {
-          const reservation = await response.json();
-          const nbrReservationConflect = reservation.length;
+    if (response.ok) {
+      const reservation = await response.json();
+      const nbrReservationConflect = reservation.length;
 
-          if (nbrReservationConflect !== 0) { 
-              alert("Véhicule déjà réservé, veuillez en choisir un autre.");
-              navigate("/signup");
-          } else {
-              reserve(); 
-          }
+      if (nbrReservationConflect !== 0) { 
+        setConflictEndDate(reservation[0].dateFin); // Assuming the API returns the conflicting reservation's end date
+        setShowReservationConflict(true);
       } else {
-          console.log("Failed to check conflict: " + response.statusText);
+        await reserve();
+        setShowPaymentSuccess(true);
       }
+    } else {
+      console.log("Failed to check conflict: " + response.statusText);
+    }
   } catch (error) {
-      console.log("Error while checking conflict: " + error);
+    console.log("Error while checking conflict: " + error);
   }
 };
 
@@ -191,7 +197,19 @@ const handelConfirmPaiment = async (event) => {
         </form>
       </div>
     </div>
+    {showReservationConflict && (
+      <ReservationConflictWindow 
+        onClose={() => setShowReservationConflict(false)}
+        endDate={conflictEndDate}
+      />
+    )}
+    {showPaymentSuccess && (
+      <PaymentSuccessWindow 
+        onClose={() => setShowPaymentSuccess(false)}
+        startDate={startDate}
+        carDetails={carDetails}
+      />
+    )}
   </div>
-)
-}
+)}
 
