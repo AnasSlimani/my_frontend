@@ -5,17 +5,24 @@ import NavBare from '../LandingPage/NavBare';
 import FilterSection from './FilterSection';
 import './section.css';
 import { jwtDecode } from 'jwt-decode';
+import { useAuth } from '../../context/AuthContext';
 
 const UserDashboard = () => {
   const [showPanier, setShowPanier] = useState(false);
   const [filters, setFilters] = useState({});
   const [reservedCars, setReservedCars] = useState([]);
+  const { isAuthenticated } = useAuth();
+
   const handleReservationDelete = (deletedReservationId) => {
     setReservedCars(prevCars => prevCars.filter(car => car.id !== deletedReservationId));
   };
 
   const togglePanier = () => {
-    setShowPanier(!showPanier);
+    if (isAuthenticated) {
+      setShowPanier(!showPanier);
+    } else {
+      alert("Please log in to view your cart.");
+    }
   };
 
   const handleFilterChange = (newFilters) => {
@@ -23,6 +30,8 @@ const UserDashboard = () => {
   };
 
   const fetchReservedCars = async () => {
+    if (!isAuthenticated) return;
+
     const token = localStorage.getItem("jwtToken");
     if (!token) {
       console.error("No token found");
@@ -52,13 +61,15 @@ const UserDashboard = () => {
 
   useEffect(() => {
     fetchReservedCars();
-  }, []);
+  }, [isAuthenticated]);
 
   const handleReserve = async (car) => {
-    // ... (keep the existing handleReserve logic)
-    // After successful reservation:
-    await fetchReservedCars();
-    setShowPanier(true);
+    if (isAuthenticated) {
+      await fetchReservedCars();
+      setShowPanier(true);
+    } else {
+      alert("Please log in to reserve a car.");
+    }
   };
 
   return (
@@ -67,9 +78,9 @@ const UserDashboard = () => {
       <FilterSection onFilterChange={handleFilterChange} />
       <div className="main">
         <div className={showPanier ? 'cars-section open' : 'cars-section'}>
-          <Cars filters={filters} onReserve={handleReserve} />
+          <Cars filters={filters} onReserve={handleReserve} isAuthenticated={isAuthenticated} />
         </div>
-        {showPanier && (
+        {showPanier && isAuthenticated && (
           <div className={`panier-section ${showPanier ? 'show' : 'hide'}`}>
             <Panier
               onTogglePanier={togglePanier}
