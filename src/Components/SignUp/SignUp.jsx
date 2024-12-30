@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./SignUp.css";
 import { Link, useNavigate } from 'react-router-dom';
-
-import {jwtDecode} from 'jwt-decode' ;
-
-
+import { jwtDecode } from 'jwt-decode';
+import { useAuth } from '../../context/AuthContext';
 
 export default function SignUp() {
-
     const [loginForm, setLoginForm] = useState({
         email: '',
         password: ''
@@ -20,11 +17,31 @@ export default function SignUp() {
         "phone" : '',
         "password" : '',
         "role" : "CLIENT"
-    })
+    }) 
 
     const [confirmedPassword, setConfirmedPassword] = useState('');
 
+    const [token, setToken] = useState("");
+
     const navigate = useNavigate();
+    const { login, isAuthenticated } = useAuth();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            const decodedToken = jwtDecode(token);
+            const role = decodedToken.role;
+            console.log("role :" + role);
+            
+            if (role == "ADMIN"){
+                navigate("/admin")
+            } else {
+                navigate("/signup")
+                // alert("hi")
+            }
+            // navigate('/signup');
+            // alert("hello")
+        }
+    }, [isAuthenticated, navigate]);
 
     const handelLoginForm = (event) => {
         const { name, value } = event.target;
@@ -34,9 +51,7 @@ export default function SignUp() {
         });
     };
 
-
     const handelSignupForm = (event) => {
-        // Placeholder for signup form handling logic
         const {name, value} = event.target;
         setSignUpForm({
             ...signUpForm,
@@ -48,7 +63,10 @@ export default function SignUp() {
         e.preventDefault();
         console.log(loginForm);
         
+        
         try {
+            console.log("helooooooooooooo");
+
             const response = await fetch("http://localhost:8082/api/utilisateur/login", {
                 method: "POST",
                 headers: {
@@ -58,23 +76,13 @@ export default function SignUp() {
             });
 
             if (response.ok) {
-                const token = await response.text(); // Assuming token is returned as plain text
-                console.log(token);
-                localStorage.setItem("jwtToken", token); // Store JWT in localStorage
-                const decodedToken = jwtDecode(token);
-                const role = decodedToken.role;
-                console.log(role);
-                if (role == "ADMIN"){
-                    navigate("/admin")
-                }else(
-                    navigate("/signup")
-                )
-                
-
-
+                const token = await response.text();
+                setToken(token);
+                login(token);
+               
             } else if (response.status === 401) {
                 alert("User not found");
-                navigate(0);
+                // navigate(0);
             }
         } catch (error) {
             console.error("Error while logging in:", error);
@@ -89,10 +97,7 @@ export default function SignUp() {
 
     const handelSignUpButton = async (e) => {
         e.preventDefault();
-        // Placeholder for signup logic
-        console.log(signUpForm);
-        console.log("confirmed password : " + confirmedPassword);
-        if (confirmedPassword != signUpForm.password) {
+        if (confirmedPassword !== signUpForm.password) {
             alert("Password Mismatch")
             navigate(0);
         }
@@ -105,44 +110,33 @@ export default function SignUp() {
                     },
                     body: JSON.stringify(signUpForm)
                 });
-                    if (response.ok) {
-                        const userExist = await response.text();
-                        console.log("status : " + userExist);
-                        
-                        if (userExist) {
-                            alert("User already exist !!")
-                            navigate(0);
-                        }else {
-                            
-                            try {
-                                const response = await fetch("http://localhost:8082/api/utilisateur/addUser", {
-                                    method: "POST",
-                                    headers: {
-                                        "Content-Type": "application/json"
-                                    },
-                                    body: JSON.stringify(signUpForm)
-                                });
-                                if (response.ok) {
-                                    alert("User added with succes")
-                                    navigate(0)
-                                    // navigate("/login")
-                                }
-                            } catch (error) {
-                                console.log(error);
-                                
+                if (response.ok) {
+                    const userExist = await response.text();
+                    if (userExist === "true") {
+                        alert("User already exist !!")
+                        navigate(0);
+                    } else {
+                        try {
+                            const response = await fetch("http://localhost:8082/api/utilisateur/addUser", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify(signUpForm)
+                            });
+                            if (response.ok) {
+                                alert("User added with success")
+                                navigate(0)
                             }
-                           
+                        } catch (error) {
+                            console.log(error);
                         }
-                        
                     }
-                    
-                    
-                
+                }
             } catch (error) {
-                
+                console.error("Error during sign up:", error);
             }
         }
-        
     };
 
     return (
@@ -185,7 +179,6 @@ export default function SignUp() {
                         <button className='btnlogin' onClick={handelLogInButton}>Log in</button>
                         
                     </form>
-                        {/* must add a change password route  */}
                     <Link to={`/forgetpassword`} 
                         state= {{ email: loginForm.email }} 
                         className='forget-password-link'> 
@@ -196,3 +189,4 @@ export default function SignUp() {
         </section>
     );
 }
+

@@ -46,6 +46,9 @@ function ProfilAdmin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const token = localStorage.getItem("jwtToken");
+
     try {
       const response = await fetch(`http://localhost:8082/api/utilisateur/${id}`, {
         method: 'PUT',

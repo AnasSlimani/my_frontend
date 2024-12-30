@@ -65,10 +65,10 @@ function UpdateVehicule() {
         console.log(token);
         
       const response = await fetch(`http://localhost:8082/api/vehicules/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Barear ${token}`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formData),
       });

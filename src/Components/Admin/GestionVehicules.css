@@ -1,0 +1,80 @@
+.vehicle-card {
+    position: relative;
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+  
+  .vehicle-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vehicle-content {
+    transition: all 0.3s ease;
+  }
+  
+  .vehicle-card:hover .vehicle-content {
+    filter: blur(2px);
+  }
+  
+  .vehicle-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+  
+  .vehicle-card:hover .vehicle-overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .update-btn,
+  .delete-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    width: 160px;
+  }
+  
+  .update-btn {
+    background: white;
+    color: #3b82f6;
+  }
+  
+  .update-btn:hover {
+    background: #3b82f6;
+    color: white;
+    transform: scale(1.05);
+  }
+  
+  .delete-btn {
+    background: white;
+    color: #ef4444;
+  }
+  
+  .delete-btn:hover {
+    background: #ef4444;
+    color: white;
+    transform: scale(1.05);
+  }
+  
+  

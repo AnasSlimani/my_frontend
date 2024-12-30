@@ -1,85 +1,99 @@
-import React, { useState } from 'react'
-import './form-booking.css'
+import React, { useState } from 'react';
+import './form-booking.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import ReservationConflictWindow from './ReservationConflictWindow';
+import PaymentSuccessWindow from './PaymentSuccessWindow';
 
 export default function FormBooking() {
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [showReservationConflict, setShowReservationConflict] = useState(false);
+  const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
+  const [conflictEndDate, setConflictEndDate] = useState('');
   const location = useLocation();
   const carDetails = location.state?.carDetails.vehicule || {};
   const reservationId = location.state?.carDetails.id || {};
   const navigate = useNavigate();
 
-
-  const reserve = async ()=> {
-      const token = localStorage.getItem("jwtToken");
-      try {
-        console.log(token);
-        const response1 = await fetch(`http://localhost:8082/api/reservation/reservecar/${reservationId}/${startDate}/${endDate}`, {
-          method: "GET",
+  const reserve = async () => {
+    const token = localStorage.getItem('jwtToken');
+    try {
+      const response = await fetch(
+        `http://localhost:8082/api/reservation/reservecar/${reservationId}/${startDate}/${endDate}`,
+        {
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             "Authorization": `Bearer ${token}`,
           },
-        });
-        
+        }
+      );
 
-        if (response1.ok){
-          const reservation1 = await response1.json() ;
-          console.log(reservation1); 
-        }    
-      }catch(error) {
-          console.log("error while reservig car " + error);     
-      }
-  }
-
-  const handelConfirmPaiment = async (event) => {
-    const token = localStorage.getItem("jwtToken");
-    event.preventDefault();
-    console.log("car id : " + carDetails.id);
-    console.log("starting date enterd  : " + startDate);
-    console.log("ending  date enterd : " + endDate);
-
-    try {
-      const response = await fetch(`http://localhost:8082/api/reservation/checkconflect/${carDetails.id}/${startDate}/${endDate}`,{
-        headers: {
-          "Authorization":`Bearer ${token}`
-          }});
-      if(response.ok){
-          const reservation = await response.json() ;  
-          const nbrReservationConflect = reservation.length;     
-          if (nbrReservationConflect != 0) {
-            alert("vehicule deja reserve , choisir une autre ")
-            navigate("/signup");
-          }
-          else {
-            reserve();
-          }
+      if (response.ok) {
+        const reservationData = await response.json();
+        console.log(reservationData);
+      } else {
+        console.error(`Failed to reserve the car: ${response.statusText}`);
       }
     } catch (error) {
-        console.log(error);
-      
+      console.error(`Error while reserving the car: ${error}`);
     }
-    
-  }
+  };
 
+  const handelConfirmPaiment = async (event) => {
+    const token = localStorage.getItem('jwtToken');
+    event.preventDefault();
 
-  
+    console.log('car id:', carDetails.id);
+    console.log('starting date entered:', startDate);
+    console.log('ending date entered:', endDate);
+
+    try {
+      const response = await fetch(
+        `http://localhost:8082/api/reservation/checkconflect/${carDetails.id}/${startDate}/${endDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const reservation = await response.json();
+        const nbrReservationConflicts = reservation.length;
+
+        if (nbrReservationConflicts !== 0) {
+          setConflictEndDate(reservation[0].dateFin);
+          setShowReservationConflict(true);
+        } else {
+          await reserve();
+          setShowPaymentSuccess(true);
+        }
+      } else {
+        console.error(`Failed to check conflict: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error(`Error while checking conflict: ${error}`);
+    }
+  };
+
   return (
     <div className="booking-container mt-20">
       <div className="booking-wrapper">
         {/* Car Details Card */}
-        <div className="car-details-card">q
+        <div className="car-details-card">
           <div className="car-header">
-            <h2 className="car-title ">{carDetails.marque} {carDetails.modele}</h2>
+            <h2 className="car-title">
+              {carDetails.marque} {carDetails.modele}
+            </h2>
             <div className="price-tag">
               <span className="price">{carDetails.prix}DH</span>
               <span className="price-period">par jour</span>
             </div>
           </div>
-          
+
           <div className="car-image-wrapper">
-            <img 
+            <img
               src={`http://localhost:8082${carDetails.imagepath}`}
               alt={`${carDetails.marque} ${carDetails.modele}`}
               className="car-image"
@@ -176,8 +190,8 @@ export default function FormBooking() {
                 J'accepte les conditions générales
               </label>
               <p className="terms-text">
-                En validant ce paiement, vous acceptez nos conditions générales de vente 
-                et notre politique de confidentialité.
+                En validant ce paiement, vous acceptez nos conditions générales
+                de vente et notre politique de confidentialité.
               </p>
             </div>
 
@@ -188,7 +202,19 @@ export default function FormBooking() {
           </form>
         </div>
       </div>
+      {showReservationConflict && (
+        <ReservationConflictWindow
+          onClose={() => setShowReservationConflict(false)}
+          endDate={conflictEndDate}
+        />
+      )}
+      {showPaymentSuccess && (
+        <PaymentSuccessWindow
+          onClose={() => setShowPaymentSuccess(false)}
+          startDate={startDate}
+          carDetails={carDetails}
+        />
+      )}
     </div>
-  )
+  );
 }
-

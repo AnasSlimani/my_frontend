@@ -9,7 +9,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 
 function GestionClient() {
   const [utilisateurs, setUtilisateur] = useState([]);
-  const [filter, setFilter] = useState({
+  const [filter, setFilter] = useState({  
     firstName: "",
     lastName: "",
     email: "",
@@ -25,7 +25,7 @@ function GestionClient() {
         );
         const data = await response.json();
         setUtilisateur(data);
-        console.log(utilisateurs);
+        console.log("users found " +utilisateurs);
       } catch (err) {
         console.error("Erreur fetching users:", err.message);
       }
@@ -41,9 +41,15 @@ function GestionClient() {
 
   const handleDelete = async (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?")) {
+
+      const token = localStorage.getItem("jwtToken");
+
       try {
         const response = await fetch(`http://localhost:8082/api/utilisateur/${id}`, {
           method: "DELETE",
+          headers: {
+            "Authorization":`Bearer ${token}`
+        },
         });
   
         if (response.ok) {
