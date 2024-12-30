@@ -1,6 +1,6 @@
 
 import { jwtDecode } from 'jwt-decode';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import 
 {BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, 
   BsListCheck, BsMenuButtonWideFill,BsBoxArrowRight, BsFillGearFill}
@@ -12,6 +12,24 @@ import { Link, useNavigate } from 'react-router-dom';
 function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
 
     const navigate = useNavigate(); // Hook pour rediriger l'utilisateur
+
+    const [Fname, setFname] = useState();
+    const [Lname, setLname] = useState();
+    const [adminId, setadminId] = useState();
+
+    useEffect(() => {
+      const decodedToken = jwtDecode(localStorage.getItem("jwtToken")) ; // Suppose que l'ID de l'admin est stocké dans localStorage
+    
+    
+
+    setadminId(decodedToken.id);
+    setFname(decodedToken.FirstName);
+    setLname(decodedToken.LastName);
+    }, [])
+
+
+
+
   
   const handleLogout = () => {
     // Logique de déconnexion ici si nécessaire
@@ -25,6 +43,7 @@ function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
   const handleProfileClick = () => {
     const decodedToken = jwtDecode(localStorage.getItem("jwtToken")) ; // Suppose que l'ID de l'admin est stocké dans localStorage
     const adminId = decodedToken.id;
+
     if (adminId) {
       navigate(`/admin/clients/ProfilAdmin/${adminId}`);
     } else {
@@ -41,7 +60,7 @@ function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
     }}>
         <div className='sidebar-title' >
         <div className='sidebar-brand text-black'>
-           Welcome Ihab
+           Welcome {Fname} 
         </div>
             <span className='icon close_icon' onClick={OpenSidebar}>X</span>
         </div>
@@ -53,9 +72,13 @@ function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
                 </Link>
             </li>
             <li className='sidebar-list-item' >
-                <a href="" >
-                    <FaCalendarCheck className='icon' style={{ marginRight: '10px' }}/> Reservations
-                </a>
+
+                <Link to="/admin/reservations" >
+                <FaCalendarCheck className='icon' style={{ marginRight: '10px' }}/> Reservations 
+                </Link>
+
+
+
             </li>
             <li className='sidebar-list-item' >
                 <Link to="/admin/vehicules" >
@@ -69,15 +92,10 @@ function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
             </li>
             <li className='sidebar-list-item' onClick={handleProfileClick} style={{  color: "blue" }} >
                 
-                
                 <FaUserShield className='icon' style={{ marginRight: '10px' }}/> Profil
                 
             </li>
-            {/* <li className='sidebar-list-item' >
-                <a href="" >
-                    <BsFillGearFill className='icon' style={{ marginRight: '10px' }}/> Profil
-                </a>
-            </li> */}
+            
             <li className='sidebar-list-item logout'  >
                 <Link to="/" >
                 <BsBoxArrowRight className='icon' style={{ marginRight: '10px' }}/> Logout
