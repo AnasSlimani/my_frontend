@@ -1,0 +1,48 @@
+/* Ajoutez ceci à votre fichier CSS */
+#sidebar {
+    position: fixed;
+    width: 250px;
+    height: 100vh; /* Prendre toute la hauteur de la page */
+    background-color: #f8f9fa; /* Couleur de fond de la sidebar */
+    overflow-y: auto; /* Permettre le défilement si le contenu est trop grand */
+  }
+  
+  .sidebar-responsive {
+    /* Styles pour la version responsive si nécessaire */
+  }
+  
+  .sidebar-title {
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .sidebar-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    height: calc(100vh - 50px); /* Ajustez en fonction de la hauteur du titre de la sidebar */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Assure que le dernier élément est en bas */
+  }
+  
+  .sidebar-list-item {
+    padding: 10px;
+  }
+  
+  .sidebar-list-item a, .sidebar-list-item Link {
+    text-decoration: none;
+    color: #000;
+    display: flex;
+    align-items: center;
+  }
+  
+  .sidebar-list-item .icon {
+    margin-right: 10px;
+  }
+  
+  .logout {
+    margin-top: auto;
+  }
+  

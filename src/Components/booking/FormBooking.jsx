@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import './form-booking.css'
-import Merc  from '../../images/Merc.jpg'
+import { useLocation } from 'react-router-dom';
 
 export default function FormBooking() {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+  const location = useLocation();
+  const carDetails = location.state?.carDetails || {};
 
   return (
     <div className="booking-container mt-20">
@@ -12,17 +14,17 @@ export default function FormBooking() {
         {/* Car Details Card */}
         <div className="car-details-card">
           <div className="car-header">
-            <h2 className="car-title ">Mercedes-Benz S-Class</h2>
+            <h2 className="car-title ">{carDetails.marque} {carDetails.modele}</h2>
             <div className="price-tag">
-              <span className="price">20€</span>
+              <span className="price">{carDetails.prix}DH</span>
               <span className="price-period">par jour</span>
             </div>
           </div>
           
           <div className="car-image-wrapper">
             <img 
-              src={Merc} 
-              alt="Mercedes-Benz S-Class" 
+              src={`http://localhost:8082${carDetails.imagepath}`}
+              alt={`${carDetails.marque} ${carDetails.modele}`}
               className="car-image"
             />
             <div className="image-overlay">
