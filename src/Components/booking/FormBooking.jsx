@@ -3,6 +3,7 @@ import './form-booking.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ReservationConflictWindow from './ReservationConflictWindow';
 import PaymentSuccessWindow from './PaymentSuccessWindow';
+import {calculateDuration} from './CalulateDuration'
 
 export default function FormBooking() {
   const [startDate, setStartDate] = useState('');
@@ -10,10 +11,21 @@ export default function FormBooking() {
   const [showReservationConflict, setShowReservationConflict] = useState(false);
   const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
   const [conflictEndDate, setConflictEndDate] = useState('');
+  
   const location = useLocation();
   const carDetails = location.state?.carDetails.vehicule || {};
   const reservationId = location.state?.carDetails.id || {};
   const navigate = useNavigate();
+
+  const [formBooking, setFormBooking] = useState({  
+        cinClient : '',
+        numeroCarteBancaire : '',
+        modePaiment : '',
+        montant : '',
+        datePaiment : new Date().toISOString().split('T')[0],
+        status : 'done'
+      })
+  
 
   const reserve = async () => {
     const token = localStorage.getItem('jwtToken');
@@ -30,8 +42,26 @@ export default function FormBooking() {
       );
 
       if (response.ok) {
-        const reservationData = await response.json();
-        console.log(reservationData);
+            const reservationData = await response.json();
+            console.log(reservationData);
+
+            const response2 = await fetch(
+              `http://localhost:8082/api/paiment/${reservationId}`,
+              {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  "Authorization": `Bearer ${token}`,
+                },
+                body : JSON.stringify(formBooking)
+              }
+            ); 
+            if(response2.ok){
+              alert("paiment fait avec succes");
+            }else {
+              alert("echec de paiment");
+            }
+            
       } else {
         console.error(`Failed to reserve the car: ${response.statusText}`);
       }
@@ -44,10 +74,23 @@ export default function FormBooking() {
     const token = localStorage.getItem('jwtToken');
     event.preventDefault();
 
-    console.log('car id:', carDetails.id);
-    console.log('starting date entered:', startDate);
-    console.log('ending date entered:', endDate);
+    if(isNaN(formBooking.numeroCarteBancaire)){
+      alert("Veuillez entrer un numéro de carte bancaire valide");
+      return;
+    }
+    
 
+    const duration = calculateDuration(startDate, endDate);
+    if (typeof(duration) == 'number'){
+      formBooking.montant = carDetails.prix * duration ;
+    }else{
+      alert("invalid date entered");
+      return
+    } 
+
+    console.log('car id:', carDetails.id);
+    console.log(formBooking);
+  
     try {
       const response = await fetch(
         `http://localhost:8082/api/reservation/checkconflect/${carDetails.id}/${startDate}/${endDate}`,
@@ -76,6 +119,15 @@ export default function FormBooking() {
       console.error(`Error while checking conflict: ${error}`);
     }
   };
+
+  const handelFormChange = (event) => {
+    const { name, value } = event.target;
+      setFormBooking({
+          ...formBooking,
+          [name]: value
+      });
+  }
+
 
   return (
     <div className="booking-container mt-20">
@@ -128,6 +180,7 @@ export default function FormBooking() {
             <p>Complétez les informations ci-dessous</p>
           </div>
 
+{/* //////////////////////////////////// ////////////////////////////////////////////////////////////////////////*/}
           <form className="booking-form" onSubmit={handelConfirmPaiment}>
             <div className="form-grid">
               <div className="form-group">
@@ -137,7 +190,9 @@ export default function FormBooking() {
                   id="startDate"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
+              
                   className="form-input"
+                  required
                 />
               </div>
 
@@ -149,6 +204,7 @@ export default function FormBooking() {
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                   className="form-input"
+                  required
                 />
               </div>
 
@@ -159,6 +215,10 @@ export default function FormBooking() {
                   id="idCard"
                   className="form-input"
                   placeholder="Entrez votre numéro"
+                  name='cinClient'
+                  value={formBooking.cinClient}
+                  onChange={handelFormChange}
+                  required
                 />
               </div>
 
@@ -169,13 +229,19 @@ export default function FormBooking() {
                   id="creditCard"
                   className="form-input"
                   placeholder="XXXX XXXX XXXX XXXX"
+                  name='numeroCarteBancaire'
+                  minLength={16}
+                  maxLength={16}
+                  value={formBooking.numeroCarteBancaire}
+                  onChange={handelFormChange}
+                  required
                 />
               </div>
             </div>
 
             <div className="form-group">
               <label htmlFor="cardType">Type de carte</label>
-              <select id="cardType" className="form-select">
+              <select id="cardType" className="form-select" name='modePaiment'  value={formBooking.modePaiment} onChange={handelFormChange} required>
                 <option value="">Sélectionner le type de carte</option>
                 <option value="visa">Visa</option>
                 <option value="mastercard">Mastercard</option>
