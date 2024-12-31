@@ -9,17 +9,15 @@ import CarDetail from './pages/CarDetails/CarDetail';
 import GestionClient from './Components/Admin/GestionClient';
 import FormAddUser from './Components/Admin/FormAddUser';
 import UpdateUser from './Components/Admin/UpdateUser';
-
 import { AuthProvider } from './context/AuthContext';
-
 import Booking from './pages/booking/Booking';
 import ErrorPage from './pages/ErrorPage';
 import GestionVehicules from './Components/Admin/GestionVehicules';
 import FormAddVehicle from './Components/Admin/FormAddVehicle';
 import UpdateVehicule from './Components/Admin/UpdateVehicule';
 import ProfilAdmin from './Components/Admin/ProfilAdmin';
-import ForgetPasswd from './pages/forgetPasswordLogin/ForgetPasswd';
 import GestionReservation from './Components/Admin/GestionReservation';
+import ForgetPasswd from './pages/forgetPasswordLogin/ForgetPasswd';
 
 function App() {
   return (

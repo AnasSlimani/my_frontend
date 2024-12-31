@@ -1,0 +1,316 @@
+.dashboard-main {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    margin-left:0px !important;
+  }
+  
+  .dashboard-content {
+    padding: 32px;
+  }
+  
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  
+  .header-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .dashboard-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #212529;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .dashboard-icon {
+    color: #4263eb;
+  }
+  
+  .dashboard-subtitle {
+    color: #6c757d;
+    margin: 0;
+  }
+  
+  .add-user-btn {
+    background-color: #4263eb !important;
+    border: none;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .add-user-btn:hover {
+    background-color: #364fc7 !important;
+    transform: translateY(-1px);
+  }
+  
+  .btn-icon {
+    font-size: 1.1rem;
+  }
+  
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    color: #6c757d;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-content {
+      padding: 16px;
+    }
+  
+    .dashboard-header {
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+  
+    .add-user-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  
+
+
+  /* Add these styles to your existing CSS */
+.modern-form-control {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  transition: all 0.2s ease;
+}
+
+.modern-form-control:focus {
+  border-color: #4263eb;
+  box-shadow: 0 0 0 2px rgba(66, 99, 235, 0.1);
+}
+
+.form-label {
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0.5rem;
+}
+
+
+  /* Add these styles for the search functionality */
+.search-section {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 12px;
+  width: 100%;
+  max-width: 400px;
+  background-color: #f8f9fa;
+}
+
+.search-input:focus {
+  border-color: #4263eb;
+  box-shadow: 0 0 0 2px rgba(66, 99, 235, 0.1);
+  outline: none;
+}
+
+/* Status badge styles */
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-badge.reserve {
+  background-color: #4263eb;
+  color: white;
+}
+
+.status-badge.entretient {
+  background-color: #fab005;
+  color: white;
+}
+
+/* Table styles */
+.modern-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.modern-table th {
+  background: #f8f9fa;
+  padding: 16px;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.modern-table td {
+  padding: 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.modern-table tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* User info styles */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, #4263eb, #3b5bdb);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: 500;
+  color: #212529;
+}
+
+.user-id {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+/* Vehicle info styles */
+.vehicle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.vehicle-name {
+  font-weight: 500;
+  color: #212529;
+}
+
+.vehicle-model {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+/* Dates info styles */
+/* Update the dates-info styles */
+.dates-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.date-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #495057;
+  font-size: 0.9rem;
+}
+
+.date-icon {
+  font-size: 1rem;
+}
+
+.date-icon.start {
+  color: #4263eb;
+}
+
+.date-icon.end {
+  color: #12b886;
+}
+
+/* Pagination styles */
+.pagination-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
+  margin-top: 20px;
+}
+
+.entries-info {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.pagination {
+  display: flex;
+  gap: 4px;
+}
+
+.page-button {
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  border-radius: 6px;
+  color: #495057;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.page-button:hover:not(:disabled) {
+  background-color: #e9ecef;
+}
+
+.page-button.active {
+  background-color: #4263eb;
+  color: white;
+}
+
+.page-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .pagination-section {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .entries-info {
+    text-align: center;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+

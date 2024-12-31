@@ -1,109 +1,80 @@
-
 import { jwtDecode } from 'jwt-decode';
-import React, { useEffect, useState } from 'react'
-import 
-{BsCart3, BsGrid1X2Fill, BsFillArchiveFill, BsFillGrid3X3GapFill, BsPeopleFill, 
-  BsListCheck, BsMenuButtonWideFill,BsBoxArrowRight, BsFillGearFill}
- from 'react-icons/bs'
+import React from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { 
+  FaTachometerAlt, 
+  FaCar, 
+  FaUsers, 
+  FaUserShield,
+  FaCalendarCheck,
+  FaSignOutAlt
+} from 'react-icons/fa';
+import './SideBar.css';
+import profilimg from '../../images/anasprofile.jpg';
 
- import { FaCar, FaUsers, FaUserShield,FaCalendarCheck } from 'react-icons/fa'
-import { Link, useNavigate } from 'react-router-dom';
-
-function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
-
-    const navigate = useNavigate(); // Hook pour rediriger l'utilisateur
-
-    const [Fname, setFname] = useState();
-    const [Lname, setLname] = useState();
-    const [adminId, setadminId] = useState();
-
-    useEffect(() => {
-      const decodedToken = jwtDecode(localStorage.getItem("jwtToken")) ; // Suppose que l'ID de l'admin est stocké dans localStorage
-    
-    
-
-    setadminId(decodedToken.id);
-    setFname(decodedToken.FirstName);
-    setLname(decodedToken.LastName);
-    }, [])
-
-
-
-
-  
-  const handleLogout = () => {
-    // Logique de déconnexion ici si nécessaire
-    // Par exemple, suppression des tokens d'authentification
-    console.log("Logout effectué !");
-    
-    // Redirection vers la page landing
-    navigate('/');
-  };
+function SideBarAdmin({ openSidebarToggle }) {
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleProfileClick = () => {
-    const decodedToken = jwtDecode(localStorage.getItem("jwtToken")) ; // Suppose que l'ID de l'admin est stocké dans localStorage
+    const decodedToken = jwtDecode(localStorage.getItem("jwtToken"));
     const adminId = decodedToken.id;
-
     if (adminId) {
       navigate(`/admin/clients/ProfilAdmin/${adminId}`);
-    } else {
-      console.error("Admin ID non trouvé !");
     }
   };
 
+  const menuItems = [
+    { path: '/admin', icon: FaTachometerAlt, label: 'Dashboard' },
+    { path: '/admin/reservations', icon: FaCalendarCheck, label: 'Reservations' },
+    { path: '/admin/vehicules', icon: FaCar, label: 'Vehicules' },
+    { path: '/admin/clients', icon: FaUsers, label: 'Clients' },
+  ];
+
   return (
-    <aside id="sidebar" className={openSidebarToggle ? "sidebar-responsive": ""} style={{
-      position: 'fixed',
-      width: '250px',
-      height: '100vh', // Prendre toute la hauteur de la page
-    //   overflowY: 'auto' // Permettre le défilement si le contenu est trop grand
-    }}>
-        <div className='sidebar-title' >
-        <div className='sidebar-brand text-black'>
-           Welcome {Fname} 
+    <aside className={`sidebar ${openSidebarToggle ? "sidebar-responsive" : ""}`}>
+      {/* Profile Section */}
+      <div className="sidebar-header">
+        <div className="profile-info">
+          <img src={profilimg} alt="Admin" className="profile-image"/> 
+          <div className="profile-details">
+            <h3>Welcome Ihab</h3>
+            <span>Administrator</span>
+          </div>
         </div>
-            <span className='icon close_icon' onClick={OpenSidebar}>X</span>
-        </div>
+      </div>
 
-        <ul className='sidebar-list' >
-            <li className='sidebar-list-item' >
-                <Link to="/admin" >
-                <BsGrid1X2Fill className='icon' style={{ marginRight: '10px' }}/> Dashboard
-                </Link>
-            </li>
-            <li className='sidebar-list-item' >
+      {/* Navigation */}
+      <nav className="sidebar-nav">
+        {menuItems.map((item) => (
+          <Link
+            key={item.path}
+            to={item.path}
+            className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
+          >
+            <item.icon className="nav-icon" />
+            <span>{item.label}</span>
+          </Link>
+        ))}
 
-                <Link to="/admin/reservations" >
-                <FaCalendarCheck className='icon' style={{ marginRight: '10px' }}/> Reservations 
-                </Link>
+        <button 
+          onClick={handleProfileClick}
+          className={`nav-item ${location.pathname.includes('/ProfilAdmin') ? 'active' : ''}`}
+        >
+          <FaUserShield className="nav-icon" />
+          <span>Profile</span>
+        </button>
+      </nav>
 
-
-
-            </li>
-            <li className='sidebar-list-item' >
-                <Link to="/admin/vehicules" >
-                <FaCar className='icon' style={{ marginRight: '10px' }}/> Vehicules
-                </Link>
-            </li>
-            <li className='sidebar-list-item' >
-                <Link to="/admin/clients" >
-                <FaUsers className='icon' style={{ marginRight: '10px' }}/> Clients 
-                </Link>
-            </li>
-            <li className='sidebar-list-item' onClick={handleProfileClick} style={{  color: "blue" }} >
-                
-                <FaUserShield className='icon' style={{ marginRight: '10px' }}/> Profil
-                
-            </li>
-            
-            <li className='sidebar-list-item logout'  >
-                <Link to="/" >
-                <BsBoxArrowRight className='icon' style={{ marginRight: '10px' }}/> Logout
-                </Link>
-            </li>
-        </ul>
+      {/* Logout Section */}
+      <div className="sidebar-footer">
+        <Link to="/" className="nav-item logout">
+          <FaSignOutAlt className="nav-icon" />
+          <span>Logout</span>
+        </Link>
+      </div>
     </aside>
-  )
+  );
 }
 
 export default SideBarAdmin;

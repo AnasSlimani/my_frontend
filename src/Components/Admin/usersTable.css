@@ -1,0 +1,223 @@
+.dashboard-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+  }
+  
+  /* Search Section Styles */
+  .search-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+  }
+  
+  .search-box {
+    flex: 1;
+    max-width: 400px;
+  }
+  
+  .search-input {
+    border: none;
+    background: #f8f9fa;
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+  
+  .search-icon {
+    background: #f8f9fa;
+    border: none;
+    color: #6c757d;
+  }
+  
+  .filter-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #f8f9fa;
+    border: none;
+    color: #495057;
+    font-weight: 500;
+  }
+  
+  /* Table Styles */
+  .table-container {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  
+  .modern-table {
+    margin-bottom: 0;
+  }
+  
+  .modern-table thead th {
+    background: #f8f9fa;
+    border: none;
+    padding: 16px;
+    font-weight: 600;
+    color: #495057;
+  }
+  
+  .table-row-hover:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.2s ease;
+  }
+  
+  /* User Info Styles */
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #4263eb, #3b5bdb);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  
+  .user-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-name {
+    font-weight: 500;
+    color: #212529;
+  }
+  
+  .user-id {
+    font-size: 0.85rem;
+    color: #6c757d;
+  }
+  
+  /* Contact Info Styles */
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .email {
+    color: #212529;
+  }
+  
+  .phone {
+    font-size: 0.85rem;
+    color: #6c757d;
+  }
+  
+  /* Role Badge Styles */
+  .role-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+  
+  .role-badge.admin {
+    background-color: #4263eb !important;
+    color: white;
+  }
+  
+  .role-badge.client {
+    background-color: #12b886 !important;
+    color: white;
+  }
+  
+  /* Action Buttons Styles */
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .action-buttons button {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+  
+  .edit-button {
+    color: #4263eb;
+  }
+  
+  .edit-button:hover {
+    background-color: #4263eb !important;
+    color: white;
+  }
+  
+  .delete-button {
+    color: #fa5252;
+  }
+  
+  .delete-button:hover {
+    background-color: #fa5252 !important;
+    color: white;
+  }
+  
+  /* Pagination Styles */
+  .pagination-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+  }
+  
+  .entries-info {
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+  
+  .modern-pagination .page-item .page-link {
+    border: none;
+    margin: 0 4px;
+    border-radius: 6px;
+    color: #495057;
+    padding: 8px 16px;
+  }
+  
+  .modern-pagination .page-item.active .page-link {
+    background-color: #4263eb;
+    color: white;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .search-section {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    
+    .search-box {
+      max-width: 100%;
+    }
+    
+    .pagination-section {
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+    
+    .entries-info {
+      text-align: center;
+    }
+  }
+  
+  

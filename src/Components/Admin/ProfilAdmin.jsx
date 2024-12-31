@@ -1,258 +1,291 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Form, Button, Row, Col, Card } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Container, Row, Col } from "react-bootstrap";
+import { FaMapMarkerAlt, FaStar, FaEye, FaEyeSlash } from "react-icons/fa";
+import { jwtDecode } from "jwt-decode";
+import SideBarAdmin from "./SideBarAdmin";
+import './profilAdmin.css';
 
 function ProfilAdmin() {
-  const { id } = useParams();
-  const [formData, setFormData] = useState({
+  const [adminData, setAdminData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    password: '',
-    role: 'ADMIN',
+    address: ''
+  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [passwords, setPasswords] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: ''
   });
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchAdminData = async () => {
       try {
-        const response = await fetch(`http://localhost:8082/api/utilisateur/${id}`);
+        const token = localStorage.getItem("jwtToken");
+        const decodedToken = jwtDecode(token);
+        const adminId = decodedToken.id;
+
+        const response = await fetch(`http://localhost:8082/api/utilisateur/${adminId}`);
         const data = await response.json();
-        setFormData({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          email: data.email,
-          phone: data.phone,
-          password: data.password,
-          role: 'ADMIN',
-        });
+        setAdminData(data);
       } catch (err) {
-        console.error('Erreur fetching user data:', err.message);
+        console.error("Error fetching admin data:", err.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    fetchUser();
-  }, [id]);
+    fetchAdminData();
+  }, []);
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
+    setAdminData(prev => ({
+      ...prev,
+      [name]: value
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPasswords(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSave = async (e) => {
     e.preventDefault();
 
     const token = localStorage.getItem("jwtToken");
 
     try {
-      const response = await fetch(`http://localhost:8082/api/utilisateur/${id}`, {
+      const token = localStorage.getItem("jwtToken");
+      const decodedToken = jwtDecode(token);
+      const adminId = decodedToken.id;
+
+      const response = await fetch(`http://localhost:8082/api/utilisateur/${adminId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(adminData)
       });
 
       if (response.ok) {
-        alert('Information mise à jour avec succès.');
-        console.log(await response.text());
-        navigate('/admin');
-      } else {
-        alert('Erreur : Impossible de mettre à jour les informations.');
+        alert('Profile updated successfully!');
       }
-    } catch (err) {
-      console.error('Erreur lors de la mise à jour :', err.message);
-      alert('Erreur de réseau ou serveur.');
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      alert('Failed to update profile');
     }
   };
 
+  const handlePasswordUpdate = async (e) => {
+    e.preventDefault();
+    
+    if (passwords.newPassword !== passwords.confirmPassword) {
+      alert('New passwords do not match!');
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("jwtToken");
+      const decodedToken = jwtDecode(token);
+      const adminId = decodedToken.id;
+
+      const response = await fetch(`http://localhost:8082/api/utilisateur/password/${adminId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          currentPassword: passwords.currentPassword,
+          newPassword: passwords.newPassword
+        })
+      });
+
+      if (response.ok) {
+        alert('Password updated successfully!');
+        // Reset password fields after successful update
+        setPasswords({
+          currentPassword: '',
+          newPassword: '',
+          confirmPassword: ''
+        });
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || 'Failed to update password. Please check your current password.');
+      }
+    } catch (error) {
+      console.error('Error updating password:', error);
+      alert('Failed to update password');
+    }
+  };
+
+  if (isLoading) {
+    return <div className="loading-spinner">Loading...</div>;
+  }
+
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: 'linear-gradient(135deg, red, black)', // Dégradé rouge-noir
-        padding: '20px',
-      }}
-    >
-      <Container
-        style={{
-          maxWidth: '800px',
-          backgroundColor: '#000', // Fond noir pour tout le container
-          borderRadius: '8px',
-          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)',
-          color: '#fff', // Texte en blanc par défaut
-        }}
-      >
-        {/* En-tête */}
-        <Row>
-          <Col xs={12} className="text-center p-4" style={{ borderBottom: '1px solid #555' }}>
-            <h2
-              style={{
-                fontSize: '28px',
-                fontWeight: 'bold',
-                textTransform: 'uppercase',
-                color: '#ff4d4d', // Couleur rouge vif
-                marginBottom: '5px',
-              }}
-            >
-              {formData.firstName}  {formData.lastName}
-            </h2>
-            <p
-              style={{
-                fontSize: '18px',
-                color: '#ddd', // Texte gris clair
-                margin: 0,
-                fontStyle: 'italic',
-              }}
-            >
-              Admin Profile
-            </p>
-          </Col>
-        </Row>
+    <Container fluid className="px-0">
+      <Row className="g-0">
+        <Col md={2}>
+          <SideBarAdmin />
+        </Col>
+        <Col md={10} className="dashboard-main">
+          <div className="profile-container">
+            <Row>
+              {/* Left Column - Profile Card */}
+              <Col md={4}>
+                <div className="profile-card">
+                  <div className="profile-image">
+                    <img src="/placeholder.svg" alt="Profile" />
+                  </div>
+                  <h2 className="profile-name">{adminData.firstName} {adminData.lastName}</h2>
+                  <div className="profile-location">
+                    <FaMapMarkerAlt className="location-icon" />
+                    <span>{adminData.address || 'No address provided'}</span>
+                  </div>
+                  <div className="profile-rating">
+                    <FaStar className="star-icon" />
+                    <span>5.0</span>
+                    <span className="rating-count">(Administrator)</span>
+                  </div>
+                  <button className="close-account-btn">Close Account</button>
+                </div>
+              </Col>
 
-        {/* Contenu principal */}
-        <Row className="p-4">
-          {/* Informations utilisateur */}
-          <Col md={4}>
-            <Card
-              className="shadow-sm"
-              style={{
-                borderRadius: '8px',
-                backgroundColor: '#333', // Gris foncé pour contraster avec le noir
-                color: '#fff',
-                padding: '20px',
-              }}
-            >
-              <h5 style={{ color: '#fff' }}>Informations</h5>
-              <p><strong>Email:</strong> {formData.email}</p>
-              <p><strong>Téléphone:</strong> {formData.phone}</p>
-              <p><strong>Rôle:</strong> {formData.role}</p>
-            </Card>
-          </Col>
+              {/* Right Column - Profile Form */}
+              <Col md={8}>
+                <div className="profile-form-container">
+                  <section className="form-section">
+                    <h3>Profile</h3>
+                    <p className="section-subtitle">User Information</p>
+                    
+                    <form onSubmit={handleSave}>
+                      <div className="form-group">
+                        <label>Name</label>
+                        <input
+                          type="text"
+                          name="firstName"
+                          value={adminData.firstName}
+                          onChange={handleInputChange}
+                          className="form-control"
+                        />
+                      </div>
 
-          {/* Formulaire de modification */}
-          <Col md={8}>
-            <Form
-              onSubmit={handleSubmit}
-              style={{
-                backgroundColor: '#000', // Fond noir
-                color: '#fff', // Texte en blanc
-                padding: '20px',
-                borderRadius: '8px',
-              }}
-            >
-              <Form.Group className="mb-3" controlId="firstName">
-                <Form.Label>First Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter first name"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  style={{
-                    borderRadius: '6px',
-                    backgroundColor: '#333', // Fond du champ en gris foncé
-                    color: '#fff',
-                    border: '1px solid #555',
-                  }}
-                />
-              </Form.Group>
+                      <div className="form-group">
+                        <label>Email</label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={adminData.email}
+                          onChange={handleInputChange}
+                          className="form-control"
+                        />
+                      </div>
 
-              <Form.Group className="mb-3" controlId="lastName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter last name"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  style={{
-                    borderRadius: '6px',
-                    backgroundColor: '#333',
-                    color: '#fff',
-                    border: '1px solid #555',
-                  }}
-                />
-              </Form.Group>
+                      <div className="form-group">
+                        <label>Phone</label>
+                        <input
+                          type="tel"
+                          name="phone"
+                          value={adminData.phone}
+                          onChange={handleInputChange}
+                          className="form-control"
+                        />
+                      </div>
 
-              <Form.Group className="mb-3" controlId="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  style={{
-                    borderRadius: '6px',
-                    backgroundColor: '#333',
-                    color: '#fff',
-                    border: '1px solid #555',
-                  }}
-                />
-              </Form.Group>
+                      <button type="submit" className="save-btn">Save Now</button>
+                    </form>
+                  </section>
 
-              <Form.Group className="mb-3" controlId="phone">
-                <Form.Label>Phone</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter phone number"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  style={{
-                    borderRadius: '6px',
-                    backgroundColor: '#333',
-                    color: '#fff',
-                    border: '1px solid #555',
-                  }}
-                />
-              </Form.Group>
+                  <section className="form-section">
+                    <h3>Password</h3>
+                    <p className="section-subtitle">Update your password</p>
+                    
+                    <form onSubmit={handlePasswordUpdate}>
+                      <div className="form-group password-group">
+                        <label>Current Password</label>
+                        <div className="password-input">
+                          <input
+                            type={showCurrentPassword ? "text" : "password"}
+                            name="currentPassword"
+                            value={passwords.currentPassword}
+                            onChange={handlePasswordChange}
+                            className="form-control"
+                            required
+                          />
+                          <button
+                            type="button"
+                            className="password-toggle"
+                            onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                          >
+                            {showCurrentPassword ? <FaEyeSlash /> : <FaEye />}
+                          </button>
+                        </div>
+                      </div>
 
-              <Form.Group className="mb-3" controlId="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter new password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  style={{
-                    borderRadius: '6px',
-                    backgroundColor: '#333',
-                    color: '#fff',
-                    border: '1px solid #555',
-                  }}
-                />
-              </Form.Group>
+                      <div className="form-group password-group">
+                        <label>New Password</label>
+                        <div className="password-input">
+                          <input
+                            type={showNewPassword ? "text" : "password"}
+                            name="newPassword"
+                            value={passwords.newPassword}
+                            onChange={handlePasswordChange}
+                            className="form-control"
+                            required
+                          />
+                          <button
+                            type="button"
+                            className="password-toggle"
+                            onClick={() => setShowNewPassword(!showNewPassword)}
+                          >
+                            {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+                          </button>
+                        </div>
+                      </div>
 
-              <div className="d-grid">
-                <Button
-                  variant="primary"
-                  type="submit"
-                  style={{
-                    backgroundColor: '#ff4d4d',
-                    borderRadius: '6px',
-                    border: 'none',
-                  }}
-                >
-                  Update Profile
-                </Button>
-              </div>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+                      <div className="form-group password-group">
+                        <label>Confirm New Password</label>
+                        <div className="password-input">
+                          <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            name="confirmPassword"
+                            value={passwords.confirmPassword}
+                            onChange={handlePasswordChange}
+                            className="form-control"
+                            required
+                          />
+                          <button
+                            type="button"
+                            className="password-toggle"
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          >
+                            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                          </button>
+                        </div>
+                      </div>
+
+                      <button type="submit" className="save-btn">Update Password</button>
+                    </form>
+                  </section>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
 export default ProfilAdmin;
+
