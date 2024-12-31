@@ -1,0 +1,66 @@
+/* Inherit all styles from usersTable.css */
+.dashboard-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+  }
+  
+  /* Additional styles specific to reservations */
+  .vehicle-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .vehicle-name {
+    font-weight: 500;
+    color: #212529;
+  }
+  
+  .vehicle-model {
+    font-size: 0.85rem;
+    color: #6c757d;
+  }
+  
+  .dates-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .date-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #495057;
+  }
+  
+  .date-icon {
+    color: #4263eb;
+    font-size: 0.9rem;
+  }
+  
+  .status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.85rem;
+  }
+  
+  .status-badge.pending {
+    background-color: #fab005 !important;
+    color: white;
+  }
+  
+  .status-badge.confirmed {
+    background-color: #12b886 !important;
+    color: white;
+  }
+  
+  .status-badge.cancelled {
+    background-color: #fa5252 !important;
+    color: white;
+  }
+  
+  
