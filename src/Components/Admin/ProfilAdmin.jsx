@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { FaMapMarkerAlt, FaStar, FaEye, FaEyeSlash } from "react-icons/fa";
+import { 
+  FaMapMarkerAlt, 
+  FaStar, 
+  FaEye, 
+  FaEyeSlash, 
+  FaUser, 
+  FaEnvelope, 
+  FaPhone, 
+  FaLock,
+  FaUserShield,
+  FaEdit
+} from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
 import SideBarAdmin from "./SideBarAdmin";
 import './profilAdmin.css';
@@ -110,7 +121,6 @@ function ProfilAdmin() {
 
       if (response.ok) {
         alert('Password updated successfully!');
-        // Reset password fields after successful update
         setPasswords({
           currentPassword: '',
           newPassword: '',
@@ -138,22 +148,33 @@ function ProfilAdmin() {
         </Col>
         <Col md={10} className="dashboard-main">
           <div className="profile-container">
+            <h1 className="page-title">
+              <FaUserShield className="page-title-icon" />
+              Admin Profile
+            </h1>
             <Row>
               {/* Left Column - Profile Card */}
               <Col md={4}>
                 <div className="profile-card">
-                  <div className="profile-image">
-                    <img src={profil} alt="Profile" />
+                  <div className="profile-image-container">
+                    <div className="profile-image">
+                      <img src={profil} alt="Profile" />
+                    </div>
+                    <button className="edit-profile-image">
+                      <FaEdit />
+                    </button>
                   </div>
                   <h2 className="profile-name">{adminData.firstName} {adminData.lastName}</h2>
-                  <div className="profile-location">
-                    <FaMapMarkerAlt className="location-icon" />
-                    <span>{adminData.address || 'AL FIRDAOUSS KHOURIBGA'}</span>
-                  </div>
-                  <div className="profile-rating">
-                    <FaStar className="star-icon" />
-                    <span>9.0</span>
-                    <span className="rating-count">(Administrator)</span>
+                  <div className="profile-info">
+                    <div className="profile-location">
+                      <FaMapMarkerAlt className="info-icon" />
+                      <span>{adminData.address || 'AL FIRDAOUSS KHOURIBGA'}</span>
+                    </div>
+                    <div className="profile-rating">
+                      <FaStar className="info-icon" />
+                      <span>9.0</span>
+                      <span className="rating-count">(Administrator)</span>
+                    </div>
                   </div>
                 </div>
               </Col>
@@ -162,54 +183,78 @@ function ProfilAdmin() {
               <Col md={8}>
                 <div className="profile-form-container">
                   <section className="form-section">
-                    <h3>Profile</h3>
-                    <p className="section-subtitle">User Information</p>
+                    <h3>
+                      <FaUser className="section-icon" />
+                      Profile Information
+                    </h3>
+                    <p className="section-subtitle">Manage your personal information</p>
                     
                     <form onSubmit={handleSave}>
                       <div className="form-group">
-                        <label>Name</label>
+                        <label>
+                          <FaUser className="input-icon" />
+                          Full Name
+                        </label>
                         <input
                           type="text"
                           name="firstName"
                           value={adminData.firstName}
                           onChange={handleInputChange}
                           className="form-control"
+                          placeholder="Enter your full name"
                         />
                       </div>
 
                       <div className="form-group">
-                        <label>Email</label>
+                        <label>
+                          <FaEnvelope className="input-icon" />
+                          Email
+                        </label>
                         <input
                           type="email"
                           name="email"
                           value={adminData.email}
                           onChange={handleInputChange}
                           className="form-control"
+                          placeholder="Enter your email"
                         />
                       </div>
 
                       <div className="form-group">
-                        <label>Phone</label>
+                        <label>
+                          <FaPhone className="input-icon" />
+                          Phone
+                        </label>
                         <input
                           type="tel"
                           name="phone"
                           value={adminData.phone}
                           onChange={handleInputChange}
                           className="form-control"
+                          placeholder="Enter your phone number"
                         />
                       </div>
 
-                      <button type="submit" className="save-btn">Save Now</button>
+                      <button type="submit" className="save-btn">
+                        <FaEdit className="btn-icon" />
+                        Update Profile
+                      </button>
                     </form>
                   </section>
 
                   <section className="form-section">
-                    <h3>Password</h3>
-                    <p className="section-subtitle">Update your password</p>
+                    <h3>
+                      <FaLock className="section-icon" />
+                      Change Password
+                    </h3>
+                    <p className="section-subtitle">Ensure your account is using a strong password</p>
                     
                     <form onSubmit={handlePasswordUpdate}>
                       <div className="form-group password-group">
-                        <label>Current Password</label>
+                        <label>
+                          <FaLock className="input-icon" />
+                          Current Password
+                        </label>
                         <div className="password-input">
                           <input
                             type={showCurrentPassword ? "text" : "password"}
@@ -218,6 +263,7 @@ function ProfilAdmin() {
                             onChange={handlePasswordChange}
                             className="form-control"
                             required
+                            placeholder="Enter your current password"
                           />
                           <button
                             type="button"
@@ -230,7 +276,10 @@ function ProfilAdmin() {
                       </div>
 
                       <div className="form-group password-group">
-                        <label>New Password</label>
+                        <label>
+                          <FaLock className="input-icon" />
+                          New Password
+                        </label>
                         <div className="password-input">
                           <input
                             type={showNewPassword ? "text" : "password"}
@@ -239,6 +288,7 @@ function ProfilAdmin() {
                             onChange={handlePasswordChange}
                             className="form-control"
                             required
+                            placeholder="Enter your new password"
                           />
                           <button
                             type="button"
@@ -251,7 +301,10 @@ function ProfilAdmin() {
                       </div>
 
                       <div className="form-group password-group">
-                        <label>Confirm New Password</label>
+                        <label>
+                          <FaLock className="input-icon" />
+                          Confirm New Password
+                        </label>
                         <div className="password-input">
                           <input
                             type={showConfirmPassword ? "text" : "password"}
@@ -260,6 +313,7 @@ function ProfilAdmin() {
                             onChange={handlePasswordChange}
                             className="form-control"
                             required
+                            placeholder="Confirm your new password"
                           />
                           <button
                             type="button"
@@ -271,7 +325,10 @@ function ProfilAdmin() {
                         </div>
                       </div>
 
-                      <button type="submit" className="save-btn">Update Password</button>
+                      <button type="submit" className="save-btn">
+                        <FaLock className="btn-icon" />
+                        Update Password
+                      </button>
                     </form>
                   </section>
                 </div>
