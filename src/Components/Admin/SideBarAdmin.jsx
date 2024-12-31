@@ -7,10 +7,11 @@ import {
   FaUsers, 
   FaUserShield,
   FaCalendarCheck,
-  FaSignOutAlt
+  FaSignOutAlt,
+  FaUserTie
 } from 'react-icons/fa';
 import './SideBar.css';
-import profilimg from '../../images/anasprofile.jpg'
+//import profilimg from '../../images/anasprofile.jpg'
 
 function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
       {/* Profile Section */}
       <div className="sidebar-header">
         <div className="profile-info">
-          <img src={profilimg} alt="Admin" className="profile-image"/> 
+          <FaUserTie className="profile-icon" />
           <div className="profile-details">
             <h3>Welcome Ihab</h3>
             <span>Administrator</span>

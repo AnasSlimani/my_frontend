@@ -4,6 +4,7 @@ import { FaMapMarkerAlt, FaStar, FaEye, FaEyeSlash } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
 import SideBarAdmin from "./SideBarAdmin";
 import './profilAdmin.css';
+import profil from '../../images/anasprofile.jpg'
 
 function ProfilAdmin() {
   const [adminData, setAdminData] = useState({
@@ -142,19 +143,18 @@ function ProfilAdmin() {
               <Col md={4}>
                 <div className="profile-card">
                   <div className="profile-image">
-                    <img src="/placeholder.svg" alt="Profile" />
+                    <img src={profil} alt="Profile" />
                   </div>
                   <h2 className="profile-name">{adminData.firstName} {adminData.lastName}</h2>
                   <div className="profile-location">
                     <FaMapMarkerAlt className="location-icon" />
-                    <span>{adminData.address || 'No address provided'}</span>
+                    <span>{adminData.address || 'AL FIRDAOUSS KHOURIBGA'}</span>
                   </div>
                   <div className="profile-rating">
                     <FaStar className="star-icon" />
-                    <span>5.0</span>
+                    <span>9.0</span>
                     <span className="rating-count">(Administrator)</span>
                   </div>
-                  <button className="close-account-btn">Close Account</button>
                 </div>
               </Col>
 

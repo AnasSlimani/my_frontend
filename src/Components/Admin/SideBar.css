@@ -21,11 +21,10 @@
   gap: 15px;
 }
 
-.profile-image {
+.profile-icon {
   width: 45px;
   height: 45px;
-  border-radius: 8px;
-  background: white;
+  color: white;
 }
 
 .profile-details h3 {
