@@ -1,48 +1,117 @@
-/* Ajoutez ceci à votre fichier CSS */
-#sidebar {
-    position: fixed;
-    width: 250px;
-    height: 100vh; /* Prendre toute la hauteur de la page */
-    background-color: #f8f9fa; /* Couleur de fond de la sidebar */
-    overflow-y: auto; /* Permettre le défilement si le contenu est trop grand */
+.sidebar {
+  position: fixed;
+  width: 280px;
+  height: 100vh;
+  background: linear-gradient(180deg, #2C3E50 0%, #3498DB 100%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+/* Header/Profile Section */
+.sidebar-header {
+  padding: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.profile-image {
+  width: 45px;
+  height: 45px;
+  border-radius: 8px;
+  background: white;
+}
+
+.profile-details h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.profile-details span {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* Navigation */
+.sidebar-nav {
+  padding: 16px 8px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  margin: 4px 0;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.nav-item.active {
+  background: #00bcd4;
+  color: white;
+  box-shadow: 0 4px 20px 0 rgba(0, 188, 212, 0.14), 
+              0 7px 10px -5px rgba(0, 188, 212, 0.4);
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 15px;
+}
+
+.nav-item span {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Footer/Logout */
+.sidebar-footer {
+  padding: 16px 8px;
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: bold;
+  font-size: larger;
+}
+
+.nav-item.logout {
+  color: #ff4d4d;
+}
+
+.nav-item.logout:hover {
+  background: rgba(255, 77, 77, 0.1);
+}
+
+/* Responsive */
+@media screen and (max-width: 992px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
   }
-  
-  .sidebar-responsive {
-    /* Styles pour la version responsive si nécessaire */
+
+  .sidebar.sidebar-responsive {
+    transform: translateX(0);
   }
-  
-  .sidebar-title {
-    padding: 10px;
-    font-size: 18px;
-    font-weight: bold;
-  }
-  
-  .sidebar-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    height: calc(100vh - 50px); /* Ajustez en fonction de la hauteur du titre de la sidebar */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Assure que le dernier élément est en bas */
-  }
-  
-  .sidebar-list-item {
-    padding: 10px;
-  }
-  
-  .sidebar-list-item a, .sidebar-list-item Link {
-    text-decoration: none;
-    color: #000;
-    display: flex;
-    align-items: center;
-  }
-  
-  .sidebar-list-item .icon {
-    margin-right: 10px;
-  }
-  
-  .logout {
-    margin-top: auto;
-  }
-  
+}
+
