@@ -18,6 +18,7 @@ import GestionVehicules from './Components/Admin/GestionVehicules';
 import FormAddVehicle from './Components/Admin/FormAddVehicle';
 import UpdateVehicule from './Components/Admin/UpdateVehicule';
 import ProfilAdmin from './Components/Admin/ProfilAdmin';
+import GestionReservation from './Components/Admin/GestionReservation';
 
 import ForgetPasswd from './pages/forgetPasswordLogin/ForgetPasswd';
 
@@ -48,6 +49,7 @@ function App(){
         <Route path="/admin/vehicules" element={<GestionVehicules />} />
         <Route path="/admin/vehicules/FormAddVehicle" element={<FormAddVehicle />} />
         <Route path="/admin/vehicules/UpdateVehicule/:id" element={<UpdateVehicule />} />
+        <Route path="/admin/reservations" element={<GestionReservation />} />
 
       </Routes>
     </Router>
