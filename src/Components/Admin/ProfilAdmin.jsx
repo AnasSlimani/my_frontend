@@ -23,7 +23,9 @@ function ProfilAdmin() {
     lastName: '',
     email: '',
     phone: '',
-    address: ''
+    address: '',
+    password:'',
+    role:''
   });
   const [isLoading, setIsLoading] = useState(true);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -97,6 +99,10 @@ function ProfilAdmin() {
 
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("jwtToken");
+    const decodedToken = jwtDecode(token);
+    const adminId = decodedToken.id;
+
     
     if (passwords.newPassword !== passwords.confirmPassword) {
       alert('New passwords do not match!');
@@ -104,23 +110,32 @@ function ProfilAdmin() {
     }
 
     try {
-      const token = localStorage.getItem("jwtToken");
-      const decodedToken = jwtDecode(token);
-      const adminId = decodedToken.id;
-
-      const response = await fetch(`http://localhost:8082/api/utilisateur/password/${adminId}`, {
+      adminData.password = passwords.currentPassword ;
+      console.log(adminData);
+      
+      const response = await fetch("http://localhost:8082/api/utilisateur/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(adminData)
+    });
+      if(response.status != 200){
+        alert('Current password is incorrect');
+      }else {
+         adminData.password = passwords.newPassword ;
+        const response = await fetch(`http://localhost:8082/api/utilisateur/${adminId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          currentPassword: passwords.currentPassword,
-          newPassword: passwords.newPassword
-        })
+        body: JSON.stringify(adminData)
       });
 
       if (response.ok) {
         alert('Password updated successfully!');
+        // Reset password fields after successful update
         setPasswords({
           currentPassword: '',
           newPassword: '',
@@ -130,11 +145,17 @@ function ProfilAdmin() {
         const errorData = await response.json();
         alert(errorData.message || 'Failed to update password. Please check your current password.');
       }
+
+      }
+        
+      
+      
     } catch (error) {
       console.error('Error updating password:', error);
       alert('Failed to update password');
     }
   };
+
 
   if (isLoading) {
     return <div className="loading-spinner">Loading...</div>;
