@@ -12,7 +12,6 @@ export default function FilterSection({ onFilterChange }) {
   });
 
   const [filters, setFilters] = useState({});
-  const token = localStorage.getItem("jwtToken");
 
   useEffect(() => {
     const fetchFilterOptions = async () => {
@@ -21,7 +20,7 @@ export default function FilterSection({ onFilterChange }) {
           fetch('http://localhost:8082/api/vehicules/marques').then(res => res.json()),
           fetch('http://localhost:8082/api/vehicules/types').then(res => res.json()),
           fetch('http://localhost:8082/api/vehicules/annees').then(res => res.json()),
-          fetch('http://localhost:8082/api/vehicules/status'  ).then(res => res.json()),
+          fetch('http://localhost:8082/api/vehicules/status').then(res => res.json()),
         ]);
 
         setFilterOptions(prevState => ({
@@ -42,16 +41,28 @@ export default function FilterSection({ onFilterChange }) {
   const handleFilterChange = (option, value) => {
     const newFilters = { ...filters };
   
-    if (newFilters[option] === value) {
-      // Si la valeur sélectionnée est déjà active, on retire le filtre
+    if (value === '') {
+      // Remove empty filters
       delete newFilters[option];
     } else {
-      // Sinon, on ajoute/modifie le filtre
+      // Add/update the filter
       newFilters[option] = value;
+      
+      // Special date handling
+      if (option === 'date_debut' && !newFilters.date_fin) {
+        // If only start date is set, set end date to far future
+        const farFutureDate = new Date();
+        farFutureDate.setFullYear(farFutureDate.getFullYear() + 1);
+        newFilters.date_fin = farFutureDate.toISOString().split('T')[0];
+      }
+      if (option === 'date_fin' && !newFilters.date_debut) {
+        // If only end date is set, set start date to today
+        newFilters.date_debut = new Date().toISOString().split('T')[0];
+      }
     }
   
     setFilters(newFilters);
-    onFilterChange(newFilters); // Transmet les nouveaux filtres au parent
+    onFilterChange(newFilters);
   };
 
   const filterSelect = [

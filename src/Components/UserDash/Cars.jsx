@@ -13,7 +13,10 @@ const Cars = ({ filters, onReserve }) => {
         let url = "http://localhost:8082/api/vehicules/filtered?";
         Object.entries(filters).forEach(([key, value]) => {
           if (value) {
-            url += `${key}=${encodeURIComponent(value)}&`;
+            // Convert frontend date keys to backend expected format
+            const paramKey = key === 'date_debut' ? 'dateDebut' : 
+                            key === 'date_fin' ? 'dateFin' : key;
+            url += `${paramKey}=${encodeURIComponent(value)}&`;
           }
         });
 
@@ -82,7 +85,7 @@ const Cars = ({ filters, onReserve }) => {
       <div className="card__container">
         {cars.map(car => (
           <article className="card__article" key={car.id}>
-            <img src={`http://localhost:8082${car.imagepath}`} alt="image" className="card__img" />
+            <img src={`http://localhost:8082${car.imagepath}`} alt={`${car.marque} ${car.modele}`} className="card__img" />
             <div className="card__data">
               <span className="card__description">Prix : {car.prix} , Etat : {car.status}</span>
               <h2 className="card__title"><img src={`http://localhost:8082${car.logoPath}`} alt="Car Logo" className="iconse" />{car.marque} {car.modele} </h2>
