@@ -12,7 +12,7 @@ const Cars = ({ filters, onReserve }) => {
       try {
         let url = "http://localhost:8082/api/vehicules/filtered?";
         Object.entries(filters).forEach(([key, value]) => {
-          if (value && key !== 'searchTerm') {
+          if (value) {
             const paramKey = key === 'date_debut' ? 'dateDebut' : 
                             key === 'date_fin' ? 'dateFin' : key;
             url += `${paramKey}=${encodeURIComponent(value)}&`;
@@ -21,17 +21,7 @@ const Cars = ({ filters, onReserve }) => {
 
         const response = await fetch(url);
         if (response.ok) {
-          let data = await response.json();
-          
-          // Apply client-side filtering for car name search
-          if (filters.searchTerm) {
-            const searchTerm = filters.searchTerm.toLowerCase();
-            data = data.filter(car => 
-              car.marque.toLowerCase().includes(searchTerm) || 
-              car.modele.toLowerCase().includes(searchTerm)
-            );
-          }
-          
+          const data = await response.json();
           setCars(data);
         } else {
           console.error("Failed to fetch cars, status:", response.status);
