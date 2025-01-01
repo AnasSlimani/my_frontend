@@ -8,10 +8,11 @@ export default function FilterSection({ onFilterChange }) {
     type: [],
     annee: [],
     disponibilite: [],
-    tarif: ['100', '200', '300'],
+    tarif: ['less than 1000', 'less than 800', 'less than 600', 'less than 400'],
   });
 
   const [filters, setFilters] = useState({});
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchFilterOptions = async () => {
@@ -42,27 +43,34 @@ export default function FilterSection({ onFilterChange }) {
     const newFilters = { ...filters };
   
     if (value === '') {
-      // Remove empty filters
       delete newFilters[option];
     } else {
-      // Add/update the filter
       newFilters[option] = value;
       
-      // Special date handling
       if (option === 'date_debut' && !newFilters.date_fin) {
-        // If only start date is set, set end date to far future
         const farFutureDate = new Date();
         farFutureDate.setFullYear(farFutureDate.getFullYear() + 1);
         newFilters.date_fin = farFutureDate.toISOString().split('T')[0];
       }
       if (option === 'date_fin' && !newFilters.date_debut) {
-        // If only end date is set, set start date to today
         newFilters.date_debut = new Date().toISOString().split('T')[0];
+      }
+
+      // Handle tarif options
+      if (option === 'tarif') {
+        const tarifValue = parseInt(value.split(' ')[2]);
+        newFilters.tarif = tarifValue;
       }
     }
   
     setFilters(newFilters);
-    onFilterChange(newFilters);
+    onFilterChange({ ...newFilters, searchTerm });
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchTerm(e.target.search.value);
+    onFilterChange({ ...filters, searchTerm: e.target.search.value });
   };
 
   const filterSelect = [
@@ -89,7 +97,7 @@ export default function FilterSection({ onFilterChange }) {
           ))}
         </form>
 
-        <form>
+        <form onSubmit={handleSearch}>
           <input type="text" name="search" placeholder="Search by car name" />
           <button type="submit">
             <Search />
