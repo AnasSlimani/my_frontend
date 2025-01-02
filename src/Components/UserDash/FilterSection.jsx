@@ -1,110 +1,130 @@
-import React, { useState, useEffect } from 'react';
-import { Search } from 'lucide-react';
+import React, { useState } from 'react';
+import { FaSearch, FaCalendarAlt } from 'react-icons/fa';
 import Select from './Select';
+import './filterSection.css';
 
-export default function FilterSection({ onFilterChange }) {
-  const [filterOptions, setFilterOptions] = useState({
-    marque: [],
-    type: [],
-    annee: [],
-    disponibilite: [],
-    tarif: ['less than 1000', 'less than 800', 'less than 600', 'less than 400'],
+const FilterSection = ({ onFilterChange }) => {
+  const [filters, setFilters] = useState({
+    marque: '',
+    type: '',
+    annee: '',
+    disponibilite: '',
+    tarif: '',
+    date_debut: '',
+    date_fin: '',
+    searchTerm: ''
   });
 
-  const [filters, setFilters] = useState({});
-  const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-    const fetchFilterOptions = async () => {
-      try {
-        const [marques, types, annees, status] = await Promise.all([
-          fetch('http://localhost:8082/api/vehicules/marques').then(res => res.json()),
-          fetch('http://localhost:8082/api/vehicules/types').then(res => res.json()),
-          fetch('http://localhost:8082/api/vehicules/annees').then(res => res.json()),
-          fetch('http://localhost:8082/api/vehicules/status').then(res => res.json()),
-        ]);
-
-        setFilterOptions(prevState => ({
-          ...prevState,
-          marque: Array.isArray(marques) ? marques : [],
-          type: Array.isArray(types) ? types : [],
-          annee: Array.isArray(annees) ? annees.map(String) : [],
-          disponibilite: Array.isArray(status) ? status : [],
-        }));
-      } catch (error) {
-        console.error('Error fetching filter options:', error);
-      }
-    };
-
-    fetchFilterOptions();
-  }, []);
-
-  const handleFilterChange = (option, value) => {
-    const newFilters = { ...filters };
-  
-    if (value === '') {
-      delete newFilters[option];
-    } else {
-      newFilters[option] = value;
-      
-      if (option === 'date_debut' && !newFilters.date_fin) {
-        const farFutureDate = new Date();
-        farFutureDate.setFullYear(farFutureDate.getFullYear() + 1);
-        newFilters.date_fin = farFutureDate.toISOString().split('T')[0];
-      }
-      if (option === 'date_fin' && !newFilters.date_debut) {
-        newFilters.date_debut = new Date().toISOString().split('T')[0];
-      }
-
-      // Handle tarif options
-      if (option === 'tarif') {
-        const tarifValue = parseInt(value.split(' ')[2]);
-        newFilters.tarif = tarifValue;
-      }
-    }
-  
+  const handleSelectChange = (option, value) => {
+    const newFilters = { ...filters, [option]: value };
     setFilters(newFilters);
-    onFilterChange({ ...newFilters, searchTerm });
+    onFilterChange(newFilters);
   };
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    setSearchTerm(e.target.search.value);
-    onFilterChange({ ...filters, searchTerm: e.target.search.value });
+  const handleSearchChange = (e) => {
+    const newFilters = { ...filters, searchTerm: e.target.value };
+    setFilters(newFilters);
+    onFilterChange(newFilters);
   };
 
-  const filterSelect = [
-    { id: 1, option: 'marque', values: filterOptions.marque },
-    { id: 2, option: 'type', values: filterOptions.type },
-    { id: 3, option: 'annee', values: filterOptions.annee },
-    { id: 4, option: 'disponibilite', values: filterOptions.disponibilite },
-    { id: 5, option: 'tarif', values: filterOptions.tarif },
-    { id: 6, option: 'date_debut', values: [] },
-    { id: 7, option: 'date_fin', values: [] },
-  ];
+  const marques = ['Mercedes', 'BMW', 'Audi', 'Toyota'];
+  const types = ['Sedan', 'SUV', 'Coupe', 'Sport'];
+  const annees = ['2020', '2021', '2022', '2023'];
+  const disponibilites = ['Available', 'Reserved'];
+  const tarifs = ['100-200', '200-300', '300-400', '400+'];
 
   return (
-    <div className="test">
-      <div className="filter">
-        <form className="filter-select">
-          {filterSelect.map((filter) => (
+    <div className="modern-filter-container ">
+      <div className="modern-filter-content">
+        <div className="filter-row">
+          <div className="filter-group">
+            <label>Brand</label>
             <Select 
-              key={filter.id} 
-              option={filter.option} 
-              values={filter.values} 
-              onChange={(value) => handleFilterChange(filter.option, value)}
+              option="marque"
+              values={marques}
+              onChange={(value) => handleSelectChange('marque', value)}
             />
-          ))}
-        </form>
+          </div>
+          
+          <div className="filter-group">
+            <label>Type</label>
+            <Select 
+              option="type"
+              values={types}
+              onChange={(value) => handleSelectChange('type', value)}
+            />
+          </div>
+          
+          <div className="filter-group">
+            <label>Year</label>
+            <Select 
+              option="annee"
+              values={annees}
+              onChange={(value) => handleSelectChange('annee', value)}
+            />
+          </div>
 
-        <form onSubmit={handleSearch}>
-          <input type="text" name="search" placeholder="Search by car name" />
-          <button type="submit">
-            <Search />
-          </button>
-        </form>
+          <div className="filter-group">
+            <label>Availability</label>
+            <Select 
+              option="disponibilite"
+              values={disponibilites}
+              onChange={(value) => handleSelectChange('disponibilite', value)}
+            />
+          </div>
+        </div>
+
+        <div className="filter-row">
+          <div className="filter-group">
+            <label>Price Range</label>
+            <Select 
+              option="tarif"
+              values={tarifs}
+              onChange={(value) => handleSelectChange('tarif', value)}
+            />
+          </div>
+
+          <div className="filter-group date-group">
+            <label>Start Date</label>
+            <div className="date-input-wrapper">
+              {/* <FaCalendarAlt className="date-icon" /> */}
+              <input
+                type="date"
+                className="modern-date-input"
+                onChange={(e) => handleSelectChange('date_debut', e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="filter-group date-group">
+            <label>End Date</label>
+            <div className="date-input-wrapper">
+              {/* <FaCalendarAlt className="date-icon" /> */}
+              <input
+                type="date"
+                className="modern-date-input"
+                onChange={(e) => handleSelectChange('date_fin', e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="filter-group search-group">
+            <label>Search</label>
+            <div className="search-input-wrapper">
+              <input
+                type="text"
+                placeholder="Search cars..."
+                className="modern-search-input"
+                onChange={handleSearchChange}
+              />
+              <FaSearch className="search-icon" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default FilterSection;
 

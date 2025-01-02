@@ -1,0 +1,146 @@
+.modern-filter-container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    margin: 24px auto;
+    max-width: 1200px;
+    padding: 24px;
+    margin-top: 100px;
+  }
+  
+  .modern-filter-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .filter-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    align-items: start;
+  }
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .filter-group label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #64748b;
+  }
+  
+  /* Select Styling */
+  .filter-group select {
+    appearance: none;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #1e293b;
+    font-size: 0.875rem;
+    padding: 10px 12px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .filter-group select:hover {
+    border-color: #94a3b8;
+  }
+  
+  .filter-group select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    outline: none;
+  }
+  
+  /* Date Input Styling */
+  .date-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .modern-date-input {
+    appearance: none;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #1e293b;
+    font-size: 0.875rem;
+    padding: 10px 12px;
+    padding-left: 36px;
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .modern-date-input:hover {
+    border-color: #94a3b8;
+  }
+  
+  .modern-date-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    outline: none;
+  }
+  
+  .date-icon {
+    position: absolute;
+    left: 12px;
+    color: #64748b;
+    pointer-events: none;
+  }
+  
+  /* Search Input Styling */
+  .search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .modern-search-input {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #1e293b;
+    font-size: 0.875rem;
+    padding: 10px 12px;
+    padding-right: 36px;
+    width: 100%;
+    transition: all 0.2s ease;
+  }
+  
+  .modern-search-input:hover {
+    border-color: #94a3b8;
+  }
+  
+  .modern-search-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    outline: none;
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 12px;
+    color: #64748b;
+    pointer-events: none;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .modern-filter-container {
+      margin: 16px;
+      padding: 16px;
+    }
+  
+    .filter-row {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  
