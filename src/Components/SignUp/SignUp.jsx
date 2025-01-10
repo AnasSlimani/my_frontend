@@ -17,16 +17,29 @@ export default function SignUp() {
         "phone" : '',
         "password" : '',
         "role" : "CLIENT"
-    })
+    }) 
 
     const [confirmedPassword, setConfirmedPassword] = useState('');
+
+    const [token, setToken] = useState("");
 
     const navigate = useNavigate();
     const { login, isAuthenticated } = useAuth();
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/signup');
+            const decodedToken = jwtDecode(token);
+            const role = decodedToken.role;
+            console.log("role :" + role);
+            
+            if (role == "ADMIN"){
+                navigate("/admin")
+            } else {
+                navigate("/signup")
+                // alert("hi")
+            }
+            // navigate('/signup');
+            // alert("hello")
         }
     }, [isAuthenticated, navigate]);
 
@@ -48,7 +61,12 @@ export default function SignUp() {
 
     const handelLogInButton = async (e) => {
         e.preventDefault();
+        console.log(loginForm);
+        
+        
         try {
+            console.log("helooooooooooooo");
+
             const response = await fetch("http://localhost:8082/api/utilisateur/login", {
                 method: "POST",
                 headers: {
@@ -59,17 +77,12 @@ export default function SignUp() {
 
             if (response.ok) {
                 const token = await response.text();
+                setToken(token);
                 login(token);
-                const decodedToken = jwtDecode(token);
-                const role = decodedToken.role;
-                if (role === "ADMIN"){
-                    navigate("/admin")
-                } else {
-                    navigate("/signup")
-                }
+               
             } else if (response.status === 401) {
                 alert("User not found");
-                navigate(0);
+                // navigate(0);
             }
         } catch (error) {
             console.error("Error while logging in:", error);
@@ -155,7 +168,7 @@ export default function SignUp() {
                         </div>
                     </form>
                 </div>
-
+        
                 <div className="logine" >
                     <form>
                         <label htmlFor="chk" aria-hidden="true" className='labele'>
@@ -176,4 +189,3 @@ export default function SignUp() {
         </section>
     );
 }
-

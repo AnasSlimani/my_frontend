@@ -31,6 +31,8 @@ export default function Pricing(props) {
         
             fetchCar();
         }, [CARid, navigate, token]);
+
+        
         
     return (
     <div className='p-10 rounded-xl border-2 shadow-md text-black lighgrey ' >
