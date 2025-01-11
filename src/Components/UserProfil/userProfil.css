@@ -1,0 +1,41 @@
+.profile-page {
+    min-height: 100vh;
+    background-color: #f3f4f6;
+  }
+  
+  .profile-content {
+    padding: 90px 2rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    height: calc(100vh - 110px);
+  }
+  
+  .loading {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: #666;
+  }
+  
+  @media (max-width: 1024px) {
+    .profile-grid {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+  }
+  
+  @media (max-width: 640px) {
+    .profile-content {
+      padding: 90px 1rem 1rem;
+    }
+  }
+  
+  
