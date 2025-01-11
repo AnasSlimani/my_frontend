@@ -11,11 +11,12 @@ import {
   FaUserTie
 } from 'react-icons/fa';
 import './SideBar.css';
-//import profilimg from '../../images/anasprofile.jpg'
+import { useAuth } from '../../context/AuthContext'; // Make sure this path is correct
 
 function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { logout } = useAuth(); // Use the logout function from AuthContext
 
   const handleProfileClick = () => {
     const decodedToken = jwtDecode(localStorage.getItem("jwtToken"));
@@ -23,6 +24,11 @@ function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
     if (adminId) {
       navigate(`/admin/clients/ProfilAdmin/${adminId}`);
     }
+  };
+
+  const handleLogout = () => {
+    logout(); // Call the logout function from AuthContext
+    navigate('/'); // Navigate to the home page
   };
 
   const menuItems = [
@@ -69,10 +75,10 @@ function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
 
       {/* Logout Section */}
       <div className="sidebar-footer">
-        <Link to="/" className="nav-item logout">
+        <button onClick={handleLogout} className="nav-item logout">
           <FaSignOutAlt className="nav-icon" />
           <span>Logout</span>
-        </Link>
+        </button>
       </div>
     </aside>
   );

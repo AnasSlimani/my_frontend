@@ -34,7 +34,7 @@ function App(){
       <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/signup" element={<UserDash />} />
+        <Route path="/cars" element={<UserDash />} />
         <Route path='/admin' element={<AdminDash />} />
         <Route path="/login" element={<SignUp />} />
         <Route path="/CarDetail/:id" element={<CarDetail />} />

@@ -1,10 +1,11 @@
 import React from 'react'
+import Notfound from '../Components/notfoundpage/Notfound'
 
 export default function () {
   return (
-    <div>
-        <h1 className='mg-4'>Page not Found</h1>
-    </div>
+    <>
+      <Notfound />
+    </>
   )
 }
 

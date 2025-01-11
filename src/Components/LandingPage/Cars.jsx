@@ -50,7 +50,7 @@ function Cars() {
     }, []);
 
     const toCars=() =>{
-        navigate('/signup')
+        navigate('/cars')
     }
 
       return (
