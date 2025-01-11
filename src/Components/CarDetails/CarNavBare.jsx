@@ -23,7 +23,7 @@ function NavBare({ onTogglePanier }) {
     navigate('/login');
   };
   const onBACK = () =>{
-    navigate('/signup')
+    navigate('/cars')
   }
 
   return (
