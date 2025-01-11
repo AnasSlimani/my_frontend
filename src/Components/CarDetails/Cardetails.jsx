@@ -2,52 +2,39 @@ import React from 'react'
 import CarNavBare from './CarNavBare'
 import Details from './Details'
 import './Details.css'
-import { useParams } from 'react-router-dom'
 import ImageGallery from './ImageGallery'
 import Description from './Description'
 import Features from './Features'
 import Pricing from './Pricing'
 import Specifications from './Specifications'
-import { useNavigate } from 'react-router-dom';
 
-const Cardetails = (props) => {
-  const idCar = props.idCar;
-  
+const CarDetails = ({ idCar }) => {
   return (
-    <>
+    <div className="min-h-screen bg-gradient-to-r from-gray-50 to-gray-100">
       <CarNavBare />
-      <div className='p-10 md:px-20 mt-20  carDETAIL'>
-        
+      <div className='p-6 md:p-10 lg:px-20 mt-20 max-w-7xl mx-auto'>
         <Details ID={idCar} />
 
-        <div className='grid grid-cols-1 md:grid-cols-3 w-full mt-10 gap-5' >
-
-          
-          {/* left */}
-          <div className='md:col-span-2' >
-            {/* Image Gallery */}
-              <ImageGallery ID={idCar} />
-            {/* Description */}
-              <Description ID={idCar} style={ { backgroundColor: 'black'  } } />
-            {/* Features List */}
-              <Features ID={idCar} />
+        <div className='grid grid-cols-1 lg:grid-cols-3 w-full mt-10 gap-6'>
+          {/* Main Content */}
+          <div className='lg:col-span-2 space-y-6'>
+            <ImageGallery ID={idCar} />
+            <Description ID={idCar} />
+            <Features ID={idCar} />
           </div>
           
-          
-          {/* right */}
-          <div>
-            {/* Pricing */}
+          {/* Sidebar */}
+          <div className="space-y-6">
+            <div className="sticky top-6">
               <Pricing ID={idCar} />
-
-            {/* Car Properties */}
               <Specifications ID={idCar} />
+            </div>
           </div>
         </div>
-
       </div>
-    </>
-
+    </div>
   )
 }
 
-export default Cardetails
+export default CarDetails
+
