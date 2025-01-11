@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaCalendarAlt, FaCheckCircle, FaTimesCircle, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaCarAlt, FaTools, FaCheckCircle, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import './userReservations.css';
 
 const UserReservations = ({ reservations }) => {
@@ -30,43 +30,59 @@ const UserReservations = ({ reservations }) => {
         <span className="reservation-count">Total: {reservations.length}</span>
       </div>
       
-      <div className="reservations-list">
-        {currentReservations.map((reservation) => (
-          <div key={reservation.id} className="reservation-card">
-            <div className="car-image">
-              <img 
-                src={`http://localhost:8082${reservation.vehicule?.imagepath}`} 
-                alt={`${reservation.vehicule?.marque} ${reservation.vehicule?.modele}`}
-              />
-              <div className={`status-badge ${reservation.status?.toLowerCase()}`}>
-                {reservation.status === 'CONFIRMED' ? (
-                  <FaCheckCircle className="status-icon" />
-                ) : (
-                  <FaTimesCircle className="status-icon" />
-                )}
-                <span>{reservation.status}</span>
-              </div>
-            </div>
-            <div className="reservation-details">
-              <h3>{reservation.vehicule?.marque} {reservation.vehicule?.modele}</h3>
-              <div className="reservation-info">
-                <div className="date-range">
-                  <FaCalendarAlt className="icon" />
-                  <div className="dates">
-                    <span className="date-label">From</span>
-                    <span className="date">{new Date(reservation.dateDebut).toLocaleDateString()}</span>
-                    <span className="date-label">To</span>
-                    <span className="date">{new Date(reservation.dateFin).toLocaleDateString()}</span>
+      <div className="table-container">
+        <table className="modern-table">
+          <thead>
+            <tr>
+              <th>Vehicle</th>
+              <th>Status</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentReservations.map((reservation) => (
+              <tr key={reservation.id} className="reservation-row">
+                <td>
+                  <div className="vehicle-info">
+                    <div className="vehicle-image">
+                      <img 
+                        src={`http://localhost:8082${reservation.vehicule?.logoPath}`} 
+                        alt={`${reservation.vehicule?.marque} ${reservation.vehicule?.modele}`}
+                      />
+                    </div>
+                    <div className="vehicle-details">
+                      <div className="vehicle-name">
+                        {reservation.vehicule?.marque} {reservation.vehicule?.modele}
+                      </div>
+                      <div className="reservation-id">ID: {reservation.id}</div>
+                    </div>
                   </div>
-                </div>
-                <div className="price">
-                  <span className="amount">{reservation.vehicule?.prix} DH</span>
-                  <span className="period">per day</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
+                </td>
+                <td>
+                  <span className={`status-badge ${reservation.status?.toLowerCase()}`}>
+                    {reservation.status === 'ENTRETIEN' ? (
+                      <>
+                        <FaTools className="status-icon" />
+                        Maintenance
+                      </>
+                    ) : (
+                      <>
+                        <FaCheckCircle className="status-icon" />
+                        Reserved
+                      </>
+                    )}
+                  </span>
+                </td>
+                <td>
+                  <div className="price-info">
+                    <span className="amount">{reservation.vehicule?.prix} DH</span>
+                    <span className="period">per day</span>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
       
       {totalPages > 1 && (

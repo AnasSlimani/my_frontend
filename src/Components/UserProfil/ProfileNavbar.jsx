@@ -7,6 +7,17 @@ import './profileNavbar.css';
 const ProfileNavbar = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const [nav, setNav] = React.useState(false);
+
+  const changeBackground = () => {
+    if (window.scrollY >= 50) {
+      setNav(true);
+    } else {
+      setNav(false);
+    }
+  };
+
+  window.addEventListener('scroll', changeBackground);
 
   const handleLogout = () => {
     logout();
@@ -18,22 +29,30 @@ const ProfileNavbar = () => {
   };
 
   return (
-    <nav className="profile-navbar">
-      <div className="nav-left">
+    <header>
+      <nav className={nav ? 'nav active' : 'nav'}>
         <Link to="/" className="logo">
           <img src={logo} alt="Logo" />
         </Link>
-        <Link to="/" className="nav-link">HOME</Link>
-      </div>
-      <div className="nav-right">
-        <button onClick={handleBack} className="nav-button back-btn">
-          BACK
-        </button>
-        <button onClick={handleLogout} className="nav-button logout-btn">
-          LOGOUT
-        </button>
-      </div>
-    </nav>
+        <input type="checkbox" id="menu-btn" className="menu-btn" />
+        <label className="menu-icon" htmlFor="menu-btn">
+          <span className="nav-icon"></span>
+        </label>
+        <ul className="menu">
+          <li>
+            <Link to="/">HOME</Link>
+          </li>
+        </ul>
+        <div className="buttonss">
+          <button onClick={handleBack} className="panier-btn">
+            Back <i className="fas fa-arrow-left"></i>
+          </button>
+          <button onClick={handleLogout} className="sign-up-btn">
+            Logout <i className="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
   );
 };
 

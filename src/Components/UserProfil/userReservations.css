@@ -1,8 +1,8 @@
 .user-reservations {
-    background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+    background: #ffffff;
     border-radius: 16px;
     padding: 2rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -18,14 +18,12 @@
   .section-title {
     font-size: 1.75rem;
     font-weight: 700;
-    background: linear-gradient(135deg, #FF1414 0%, #FF5555 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #1a1a1a;
     margin: 0;
   }
   
   .reservation-count {
-    background: linear-gradient(135deg, #FF1414 0%, #FF5555 100%);
+    background: #FF1414;
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 999px;
@@ -33,132 +31,121 @@
     font-weight: 600;
   }
   
-  .reservations-list {
+  .table-container {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    overflow-y: auto;
-    padding-right: 0.5rem;
+    overflow: auto;
   }
   
-  .reservation-card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    display: flex;
-    gap: 1.5rem;
-  }
-  
-  .reservation-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  .car-image {
-    width: 200px;
-    height: 140px;
-    position: relative;
-    flex-shrink: 0;
-  }
-  
-  .car-image img {
+  .modern-table {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
   }
   
-  .status-badge {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    padding: 0.5rem 1rem;
-    border-radius: 999px;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    font-weight: 600;
-    backdrop-filter: blur(8px);
+  .modern-table th {
+    padding: 1rem;
+    text-align: left;
+    color: #666;
+    font-weight: 500;
+    border-bottom: 2px solid #eee;
   }
   
-  .status-badge.confirmed {
-    background: rgba(22, 163, 74, 0.9);
-    color: white;
+  .reservation-row {
+    transition: transform 0.2s ease;
   }
   
-  .status-badge.pending {
-    background: rgba(234, 179, 8, 0.9);
-    color: white;
+  .reservation-row:hover {
+    transform: translateY(-2px);
   }
   
-  .status-badge.cancelled {
-    background: rgba(220, 38, 38, 0.9);
-    color: white;
+  .reservation-row td {
+    padding: 1rem;
+    background: #f8f9fa;
+    border: none;
   }
   
-  .reservation-details {
-    padding: 1.5rem 1.5rem 1.5rem 0;
-    flex: 1;
+  .reservation-row td:first-child {
+    border-radius: 8px 0 0 8px;
   }
   
-  .reservation-details h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin-bottom: 1rem;
+  .reservation-row td:last-child {
+    border-radius: 0 8px 8px 0;
   }
   
-  .reservation-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-  
-  .date-range {
+  .vehicle-info {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
   
-  .icon {
-    color: #FF1414;
-    font-size: 1.25rem;
+  .vehicle-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
   }
   
-  .dates {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.25rem 1rem;
-    align-items: center;
+  .vehicle-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
   
-  .date-label {
-    color: #6c757d;
-    font-size: 0.875rem;
+  .vehicle-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
   
-  .date {
-    font-weight: 500;
+  .vehicle-name {
+    font-weight: 600;
     color: #1a1a1a;
   }
   
-  .price {
-    text-align: right;
+  .reservation-id {
+    font-size: 0.875rem;
+    color: #666;
+  }
+  
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  
+  .status-badge.entretien {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+  
+  .status-badge.reserved {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+  
+  .status-icon {
+    font-size: 1rem;
+  }
+  
+  .price-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
   
   .amount {
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
     color: #FF1414;
-    display: block;
   }
   
   .period {
-    color: #6c757d;
     font-size: 0.875rem;
+    color: #666;
   }
   
   .pagination {
@@ -168,7 +155,7 @@
     gap: 1rem;
     margin-top: 2rem;
     padding-top: 1rem;
-    border-top: 1px solid #e9ecef;
+    border-top: 1px solid #eee;
   }
   
   .pagination-btn {
@@ -179,7 +166,7 @@
     justify-content: center;
     border: none;
     border-radius: 50%;
-    background: linear-gradient(135deg, #FF1414 0%, #FF5555 100%);
+    background: #FF1414;
     color: white;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -198,32 +185,33 @@
   
   .page-info {
     font-size: 0.95rem;
-    color: #6c757d;
+    color: #666;
     font-weight: 500;
   }
   
   @media (max-width: 768px) {
-    .reservation-card {
-      flex-direction: column;
+    .user-reservations {
+      padding: 1rem;
     }
   
-    .car-image {
+    .vehicle-info {
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: center;
+    }
+  
+    .vehicle-image {
       width: 100%;
-      height: 200px;
+      height: 120px;
     }
   
-    .reservation-details {
-      padding: 1.5rem;
-    }
-  
-    .reservation-info {
-      flex-direction: column;
-      gap: 1rem;
+    .price-info {
       align-items: flex-start;
     }
   
-    .price {
-      text-align: left;
+    .status-badge {
+      width: 100%;
+      justify-content: center;
     }
   }
   
