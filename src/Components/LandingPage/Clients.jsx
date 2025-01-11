@@ -49,7 +49,7 @@ function Clients() {
           <div className="swiper-slide box">
             <img src={client1} alt="" />
             <div className="content">
-              <p>aqwad agence hhhhhhhhhhhhhhhhhhhhhh</p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, quia?</p>
               <h3>Anas Slimani</h3>
               <div class="stars">
                 <i class="fas fa-star"></i>
@@ -64,7 +64,7 @@ function Clients() {
           <div className="swiper-slide box">
             <img src={client2} alt="" />
             <div className="content">
-              <p>agence dial zab a wlad qhab</p>
+              <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit, officia?</p>
               <h3>Badr Ezziyati</h3>
               <div class="stars">
                 <i class="fas fa-star"></i>
@@ -79,7 +79,7 @@ function Clients() {
           <div className="swiper-slide box">
             <img src={client3} alt="" />
             <div className="content">
-              <p>dacia daial zab jibo clio hh</p>
+              <p>lorem10</p>
               <h3>Ihab Hilal</h3>
               <div class="stars">
                 <i class="fas fa-star"></i>
@@ -94,7 +94,7 @@ function Clients() {
           <div className="swiper-slide box">
             <img src={client4} alt="" />
             <div className="content">
-              <p>t3iiiiiiiiiiiiich DACIA a lkhout hh</p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, pariatur!</p>
               <h3>Said Yassine</h3>
               <div class="stars">
                 <i class="fas fa-star"></i>

@@ -76,7 +76,7 @@ const Panier = ({ onTogglePanier, reservedCars, onReservationDelete }) => {
             />
             <div className="item-image">
               <img 
-                src={`http://localhost:8082${reservation.vehicule.imagepath}`} 
+                src={`http://localhost:8082${reservation.vehicule.logoPath}`} 
                 alt={`${reservation.vehicule.marque} ${reservation.vehicule.modele}`}
               />
             </div>
