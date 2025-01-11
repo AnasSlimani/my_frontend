@@ -12,7 +12,10 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        setUser(decoded);
+        setUser({
+          ...decoded,
+          role: decoded.role || 'USER' // Ensure there's always a role, default to 'USER'
+        });
         setIsAuthenticated(true);
       } catch (error) {
         console.error('Invalid token:', error);
@@ -24,7 +27,10 @@ export const AuthProvider = ({ children }) => {
   const login = (token) => {
     localStorage.setItem('jwtToken', token);
     const decoded = jwtDecode(token);
-    setUser(decoded);
+    setUser({
+      ...decoded,
+      role: decoded.role || 'USER' // Ensure there's always a role, default to 'USER'
+    });
     setIsAuthenticated(true);
   };
 

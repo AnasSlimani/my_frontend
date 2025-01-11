@@ -35,7 +35,7 @@ export default function SignUp() {
             if (role == "ADMIN"){
                 navigate("/admin")
             } else {
-                navigate("/signup")
+                navigate("/cars")
                 // alert("hi")
             }
             // navigate('/signup');
