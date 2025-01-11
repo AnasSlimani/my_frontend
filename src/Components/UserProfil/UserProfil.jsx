@@ -24,7 +24,7 @@ const UserProfil = () => {
 
         // Fetch reservations
         const reservationsResponse = await fetch(
-          `http://localhost:8082/api/reservation/reservedcars/${userId}`,
+          `http://localhost:8082/api/reservation/allreservations/${userId}`,
           {
             headers: {
               'Authorization': `Bearer ${token}`

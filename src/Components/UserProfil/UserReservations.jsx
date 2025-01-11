@@ -60,15 +60,15 @@ const UserReservations = ({ reservations }) => {
                 </td>
                 <td>
                   <span className={`status-badge ${reservation.status?.toLowerCase()}`}>
-                    {reservation.status === 'ENTRETIEN' ? (
+                    {reservation.status === 'entretient' ? (
                       <>
                         <FaTools className="status-icon" />
-                        Maintenance
+                        entretien
                       </>
                     ) : (
                       <>
                         <FaCheckCircle className="status-icon" />
-                        Reserved
+                        Payed
                       </>
                     )}
                   </span>

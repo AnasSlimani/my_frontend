@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ReservationConflictWindow from './ReservationConflictWindow';
 import PaymentSuccessWindow from './PaymentSuccessWindow';
 import { calculateDuration } from './CalulateDuration';
+import {UsersInfos} from '../auth/Authentification';
 
 export default function FormBooking() {
   const [startDate, setStartDate] = useState('');
@@ -11,10 +12,15 @@ export default function FormBooking() {
   const [showReservationConflict, setShowReservationConflict] = useState(false);
   const [showPaymentSuccess, setShowPaymentSuccess] = useState(false);
   const [conflictEndDate, setConflictEndDate] = useState('');
+  const[userinfos,setuserinfos]=useState({});
+
+  
+  
 
   const location = useLocation();
   const carDetails = location.state?.carDetails.vehicule || {};
   const reservationId = location.state?.carDetails.id || {};
+  const userinfoss=location.state?.carDetails.utilisateur || {};
   const navigate = useNavigate();
 
   const [formBooking, setFormBooking] = useState({
@@ -69,6 +75,8 @@ export default function FormBooking() {
   };
 
   const handelConfirmPaiment = async (event) => {
+    setuserinfos(UsersInfos);
+    console.log(userinfos);
     const token = localStorage.getItem('jwtToken');
     event.preventDefault();
 
@@ -279,6 +287,8 @@ export default function FormBooking() {
           onClose={() => setShowPaymentSuccess(false)}
           startDate={startDate}
           carDetails={carDetails}
+          endDate={endDate}
+          user={userinfoss}
         />
       )}
     </div>

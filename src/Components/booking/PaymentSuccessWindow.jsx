@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import jsPDF from "jspdf";
 import logo from '../../images/car-logo.png';
 
-const PaymentSuccessWindow = ({ onClose, startDate, carDetails }) => {
+const PaymentSuccessWindow = ({ onClose, startDate, carDetails, endDate ,user}) => {
   const [logoBase64, setLogoBase64] = useState('');
 
   useEffect(() => {
@@ -61,9 +61,9 @@ const PaymentSuccessWindow = ({ onClose, startDate, carDetails }) => {
     // Add main content with improved formatting
     doc.setTextColor(51, 51, 51);
     doc.setFontSize(11);
-    const content = `This Rental Agreement ("Agreement") is entered into between CarRental Company, located at 123 Anywhere St., Any City ("the Company"), and ${carDetails.utilisateur?.firstName} ${carDetails.utilisateur?.lastName} ("the Renter"), residing at ${carDetails.utilisateur?.address || 'N/A'}.
+    const content = `This Rental Agreement ("Agreement") is entered into between CarRental Company, located at 123 Anywhere St., Any City ("the Company"), and ${user.firstName} ${user.lastName} ("the Renter"), residing at ${carDetails.utilisateur?.address || 'N/A'}.
 
-By this agreement, the Company agrees to rent to the Renter a ${carDetails.marque} ${carDetails.modele}, Year ${carDetails.annee}, for the period from ${new Date(startDate).toLocaleDateString()} to ${new Date(carDetails.dateFin).toLocaleDateString()}, at a daily rate of ${carDetails.prix} DHS, with a total rental amount of ${calculateTotalAmount(startDate, carDetails.dateFin, carDetails.prix)} DHS.
+By this agreement, the Company agrees to rent to the Renter a ${carDetails.marque} ${carDetails.modele}, Year ${carDetails.annee}, for the period from ${new Date(startDate).toLocaleDateString()} to ${new Date(endDate).toLocaleDateString()}, at a daily rate of ${carDetails.prix} DHS, with a total rental amount of ${calculateTotalAmount(startDate, endDate, carDetails.prix)} DHS.
 
 The rental includes comprehensive insurance with standard coverage, subject to a deductible payable by the Renter in case of damage. The Renter agrees to maintain the vehicle in the same condition as received, comply with all traffic laws, and return the vehicle with the same fuel level.
 
@@ -86,16 +86,23 @@ Any violations, damages, or excessive cleaning requirements will result in addit
     doc.setTextColor(66, 99, 235);
     doc.text("Renter:", 25, signatureY + 10);
     doc.setTextColor(51, 51, 51);
-    doc.text(`${carDetails.utilisateur?.firstName} ${carDetails.utilisateur?.lastName}`, 25, signatureY + 20);
+    doc.text(`${user.firstName} ${user.lastName}`, 25, signatureY + 20);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 25, signatureY + 30);
 
     // Company signature box
-    doc.roundedRect(110, signatureY, 75, 40, 3, 3, 'FD');
-    doc.setTextColor(66, 99, 235);
-    doc.text("Company Representative:", 115, signatureY + 10);
-    doc.setTextColor(51, 51, 51);
-    doc.text("Aymen Lamkhanet", 115, signatureY + 20);
-    doc.text(`Date: ${new Date().toLocaleDateString()}`, 115, signatureY + 30);
+    // Set the background color to white
+doc.setFillColor(255, 255, 255); // RGB for white
+doc.roundedRect(110, signatureY, 75, 40, 3, 3, 'FD');
+
+// Set text color for the heading
+doc.setTextColor(66, 99, 235);
+doc.text("Company Representative:", 115, signatureY + 10);
+
+// Set text color for the representative name and date
+doc.setTextColor(51, 51, 51);
+doc.text("Anas Slimani", 115, signatureY + 20);
+doc.text(`Date: ${new Date().toLocaleDateString()}`, 115, signatureY + 30);
+
 
     // Add footer with styling
     const footerY = doc.internal.pageSize.height - 20;
@@ -105,8 +112,8 @@ Any violations, damages, or excessive cleaning requirements will result in addit
     
     doc.setFontSize(8);
     doc.setTextColor(128, 128, 128);
-    doc.text("CarRental Company • 123 Anywhere St., Any City", pageWidth / 2, footerY, { align: "center" });
-    doc.text("Tel: +123-456-7890 • Email: contact@carrentalcompany.com", pageWidth / 2, footerY + 5, { align: "center" });
+    doc.text("WHEELS Company • 123 Anywhere St., KHOURIBGA", pageWidth / 2, footerY, { align: "center" });
+    doc.text("Tel: +212 670623901 • Email: bziyati11@gmail.com", pageWidth / 2, footerY + 5, { align: "center" });
 
     // Save the PDF
     doc.save(`rental_agreement_${refNumber}.pdf`);
