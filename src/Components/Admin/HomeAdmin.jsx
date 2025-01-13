@@ -4,22 +4,64 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import './homeadmin.css';
 
 function HomeAdmin() {
+
   const [clientsCount, setClientsCount] = useState(0);
+  const [vehiclesCount, setVehiclesCount] = useState(0);
+  const [reservationCount, setReservationCount] = useState(0);
 
-  useEffect(() => {
-    const fetchClientsCount = async () => {
-      try {
-        const response = await fetch('http://localhost:8082/api/utilisateur/count');
-        if (!response.ok) throw new Error('Failed to fetch');
-        const data = await response.json();
-        setClientsCount(data);
-      } catch (error) {
-        console.error('Error fetching client count:', error);
-      }
-    };
+    useEffect(() => {
+        // Appel à l'API avec fetch
+        const fetchClientsCount = async () => {
+            try {
+                const response = await fetch('http://localhost:8082/api/utilisateur/count'); // URL du backend
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la récupération des données');
+                }
+                const data = await response.json(); // Assurez-vous que la réponse est au format JSON
+                setClientsCount(data); // Mettez à jour l'état avec le nombre de clients
+            } catch (error) {
+                console.error('Erreur lors de la récupération du nombre de clients:', error);
+            }
+        };
 
-    fetchClientsCount();
-  }, []);
+        fetchClientsCount();
+    }, []); // [] pour n'exécuter qu'une fois lors du montage
+
+    useEffect(() => {
+        // Appel à l'API avec fetch
+        const fetchVehiculesCount = async () => {
+            try {
+                const response = await fetch('http://localhost:8082/api/vehicules/count'); // URL du backend
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la récupération des données');
+                }
+                const data = await response.json(); // Assurez-vous que la réponse est au format JSON
+                setVehiclesCount(data); // Mettez à jour l'état avec le nombre de vehicules
+            } catch (error) {
+                console.error('Erreur lors de la récupération du nombre de clients:', error);
+            }
+        };
+
+        fetchVehiculesCount();
+    }, []); // [] pour n'exécuter qu'une fois lors du montage
+
+    useEffect(() => {
+        // Appel à l'API avec fetch
+        const fetchReservationCount = async () => {
+            try {
+                const response = await fetch('http://localhost:8082/api/reservation/count'); // URL du backend
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la récupération des données');
+                }
+                const data = await response.json(); // Assurez-vous que la réponse est au format JSON
+                setReservationCount(data); // Mettez à jour l'état avec le nombre de reservation
+            } catch (error) {
+                console.error('Erreur lors de la récupération du nombre de clients:', error);
+            }
+        };
+
+        fetchReservationCount();
+    }, []);
 
   const data = [
     { name: 'Jan', value: 4000 },
@@ -43,7 +85,7 @@ function HomeAdmin() {
             <h3>Reservations</h3>
             <FaCalendarCheck className='card_icon'/>
           </div>
-          <h1>300</h1>
+          <h1>{reservationCount}</h1>
           <span className="percentage">+3.2% vs last month</span>
         </div>
         
@@ -52,7 +94,7 @@ function HomeAdmin() {
             <h3>Vehicules</h3>
             <FaCar className='card_icon'/>
           </div>
-          <h1>12</h1>
+          <h1>{vehiclesCount}</h1>
           <span className="percentage">+3.2% vs last month</span>
         </div>
         
