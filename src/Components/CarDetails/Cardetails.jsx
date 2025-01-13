@@ -8,31 +8,36 @@ import Features from './Features'
 import Pricing from './Pricing'
 import Specifications from './Specifications'
 
-const CarDetails = ({ idCar }) => {
+const CarDetails = (props) => {
+  const idCar = props.idCar;
+  
   return (
-    <div className="min-h-screen bg-gradient-to-r from-gray-50 to-gray-100">
+    <>
       <CarNavBare />
-      <div className='p-6 md:p-10 lg:px-20 mt-20 max-w-7xl mx-auto'>
+      <div className='p-10 md:px-20 mt-20 carDETAIL'>
         <Details ID={idCar} />
 
-        <div className='grid grid-cols-1 lg:grid-cols-3 w-full mt-10 gap-6'>
-          {/* Main Content */}
-          <div className='lg:col-span-2 space-y-6'>
+        <div className='grid grid-cols-1 md:grid-cols-3 w-full mt-10 gap-5'>
+          {/* left */}
+          <div className='md:col-span-2'>
+            {/* Image Gallery */}
             <ImageGallery ID={idCar} />
+            {/* Description */}
             <Description ID={idCar} />
+            {/* Features List */}
             <Features ID={idCar} />
           </div>
           
-          {/* Sidebar */}
-          <div className="space-y-6">
-            <div className="sticky top-6">
-              <Pricing ID={idCar} />
-              <Specifications ID={idCar} />
-            </div>
+          {/* right */}
+          <div>
+            {/* Pricing */}
+            <Pricing ID={idCar} />
+            {/* Car Properties */}
+            <Specifications ID={idCar} />
           </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

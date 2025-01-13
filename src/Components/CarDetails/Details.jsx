@@ -1,50 +1,53 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import './Details.css'
-import { Calendar, Gauge, GaugeCircle, Fuel } from 'lucide-react'
+import { useState, useEffect } from 'react';
+import { HiOutlineCalendar } from "react-icons/hi";
+import { IoSpeedometerOutline } from "react-icons/io5";
+import { GiGearStickPattern } from "react-icons/gi";
+import { FaGasPump } from "react-icons/fa";
 
-const Details = ({ ID }) => {
-  const [car, setCar] = useState(null)
+const Details = (props) => {
+  const CARid = props.ID;
+  const [car, setCar] = useState([]);
+  const token = localStorage.getItem("jwtToken");
 
   useEffect(() => {
     const fetchCar = async () => {
       try {
-        const response = await fetch(`http://localhost:8082/api/vehicules/${ID}`)
-        const data = await response.json()
+        const response = await fetch(`http://localhost:8082/api/vehicules/${CARid}`);
+        const data = await response.json();
         setCar(data)
       } catch (error) {
-        console.error("Error fetching car details:", error)
+        console.log("Error fetching the car : ", error.message)
       }
     }
 
-    fetchCar()
-  }, [ID])
-
-  if (!car) return null
-
-  const stats = [
-    { icon: Calendar, label: car.annee },
-    { icon: Gauge, label: `${car.maxCount} km` },
-    { icon: GaugeCircle, label: car.vitesse },
-    { icon: Fuel, label: car.Fuel }
-  ]
+    fetchCar();
+  }, []);
 
   return (
-    <div className="animate-fadeIn">
-      <div className='text-gray-900'>
-        <h1 className='font-bold text-4xl md:text-5xl tracking-tight'>{car.marque}</h1>
-        <p className='text-lg text-gray-600 mt-2'>{car.modele}</p>
+    <div>
+      <div className='text-black'>
+        <h2 className='font-bold text-3xl'>{car.marque}</h2>
+        <p className='text-sm'>{car.modele}</p>
 
-        <div className='flex flex-wrap gap-3 mt-6'>
-          {stats.map((Stat, index) => (
-            <div 
-              key={index}
-              className='flex items-center gap-2 bg-white rounded-full px-4 py-2 shadow-sm
-                       transition-all duration-300 hover:shadow-md hover:scale-105'
-            >
-              <Stat.icon className='h-5 w-5 text-blue-600' />
-              <span className='text-gray-700 font-medium'>{Stat.label}</span>
-            </div>
-          ))}
+        <div className='flex gap-2 mt-3'>
+          <div className='flex gap-2 items-center bg-blue-50 rounded-full p-2 px-3 hover:bg-blue-100 transition-colors duration-300'>
+            <HiOutlineCalendar className='h-7 w-7 text-primary' />
+            <h2 className='text-primary text-sm'>{car.annee}</h2>
+          </div>
+          <div className='flex gap-2 items-center bg-blue-50 rounded-full p-2 px-3 hover:bg-blue-100 transition-colors duration-300'>
+            <IoSpeedometerOutline className='h-7 w-7 text-primary' />
+            <h2 className='text-primary text-sm'>{car.vitesse}</h2>
+          </div>
+          <div className='flex gap-2 items-center bg-blue-50 rounded-full p-2 px-3 hover:bg-blue-100 transition-colors duration-300'>
+            <GiGearStickPattern className='h-7 w-7 text-primary' />
+            <h2 className='text-primary text-sm'>{car.maxCount}</h2>
+          </div>
+          <div className='flex gap-2 items-center bg-blue-50 rounded-full p-2 px-3 hover:bg-blue-100 transition-colors duration-300'>
+            <FaGasPump className='h-7 w-7 text-primary' />
+            <h2 className='text-primary text-sm'>{car.Fuel}</h2>
+          </div>
         </div>
       </div>
     </div>

@@ -18,11 +18,7 @@ const Pricing = ({ ID, onReserve }) => {
             'Content-Type': 'application/json',
           },
         })
-        if (response.status === 401) {
-          alert("Session expired")
-          navigate("/login")
-          return
-        }
+        
         const data = await response.json()
         setCar(data)
       } catch (error) {

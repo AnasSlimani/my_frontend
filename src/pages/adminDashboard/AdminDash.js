@@ -18,14 +18,7 @@ function AdminDash() {
   }
 
 
-  useEffect(()=>{
-    const token = localStorage.getItem("jwtToken");
-    const decodedToken = jwtDecode(token);
-    const role = decodedToken.role;
-    if (role != "ADMIN"){
-        navigate("/error");
-    }
-  },[]);
+ 
 
   return (
     <div className='grid-container'>

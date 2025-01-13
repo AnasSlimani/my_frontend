@@ -3,6 +3,7 @@ import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 function FormAddVehicle() {
+
   const [formData, setFormData] = useState({
     annee: '',
     marque: '',
@@ -17,25 +18,46 @@ function FormAddVehicle() {
     features: '',
     maxCount: '',
     vitesse: '',
-    
-    
-    
+    imagepath: null,    // New field
+    detailpic: null,    // New field
+    logoPath: null,     // New field
   });
+  
 
   const [errors, setErrors] = useState({});
+
+  const [previews, setPreviews] = useState({
+    imagepath: null,
+    detailpic: null,
+    logoPath: null,
+  });
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: files ? files[0] : value, // Stocker l'objet fichier si présent
-    }));
+    const { name, files } = e.target;
+  
+    if (files && files[0]) {
+      // Construct the path
+      const fileName = files[0].name;
+      const filePath = `/images/${fileName}`;
+  
+      console.log(`${name} file path:`, filePath); // Logs the constructed path
+  
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: filePath, // Store the constructed path in the form data
+      }));
+    } else {
+      // Handle non-file inputs
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: e.target.value,
+      }));
+    }
   };
   
   
   
-
   const validateForm = () => {
     const newErrors = {};
     for (const key in formData) {
@@ -57,38 +79,54 @@ function FormAddVehicle() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('jwtToken');
-  
+    // console.log("image path : " + formData.imagepath.name);
+    // console.log("detail pic : " + formData.detailpic.name);
+    // console.log("logo path  : " + formData.logoPath.name);
+    
+
+    // formData.imagepath = formData.imagepath.name;
+    // formData.detailpic = formData.detailpic.name;
+    // formData.log = formData.log.name;
+
+
+    console.log("image path : " + formData.imagepath);
+    console.log("detail pic : " + formData.detailpic);
+    console.log("logo path  : " + formData.logoPath);
+    
+
+
     if (!validateForm()) {
       return;
     }
   
-    try {
-      // Créer un objet FormData
-      const data = new FormData();
-      for (const key in formData) {
-        data.append(key, formData[key]);
+      try {
+        // Créer un objet FormData
+        const data = new FormData();
+        for (const key in formData) {
+          data.append(key, formData[key]);
+        }
+        console.log(token);
+    
+        const response = await fetch('http://localhost:8082/api/vehicules/addVehicule', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(formData),
+        });
+    
+        if (response.ok) {
+          console.log('Véhicule ajouté avec succès');
+          navigate('/admin/vehicules');
+        } else if (response.status === 401) {
+          console.error('Erreur 401 : Non autorisé. Vérifiez le token JWT.');
+        } else {
+          console.error('Erreur lors de l’ajout du véhicule');
+        }
+      } catch (error) {
+        console.error('Erreur de réseau ou backend :', error);
       }
-  
-      const response = await fetch('http://localhost:8082/api/vehicules/addVehicule', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(formData),
-      });
-  
-      if (response.ok) {
-        console.log('Véhicule ajouté avec succès');
-        navigate('/admin/vehicules');
-      } else if (response.status === 401) {
-        console.error('Erreur 401 : Non autorisé. Vérifiez le token JWT.');
-      } else {
-        console.error('Erreur lors de l’ajout du véhicule');
-      }
-    } catch (error) {
-      console.error('Erreur de réseau ou backend :', error);
-    }
   };
   
   
@@ -317,7 +355,52 @@ function FormAddVehicle() {
           </Row>
 
 
-          
+          {/* ///////////////////////////// */}
+
+
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="imagepath">
+                <Form.Label>Image Path</Form.Label>
+                <Form.Control
+                  type="file"
+                  name="imagepath"
+                  onChange={handleChange}
+                  isInvalid={!!errors.imagepath}
+                />
+                <Form.Control.Feedback type="invalid">{errors.imagepath}</Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="detailpic">
+                <Form.Label>Detail Picture</Form.Label>
+                <Form.Control
+                  type="file"
+                  name="detailpic"
+                  onChange={handleChange}
+                  isInvalid={!!errors.detailpic}
+                />
+                <Form.Control.Feedback type="invalid">{errors.detailpic}</Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3" controlId="logoPath">
+                <Form.Label>Logo Path</Form.Label>
+                <Form.Control
+                  type="file"
+                  name="logoPath"
+                  onChange={handleChange}
+                  isInvalid={!!errors.logoPath}
+                />
+                <Form.Control.Feedback type="invalid">{errors.logoPath}</Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+          </Row>
+
+          {/* ///////////////////////////// */}
 
           <div className="d-grid">
             <Button variant="success" type="submit">

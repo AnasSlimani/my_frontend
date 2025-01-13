@@ -13,6 +13,9 @@ function GestionVehicules() {
     const fetchVehicules = async () => {
       try {
         const response = await fetch("http://localhost:8082/api/vehicules/allVehicules");
+        if (!response.ok) {
+          throw new Error("Failed to fetch vehicles.");
+        }
         const data = await response.json();
         setVehicules(data);
       } catch (err) {
@@ -26,7 +29,12 @@ function GestionVehicules() {
   const handleDelete = async (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce véhicule ?")) {
       try {
+        const token = localStorage.getItem("jwtToken");
         const response = await fetch(`http://localhost:8082/api/vehicules/deleteVehicule/${id}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
           method: "DELETE",
         });
 
@@ -160,4 +168,3 @@ function GestionVehicules() {
 }
 
 export default GestionVehicules;
-

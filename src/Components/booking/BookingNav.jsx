@@ -21,7 +21,7 @@ function BookingNav() {
   window.addEventListener('scroll', changeBackground);
 
   const handleBack = () => {
-    navigate('/signup');
+    navigate('/cars');
   };
 
   if (!isAuthenticated) {

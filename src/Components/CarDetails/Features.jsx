@@ -25,7 +25,7 @@ const Features = ({ ID }) => {
 
   return (
     <div className="bg-white rounded-2xl shadow-sm transition-all duration-300 
-                    hover:shadow-lg hover:translate-y-[-2px]">
+                    hover:shadow-lg hover:translate-y-[-2px] mt-6">
       <div className='p-8'>
         <h2 className='text-2xl font-bold text-gray-900 mb-6 relative inline-block'>
           Features

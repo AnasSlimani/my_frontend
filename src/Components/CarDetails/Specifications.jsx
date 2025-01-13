@@ -1,64 +1,100 @@
-import React, { useState, useEffect } from 'react'
-import { Car, CheckCircle, Type, Calendar, Users, Package, Info } from 'lucide-react'
+import React from 'react'
+import { useState, useEffect } from 'react';
+import { FaCarAlt, FaCheckCircle } from "react-icons/fa";
+import { FiType } from "react-icons/fi";
+import { IoMan } from "react-icons/io5";
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
+import { GrStatusInfo } from "react-icons/gr";
+import { MdDateRange } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
-const Specifications = ({ ID }) => {
-  const [car, setCar] = useState(null)
+export default function Specifications(props) {
+    const CARid = props.ID;
+    const navigate = useNavigate();
+    const [car, setCar] = useState([]);
+    const token = localStorage.getItem("jwtToken");
 
-  useEffect(() => {
-    const fetchCar = async () => {
-      try {
-        const response = await fetch(`http://localhost:8082/api/vehicules/${ID}`)
-        const data = await response.json()
-        setCar(data)
-      } catch (error) {
-        console.error("Error fetching car:", error)
-      }
-    }
+    useEffect(() => {
+        const fetchCar = async () => {
+            try {
+                const response = await fetch(`http://localhost:8082/api/vehicules/${CARid}`);
+                
+                const data = await response.json();
+                setCar(data)
+            } catch (error) {
+                console.log("Error fetching the car : ", error.message)
+            }
+        }
 
-    fetchCar()
-  }, [ID])
+        fetchCar();
+    }, []);
 
-  const specs = [
-    { icon: Car, label: 'Marque', value: car?.marque },
-    { icon: CheckCircle, label: 'Modele', value: car?.modele },
-    { icon: Type, label: 'Type', value: car?.vehiculeType },
-    { icon: Calendar, label: 'Annee', value: car?.annee },
-    { icon: Users, label: 'Nbr Reservateurs', value: car?.nbrReservateurs },
-    { icon: Package, label: 'Quantite', value: car?.quantite },
-    { icon: Info, label: 'Status', value: car?.status }
-  ]
-
-  return (
-    <div className="bg-white rounded-2xl shadow-sm mt-6 transition-all duration-300 
-                    hover:shadow-lg hover:translate-y-[-2px]">
-      <div className='p-8'>
-        <h2 className='text-2xl font-bold text-gray-900 mb-6 relative inline-block'>
-          Specifications
-          <span className="absolute bottom-[-4px] left-0 w-1/2 h-1 bg-blue-600 rounded-full"></span>
-        </h2>
-
-        <div className="space-y-4">
-          {specs.map((spec, index) => (
-            <div 
-              key={index}
-              className="flex items-center justify-between p-3 rounded-xl
-                         transition-colors hover:bg-blue-50 group"
-            >
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-blue-100 group-hover:bg-blue-200 
-                              transition-colors">
-                  <spec.icon className="h-5 w-5 text-blue-600" />
+    return (
+        <div className='p-5 rounded-xl border-2 shadow-md mt-3 text-black lighgrey hover:shadow-lg transition-all duration-300 bg-white'>
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3 font-bold">
+                    <span className="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full">
+                        <FaCarAlt className="text-white text-lg" />
+                    </span>
+                    <span>Marque</span>
                 </div>
-                <span className="font-medium text-gray-700">{spec.label}</span>
-              </div>
-              <span className="text-gray-600">{spec.value || '-'}</span>
+                <span>{car.marque}</span>
             </div>
-          ))}
+            <div className="flex items-center justify-between mt-10">
+                <div className="flex items-center gap-3 font-bold">
+                    <span className="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full">
+                        <FaCheckCircle className="text-white text-lg" />
+                    </span>
+                    <span>Modele</span>
+                </div>
+                <span>{car.modele}</span>
+            </div>
+            <div className="flex items-center justify-between mt-10">
+                <div className="flex items-center gap-3 font-bold">
+                    <span className="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full">
+                        <FiType className="text-white text-lg" />
+                    </span>
+                    <span>Type</span>
+                </div>
+                <span>{car.vehiculeType}</span>
+            </div>
+            <div className="flex items-center justify-between mt-10">
+                <div className="flex items-center gap-3 font-bold">
+                    <span className="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full">
+                        <MdDateRange className="text-white text-lg" />
+                    </span>
+                    <span>Annee</span>
+                </div>
+                <span>{car.annee}</span>
+            </div>
+            <div className="flex items-center justify-between mt-10">
+                <div className="flex items-center gap-3 font-bold">
+                    <span className="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full">
+                        <IoMan className="text-white text-lg" />
+                    </span>
+                    <span>Nbr Reservateurs</span>
+                </div>
+                <span>{car.nbrReservateurs}</span>
+            </div>
+            <div className="flex items-center justify-between mt-10">
+                <div className="flex items-center gap-3 font-bold">
+                    <span className="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full">
+                        <MdOutlineProductionQuantityLimits className="text-white text-lg" />
+                    </span>
+                    <span>Quantite</span>
+                </div>
+                <span>{car.quantite}</span>
+            </div>
+            <div className="flex items-center justify-between mt-10">
+                <div className="flex items-center gap-3 font-bold">
+                    <span className="flex items-center justify-center w-8 h-8 bg-blue-600 rounded-full">
+                        <GrStatusInfo className="text-white text-lg" />
+                    </span>
+                    <span>Status</span>
+                </div>
+                <span>{car.status}</span>
+            </div>
         </div>
-      </div>
-    </div>
-  )
+    )
 }
-
-export default Specifications
 
