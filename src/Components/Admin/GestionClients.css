@@ -314,3 +314,117 @@
   }
 }
 
+.add-user-btn {
+  background-color: #4263eb !important;
+  border: none;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.add-user-btn:hover {
+  background-color: #364fc7 !important;
+  transform: translateY(-1px);
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  color: #6c757d;
+}
+
+.user-modal .modal-content {
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+}
+
+.user-modal .modal-header {
+  border-bottom: 1px solid #f3f4f6;
+  padding: 1.5rem 2rem;
+}
+
+.user-modal .modal-title {
+  font-weight: 700;
+  color: #111827;
+  font-size: 1.5rem;
+}
+
+.user-modal .modal-body {
+  padding: 2rem;
+}
+
+.user-modal .form-label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.925rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-modal .form-control {
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  background-color: #f9fafb;
+}
+
+.user-modal .form-control:hover {
+  border-color: #d1d5db;
+  background-color: #ffffff;
+}
+
+.user-modal .form-control:focus {
+  border-color: #3b82f6;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.user-modal .btn-primary {
+  background-color: #3b82f6;
+  border: none;
+  padding: 0.875rem 1.5rem;
+  font-weight: 600;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+}
+
+.user-modal .btn-primary:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2);
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 16px;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .add-user-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+

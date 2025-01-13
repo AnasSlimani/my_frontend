@@ -3,19 +3,17 @@ import { Table, Form, InputGroup, Button, Badge, Pagination } from 'react-bootst
 import { FaSearch, FaPen, FaTrash, FaFilter } from 'react-icons/fa';
 import './usersTable.css';
 
-export function UsersTable({ data, onDelete }) {
+export function UsersTable({ data, onDelete, onUpdate }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
-  // Filtering logic
   const filteredData = data.filter(item =>
     Object.values(item).some(val =>
-      val.toString().toLowerCase().includes(searchTerm.toLowerCase())
+      val?.toString().toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
 
-  // Pagination logic
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
@@ -23,7 +21,6 @@ export function UsersTable({ data, onDelete }) {
 
   return (
     <div className="dashboard-container">
-      {/* Search and Filter Section */}
       <div className="search-section">
         <div className="search-box">
           <InputGroup>
@@ -45,7 +42,6 @@ export function UsersTable({ data, onDelete }) {
         </div>
       </div>
 
-      {/* Table Section */}
       <div className="table-container">
         <Table hover responsive className="modern-table">
           <thead>
@@ -62,7 +58,7 @@ export function UsersTable({ data, onDelete }) {
                 <td>
                   <div className="user-info">
                     <div className="user-avatar">
-                      {user.firstName[0]}{user.lastName[0]}
+                      {user.firstName?.[0]}{user.lastName?.[0]}
                     </div>
                     <div className="user-details">
                       <div className="user-name">{user.firstName} {user.lastName}</div>
@@ -78,7 +74,7 @@ export function UsersTable({ data, onDelete }) {
                 </td>
                 <td>
                   <Badge 
-                    className={`role-badge ${user.role.toLowerCase()}`}
+                    className={`role-badge ${user.role?.toLowerCase()}`}
                   >
                     {user.role}
                   </Badge>
@@ -88,7 +84,7 @@ export function UsersTable({ data, onDelete }) {
                     <Button 
                       variant="light"
                       className="edit-button"
-                      href={`/admin/clients/UpdateUser/${user.id}`}
+                      onClick={() => onUpdate(user)}
                     >
                       <FaPen />
                     </Button>
@@ -107,7 +103,6 @@ export function UsersTable({ data, onDelete }) {
         </Table>
       </div>
 
-      {/* Pagination Section */}
       <div className="pagination-section">
         <div className="entries-info">
           Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, filteredData.length)} of {filteredData.length} entries

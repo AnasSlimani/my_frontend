@@ -1,25 +1,52 @@
-import React, { useState } from 'react';
-import { Form, Button, Alert } from 'react-bootstrap';
-import { FaUser, FaEnvelope, FaPhone, FaUserTag, FaLock } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { FaUser, FaEnvelope, FaPhone, FaUserTag } from 'react-icons/fa';
 
-function FormAddUser({ onSubmitSuccess }) {
+function FormUpdateUser({ userId, initialData, onSubmitSuccess }) {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
     role: '',
-    password: ''
+    password:''
   });
 
   const [errors, setErrors] = useState({});
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`http://localhost:8082/api/utilisateur/${userId}`);
+        const data = await response.json();
+        setFormData({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          phone: data.phone,
+          role: data.role,
+          password: data.password
+        });
+      } catch (err) {
+        console.error('Erreur fetching user data:', err.message);
+      }
+    };
+
+    fetchUser();
+  }, [userId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setFormData(prevData => ({
       ...prevData,
       [name]: value,
     }));
+    // Clear error when field is modified
+    if (errors[name]) {
+      setErrors(prevErrors => ({
+        ...prevErrors,
+        [name]: undefined
+      }));
+    }
   };
 
   const validateForm = () => {
@@ -29,7 +56,6 @@ function FormAddUser({ onSubmitSuccess }) {
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     if (!formData.phone.trim()) newErrors.phone = 'Phone is required';
     if (!formData.role.trim()) newErrors.role = 'Role is required';
-    if (!formData.password.trim()) newErrors.password = 'Password is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -37,14 +63,14 @@ function FormAddUser({ onSubmitSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("jwtToken");
     if (!validateForm()) {
       return;
     }
 
     try {
-      const response = await fetch('http://localhost:8082/api/utilisateur/addUser', {
-        method: 'POST',
+      const token = localStorage.getItem("jwtToken");
+      const response = await fetch(`http://localhost:8082/api/utilisateur/${userId}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
@@ -53,13 +79,15 @@ function FormAddUser({ onSubmitSuccess }) {
       });
 
       if (response.ok) {
-        console.log('Utilisateur ajouté avec succès');
         onSubmitSuccess();
       } else {
-        console.error('Erreur lors de lajout de lutilisateur');
+        const errorData = await response.json();
+        console.error('Update failed:', errorData);
+        alert('Failed to update user. Please try again.');
       }
     } catch (error) {
-      console.error('Erreur de réseau ou backend :', error);
+      console.error('Error updating user:', error);
+      alert('Network error occurred. Please try again.');
     }
   };
 
@@ -110,21 +138,6 @@ function FormAddUser({ onSubmitSuccess }) {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="password">
-        <Form.Label><FaLock /> Password</Form.Label>
-        <Form.Control
-          type="password"
-          placeholder="Enter Password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          isInvalid={!!errors.password}
-        />
-        <Form.Control.Feedback type="invalid">
-          {errors.password}
-        </Form.Control.Feedback>
-      </Form.Group>
-
       <Form.Group className="mb-3" controlId="phone">
         <Form.Label><FaPhone /> Phone</Form.Label>
         <Form.Control
@@ -157,12 +170,12 @@ function FormAddUser({ onSubmitSuccess }) {
 
       <div className="d-grid">
         <Button variant="primary" type="submit" size="lg">
-          Add User
+          Update User
         </Button>
       </div>
     </Form>
   );
 }
 
-export default FormAddUser;
+export default FormUpdateUser;
 

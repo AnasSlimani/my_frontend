@@ -37,7 +37,7 @@ function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
     { path: '/admin/vehicules', icon: FaCar, label: 'Vehicules' },
     { path: '/admin/clients', icon: FaUsers, label: 'Clients' },
   ];
-
+  const decodedToken = jwtDecode(localStorage.getItem("jwtToken"));
   return (
     <aside className={`sidebar ${openSidebarToggle ? "sidebar-responsive" : ""}`}>
       {/* Profile Section */}
@@ -45,7 +45,7 @@ function SideBarAdmin({openSidebarToggle, OpenSidebar}) {
         <div className="profile-info">
           <FaUserTie className="profile-icon" />
           <div className="profile-details">
-            <h3>Welcome Ihab</h3>
+            <h3>Welcome {decodedToken.FirstName} </h3>
             <span>Administrator</span>
           </div>
         </div>

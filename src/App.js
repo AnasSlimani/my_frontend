@@ -7,7 +7,7 @@ import SignUp from './pages/signup/SignUp';
 import CarDetail from './pages/CarDetails/CarDetail';
 import GestionClient from './Components/Admin/GestionClient';
 import FormAddUser from './Components/Admin/FormAddUser';
-import UpdateUser from './Components/Admin/UpdateUser';
+// import UpdateUser from './Components/Admin/UpdateUser';
 import Booking from './pages/booking/Booking';
 import ErrorPage from './pages/ErrorPage';
 import GestionVehicules from './Components/Admin/GestionVehicules';
@@ -71,7 +71,7 @@ function App() {
           <Route path="/CarDetail/:id" element={<ProtectedUserRoute Component={CarDetail}/>} />
           <Route path="/admin/clients" element={<ProtectedAdminRoute Component={GestionClient}/>} />
           <Route path="/admin/clients/FormAddUser" element={<ProtectedAdminRoute Component={FormAddUser}/>} />
-          <Route path="/admin/clients/UpdateUser/:id" element={<ProtectedAdminRoute Component={UpdateUser}/>} />
+          {/* <Route path="/admin/clients/UpdateUser/:id" element={<ProtectedAdminRoute Component={UpdateUser}/>} /> */}
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/booking" element={<ProtectedUserRoute Component={Booking}/>} />
           <Route path="/forgetpassword" element={<ForgetPasswd />} />
