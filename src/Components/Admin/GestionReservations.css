@@ -1,0 +1,21 @@
+.dates-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .date-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .date-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .date-icon {
+    color: #6366f1;
+    font-size: 1rem;
+  }

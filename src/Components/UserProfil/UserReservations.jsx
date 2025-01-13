@@ -3,7 +3,7 @@ import { FaCarAlt, FaTools, FaCheckCircle, FaChevronLeft, FaChevronRight, FaInfo
 import ReservationDetailsModal from './ReservationDetailsModal';
 import './userReservations.css';
 
-const UserReservations = ({ reservations }) => {
+const UserReservations = ({ reservations , userData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedReservation, setSelectedReservation] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -138,6 +138,7 @@ const UserReservations = ({ reservations }) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         details={selectedReservation}
+        user={userData}
       />
     </div>
   );

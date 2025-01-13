@@ -3,6 +3,7 @@ import SideBarAdmin from "./SideBarAdmin";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { Plus, Pencil, Trash2 } from 'lucide-react';
+import FormAddVehicle from './FormAddVehicle';
 import './GestionVehicules.css';
 
 function GestionVehicules() {

@@ -106,7 +106,7 @@ const UserProfil = () => {
             onUpdateProfile={handleUpdateProfile}
             onUpdatePassword={handleUpdatePassword}
           />
-          <UserReservations reservations={reservations} />
+          <UserReservations reservations={reservations} userData={userData} />
         </div>
       </div>
     </div>
