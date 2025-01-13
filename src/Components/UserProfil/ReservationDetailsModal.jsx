@@ -36,7 +36,7 @@ const ReservationDetailsModal = ({ isOpen, onClose, details, user }) => {
       doc.addImage(logoBase64, "PNG", logoX, 15, logoWidth, logoHeight);
     }
 
-    // Add decorative elements
+    
     doc.setDrawColor(66, 99, 235);
     doc.setLineWidth(2);
     doc.line(20, 65, 190, 65);
@@ -50,7 +50,7 @@ const ReservationDetailsModal = ({ isOpen, onClose, details, user }) => {
     doc.setFontSize(20);
     doc.text("AND RESERVATION CONFIRMATION", pageWidth / 2, 90, { align: "center" });
 
-    // Add reference number
+    
     doc.setFontSize(12);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(66, 99, 235);
@@ -58,7 +58,7 @@ const ReservationDetailsModal = ({ isOpen, onClose, details, user }) => {
     doc.text(`Reference Number: ${refNumber}`, 20, 110);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 120);
 
-    // Add main content
+    
     doc.setTextColor(51, 51, 51);
     doc.setFontSize(11);
     const content = `This Rental Agreement ("Agreement") is entered into between WheelsCars Company, located at KHOURIBGA, and ${user.firstName} ${user.lastName} ("the Renter").
