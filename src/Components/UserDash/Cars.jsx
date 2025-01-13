@@ -86,7 +86,7 @@ const Cars = ({ filters, onReserve }) => {
           <article className="card__article" key={car.id}>
             <img src={`http://localhost:8082${car.imagepath}`} alt={`${car.marque} ${car.modele}`} className="card__img" />
             <div className="card__data">
-              <span className="card__description">Prix : {car.prix} , Etat : {car.status}</span>
+              <span className="card__description">Price : {car.prix}</span>
               <h2 className="card__title"><img src={`http://localhost:8082${car.logoPath}`} alt="Car Logo" className="iconse" />{car.marque} {car.modele} </h2>
               <div className="buttons">
                 <Link to={'/CarDetail/'+car.id}><a href="#" className="card__button">Read More</a></Link> 

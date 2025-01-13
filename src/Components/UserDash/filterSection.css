@@ -1,146 +1,209 @@
 .modern-filter-container {
-    background: white;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin: 24px auto;
+  max-width: 1200px;
+  padding: 32px;
+  margin-top: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.modern-filter-container:hover {
+  transform: translateY(-2px);
+}
+
+.modern-filter-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.filter-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  transition: color 0.2s ease;
+}
+
+.filter-icon {
+  color: #12742f;
+  font-size: 1rem;
+}
+
+/* Select Styling */
+.filter-group select {
+  appearance: none;
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  color: #1f2937;
+  font-size: 0.95rem;
+  padding: 12px 16px;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-group select:hover {
+  border-color: #12742f;
+}
+
+.filter-group select:focus {
+  border-color: #12742f;
+  box-shadow: 0 0 0 3px rgba(255, 20, 20, 0.1);
+  outline: none;
+}
+
+/* Date Input Styling */
+.date-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.modern-date-input {
+  appearance: none;
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  color: #1f2937;
+  font-size: 0.95rem;
+  padding: 12px 16px;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modern-date-input:hover {
+  border-color: #12742f;
+}
+
+.modern-date-input:focus {
+  border-color: #12742f;
+  box-shadow: 0 0 0 3px rgba(255, 20, 20, 0.1);
+  outline: none;
+}
+
+/* Search Input Styling */
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  gap: 12px;
+}
+
+.modern-search-input {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  color: #1f2937;
+  font-size: 0.95rem;
+  padding: 12px 16px;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.modern-search-input:hover {
+  border-color: #12742f;
+}
+
+.modern-search-input:focus {
+  border-color: #12742f;
+  box-shadow: 0 0 0 3px rgba(255, 20, 20, 0.1);
+  outline: none;
+}
+
+.search-button {
+  background: #12742f;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.search-button:hover {
+  background: #12742f;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 20, 20, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .modern-filter-container {
+    margin: 16px;
+    padding: 20px;
     border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
-    margin: 24px auto;
-    max-width: 1200px;
-    padding: 24px;
-    margin-top: 100px;
   }
-  
-  .modern-filter-content {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
+
   .filter-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    align-items: start;
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
-  
-  .filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .filter-group label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #64748b;
-  }
-  
-  /* Select Styling */
-  .filter-group select {
-    appearance: none;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    color: #1e293b;
-    font-size: 0.875rem;
-    padding: 10px 12px;
-    width: 100%;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .filter-group select:hover {
-    border-color: #94a3b8;
-  }
-  
-  .filter-group select:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    outline: none;
-  }
-  
-  /* Date Input Styling */
-  .date-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .modern-date-input {
-    appearance: none;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    color: #1e293b;
-    font-size: 0.875rem;
-    padding: 10px 12px;
-    padding-left: 36px;
-    width: 100%;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .modern-date-input:hover {
-    border-color: #94a3b8;
-  }
-  
-  .modern-date-input:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    outline: none;
-  }
-  
-  .date-icon {
-    position: absolute;
-    left: 12px;
-    color: #64748b;
-    pointer-events: none;
-  }
-  
-  /* Search Input Styling */
+
   .search-input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
+    flex-direction: column;
   }
-  
-  .modern-search-input {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    border-radius: 8px;
-    color: #1e293b;
-    font-size: 0.875rem;
-    padding: 10px 12px;
-    padding-right: 36px;
+
+  .search-button {
     width: 100%;
-    transition: all 0.2s ease;
   }
-  
-  .modern-search-input:hover {
-    border-color: #94a3b8;
+}
+
+/* Placeholder Styling */
+::placeholder {
+  color: #9ca3af;
+}
+
+/* Select Options Styling */
+select option {
+  padding: 12px;
+  font-size: 0.95rem;
+}
+
+/* Custom Select Arrow */
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+/* Animation for Filter Container */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .modern-search-input:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    outline: none;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .search-icon {
-    position: absolute;
-    right: 12px;
-    color: #64748b;
-    pointer-events: none;
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .modern-filter-container {
-      margin: 16px;
-      padding: 16px;
-    }
-  
-    .filter-row {
-      grid-template-columns: 1fr;
-    }
-  }
-  
-  
+}
+
+.modern-filter-container {
+  animation: fadeIn 0.5s ease-out;
+}
+

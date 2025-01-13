@@ -10,9 +10,9 @@
   --text-color: hsl(0, 0%, 35%);
   --body-color: hsl(0, 0%, 95%);
   --container-color: hsl(0, 0%, 100%);
-  --primary-color: #2563eb; /* Bleu principal */
-  --button-green: blue; /* Vert bouton */
-  --button-green-hover: blue; /* Vert survol */
+  --primary-color: #137974; /* Bleu principal */
+  --button-green: #137974; /* Vert bouton */
+  --button-green-hover: #137974; /* Vert survol */
 
   /*========== Font and typography ==========*/
   /*.5rem = 8px | 1rem = 16px ...*/

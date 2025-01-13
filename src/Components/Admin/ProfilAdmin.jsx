@@ -15,7 +15,7 @@ import {
 import { jwtDecode } from "jwt-decode";
 import SideBarAdmin from "./SideBarAdmin";
 import './profilAdmin.css';
-import profil from '../../images/anasprofile.jpg'
+import profil from '../../images/compagnyLOGO.jpeg'
 
 function ProfilAdmin() {
   const [adminData, setAdminData] = useState({

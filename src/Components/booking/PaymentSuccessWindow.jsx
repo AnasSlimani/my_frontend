@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import jsPDF from "jspdf";
-import logo from '../../images/car-logo.png';
+import logo from '../../images/compagnyLOGO.jpeg';
 
 const PaymentSuccessWindow = ({ onClose, startDate, carDetails, endDate ,user}) => {
   const [logoBase64, setLogoBase64] = useState('');
@@ -61,7 +61,7 @@ const PaymentSuccessWindow = ({ onClose, startDate, carDetails, endDate ,user}) 
     // Add main content with improved formatting
     doc.setTextColor(51, 51, 51);
     doc.setFontSize(11);
-    const content = `This Rental Agreement ("Agreement") is entered into between CarRental Company, located at 123 Anywhere St., Any City ("the Company"), and ${user.firstName} ${user.lastName} ("the Renter"), residing at ${carDetails.utilisateur?.address || 'N/A'}.
+    const content = `This Rental Agreement ("Agreement") is entered into between WheelsCars Company, located at KHOURIBGA, and ${user.firstName} ${user.lastName} ("the Renter").
 
 By this agreement, the Company agrees to rent to the Renter a ${carDetails.marque} ${carDetails.modele}, Year ${carDetails.annee}, for the period from ${new Date(startDate).toLocaleDateString()} to ${new Date(endDate).toLocaleDateString()}, at a daily rate of ${carDetails.prix} DHS, with a total rental amount of ${calculateTotalAmount(startDate, endDate, carDetails.prix)} DHS.
 
@@ -112,8 +112,8 @@ doc.text(`Date: ${new Date().toLocaleDateString()}`, 115, signatureY + 30);
     
     doc.setFontSize(8);
     doc.setTextColor(128, 128, 128);
-    doc.text("WHEELS Company • 123 Anywhere St., KHOURIBGA", pageWidth / 2, footerY, { align: "center" });
-    doc.text("Tel: +212 670623901 • Email: bziyati11@gmail.com", pageWidth / 2, footerY + 5, { align: "center" });
+    doc.text("WheelsCars Company • 123 Anywhere St., KHOURIBGA", pageWidth / 2, footerY, { align: "center" });
+    doc.text("Tel: +212 670325689 • Email: wheels@gmail.com", pageWidth / 2, footerY + 5, { align: "center" });
 
     // Save the PDF
     doc.save(`rental_agreement_${refNumber}.pdf`);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaSearch, FaCalendarAlt } from 'react-icons/fa';
+import { FaSearch, FaCalendarAlt, FaCar, FaTags, FaClock, FaCheckCircle } from 'react-icons/fa';
 import Select from './Select';
 import './filterSection.css';
 
@@ -34,60 +34,82 @@ const FilterSection = ({ onFilterChange }) => {
   const tarifs = ['100-200', '200-300', '300-400', '400+'];
 
   return (
-    <div className="modern-filter-container ">
+    <div className="modern-filter-container">
       <div className="modern-filter-content">
         <div className="filter-row">
           <div className="filter-group">
-            <label>Brand</label>
+            <label>
+              <FaCar className="filter-icon" />
+              Brand
+            </label>
             <Select 
               option="marque"
               values={marques}
               onChange={(value) => handleSelectChange('marque', value)}
+              placeholder="Select brand"
             />
           </div>
           
           <div className="filter-group">
-            <label>Type</label>
+            <label>
+              <FaTags className="filter-icon" />
+              Type
+            </label>
             <Select 
               option="type"
               values={types}
               onChange={(value) => handleSelectChange('type', value)}
+              placeholder="Select type"
             />
           </div>
           
           <div className="filter-group">
-            <label>Year</label>
+            <label>
+              <FaClock className="filter-icon" />
+              Year
+            </label>
             <Select 
               option="annee"
               values={annees}
               onChange={(value) => handleSelectChange('annee', value)}
+              placeholder="Select year"
             />
           </div>
 
           <div className="filter-group">
-            <label>Availability</label>
+            <label>
+              <FaCheckCircle className="filter-icon" />
+              Availability
+            </label>
             <Select 
               option="disponibilite"
               values={disponibilites}
               onChange={(value) => handleSelectChange('disponibilite', value)}
+              placeholder="Select availability"
             />
           </div>
         </div>
 
         <div className="filter-row">
           <div className="filter-group">
-            <label>Price Range</label>
+            <label>
+              <FaTags className="filter-icon" />
+              Price Range
+            </label>
             <Select 
               option="tarif"
               values={tarifs}
               onChange={(value) => handleSelectChange('tarif', value)}
+              placeholder="Select price range"
             />
           </div>
 
           <div className="filter-group date-group">
-            <label>Start Date</label>
+            <label>
+              <FaCalendarAlt className="filter-icon" />
+              Start Date
+            </label>
             <div className="date-input-wrapper">
-              {/* <FaCalendarAlt className="date-icon" /> */}
               <input
                 type="date"
                 className="modern-date-input"
@@ -97,9 +119,11 @@ const FilterSection = ({ onFilterChange }) => {
           </div>
 
           <div className="filter-group date-group">
-            <label>End Date</label>
+            <label>
+              <FaCalendarAlt className="filter-icon" />
+              End Date
+            </label>
             <div className="date-input-wrapper">
-              {/* <FaCalendarAlt className="date-icon" /> */}
               <input
                 type="date"
                 className="modern-date-input"
@@ -109,7 +133,10 @@ const FilterSection = ({ onFilterChange }) => {
           </div>
 
           <div className="filter-group search-group">
-            <label>Search</label>
+            <label>
+              <FaSearch className="filter-icon" />
+              Search
+            </label>
             <div className="search-input-wrapper">
               <input
                 type="text"
@@ -117,7 +144,9 @@ const FilterSection = ({ onFilterChange }) => {
                 className="modern-search-input"
                 onChange={handleSearchChange}
               />
-              <FaSearch className="search-icon" />
+              <button className="search-button">
+                Search
+              </button>
             </div>
           </div>
         </div>
