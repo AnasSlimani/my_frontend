@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from "react";
 import SideBarAdmin from "./SideBarAdmin";
-import { Container, Row, Col } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Container, Row, Col, Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { Plus, Pencil, Trash2 } from 'lucide-react';
 import FormAddVehicle from './FormAddVehicle';
 import './GestionVehicules.css';
 
 function GestionVehicules() {
   const [vehicules, setVehicules] = useState([]);
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    const fetchVehicules = async () => {
-      try {
-        const response = await fetch("http://localhost:8082/api/vehicules/allVehicules");
-        if (!response.ok) {
-          throw new Error("Failed to fetch vehicles.");
-        }
-        const data = await response.json();
-        setVehicules(data);
-      } catch (err) {
-        console.error("Erreur fetching vehicles:", err.message);
-      }
-    };
-
     fetchVehicules();
   }, []);
+
+  const fetchVehicules = async () => {
+    try {
+      const response = await fetch("http://localhost:8082/api/vehicules/allVehicules");
+      if (!response.ok) {
+        throw new Error("Failed to fetch vehicles.");
+      }
+      const data = await response.json();
+      setVehicules(data);
+    } catch (err) {
+      console.error("Erreur fetching vehicles:", err.message);
+    }
+  };
 
   const handleDelete = async (id) => {
     if (window.confirm("Êtes-vous sûr de vouloir supprimer ce véhicule ?")) {
@@ -55,7 +55,7 @@ function GestionVehicules() {
   };
 
   const handleUpdate = (id) => {
-    navigate(`/admin/vehicules/UpdateVehicule/${id}`);
+    window.location.href = `/admin/vehicules/UpdateVehicule/${id}`;
   };
 
   return (
@@ -69,13 +69,13 @@ function GestionVehicules() {
           <div className="p-6 md:p-8">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
               <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Gestion des Véhicules</h1>
-              <Link
-                to="/admin/vehicules/FormAddVehicle"
+              <button
+                onClick={() => setShowModal(true)}
                 className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105"
               >
                 <Plus className="w-5 h-5 mr-2" />
                 Ajouter un véhicule
-              </Link>
+              </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
@@ -164,8 +164,29 @@ function GestionVehicules() {
           </div>
         </Col>
       </Row>
+
+      <Modal 
+        show={showModal} 
+        onHide={() => setShowModal(false)}
+        size="lg"
+        centered
+        className="vehicle-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Ajouter un Nouveau Véhicule</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <FormAddVehicle 
+            onSubmitSuccess={() => {
+              setShowModal(false);
+              fetchVehicules();
+            }} 
+          />
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 }
 
 export default GestionVehicules;
+
