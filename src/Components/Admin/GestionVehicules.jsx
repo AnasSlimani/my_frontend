@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import SideBarAdmin from "./SideBarAdmin";
 import { Container, Row, Col, Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { Plus, Pencil, Trash2 } from 'lucide-react';
 import FormAddVehicle from './FormAddVehicle';
+import FormUpdateVehicle from './FormUpdateVehicle';
 import './GestionVehicules.css';
 
 function GestionVehicules() {
   const [vehicules, setVehicules] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedVehicule, setSelectedVehicule] = useState(null);
 
   useEffect(() => {
     fetchVehicules();
@@ -54,8 +56,9 @@ function GestionVehicules() {
     }
   };
 
-  const handleUpdate = (id) => {
-    window.location.href = `/admin/vehicules/UpdateVehicule/${id}`;
+  const handleUpdate = async (vehicule) => {
+    setSelectedVehicule(vehicule);
+    setShowUpdateModal(true);
   };
 
   return (
@@ -70,7 +73,7 @@ function GestionVehicules() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
               <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Gestion des Véhicules</h1>
               <button
-                onClick={() => setShowModal(true)}
+                onClick={() => setShowAddModal(true)}
                 className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-300 transform hover:scale-105"
               >
                 <Plus className="w-5 h-5 mr-2" />
@@ -144,7 +147,7 @@ function GestionVehicules() {
 
                   <div className="vehicle-overlay">
                     <button
-                      onClick={() => handleUpdate(vehicule.id)}
+                      onClick={() => handleUpdate(vehicule)}
                       className="update-btn"
                     >
                       <Pencil className="w-5 h-5" />
@@ -165,10 +168,11 @@ function GestionVehicules() {
         </Col>
       </Row>
 
+      {/* Add Vehicle Modal */}
       <Modal 
-        show={showModal} 
-        onHide={() => setShowModal(false)}
-        size="lg"
+        show={showAddModal} 
+        onHide={() => setShowAddModal(false)}
+        size="xl"
         centered
         className="vehicle-modal"
       >
@@ -178,10 +182,35 @@ function GestionVehicules() {
         <Modal.Body>
           <FormAddVehicle 
             onSubmitSuccess={() => {
-              setShowModal(false);
+              setShowAddModal(false);
               fetchVehicules();
             }} 
           />
+        </Modal.Body>
+      </Modal>
+
+      {/* Update Vehicle Modal */}
+      <Modal 
+        show={showUpdateModal} 
+        onHide={() => setShowUpdateModal(false)}
+        size="xl"
+        centered
+        className="vehicle-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Modifier le Véhicule</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedVehicule && (
+            <FormUpdateVehicle 
+              vehiculeId={selectedVehicule.id}
+              initialData={selectedVehicule}
+              onSubmitSuccess={() => {
+                setShowUpdateModal(false);
+                fetchVehicules();
+              }} 
+            />
+          )}
         </Modal.Body>
       </Modal>
     </Container>
