@@ -23,7 +23,7 @@
 }
 
 .reservation-count {
-  background: #FF1414;
+  background: #3b82f6; /* Changed to blue */
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 999px;
@@ -111,27 +111,6 @@
   color: #666;
 }
 
-.dates-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.date-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.date-label {
-  font-weight: 600;
-  color: #666;
-}
-
-.date {
-  color: #1a1a1a;
-}
-
 .status-badge {
   display: inline-flex;
   align-items: center;
@@ -167,7 +146,7 @@
 .amount {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #FF1414;
+  color: #FFD700; /* Changed to gold */
 }
 
 .period {
@@ -193,15 +172,24 @@
   justify-content: center;
   border: none;
   border-radius: 50%;
-  background: #FF1414;
   color: white;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
+/* Previous button (left arrow) */
+.pagination-btn:first-child {
+  background: #ff3b3b; /* Red color for previous */
+}
+
+/* Next button (right arrow) */
+.pagination-btn:last-child {
+  background: #22c55e; /* Green color for next */
+}
+
 .pagination-btn:hover:not(.disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 20, 20, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .pagination-btn.disabled {
@@ -224,6 +212,7 @@
   .modern-table {
     font-size: 0.9rem;
   }
+  
   .vehicle-info {
     flex-direction: column;
     align-items: flex-start;
@@ -289,13 +278,5 @@
 .info-button:hover {
   background: #e60000;
   transform: translate(-50%, -50%) scale(1.05);
-}
-
-td {
-  position: relative;
-}
-
-.reservation-row td:nth-child(2) {
-  position: static;
 }
 
