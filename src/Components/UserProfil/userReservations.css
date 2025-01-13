@@ -1,218 +1,301 @@
 .user-reservations {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.reservations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.reservation-count {
+  background: #FF1414;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.table-container {
+  flex: 1;
+  overflow: auto;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
+}
+
+.modern-table th {
+  padding: 1rem;
+  text-align: left;
+  color: #666;
+  font-weight: 500;
+  border-bottom: 2px solid #eee;
+}
+
+.reservation-row {
+  transition: transform 0.2s ease;
+}
+
+.reservation-row:hover {
+  transform: translateY(-2px);
+}
+
+.reservation-row td {
+  position: relative;
+  padding: 1rem;
+  background: #f8f9fa;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.reservation-row td:first-child {
+  border-radius: 8px 0 0 8px;
+}
+
+.reservation-row td:last-child {
+  border-radius: 0 8px 8px 0;
+}
+
+.vehicle-info {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 1;
+}
+
+.vehicle-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.vehicle-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vehicle-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.vehicle-name {
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.reservation-id {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.dates-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.date-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.date-label {
+  font-weight: 600;
+  color: #666;
+}
+
+.date {
+  color: #1a1a1a;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+.status-badge.entretien {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.reserved {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-icon {
+  font-size: 1rem;
+}
+
+.price-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.amount {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FF1414;
+}
+
+.period {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.pagination-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: #FF1414;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(.disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 20, 20, 0.2);
+}
+
+.pagination-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #e9ecef;
+}
+
+.page-info {
+  font-size: 0.95rem;
+  color: #666;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .user-reservations {
+    padding: 1rem;
   }
-  
-  .reservations-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-  
-  .section-title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin: 0;
-  }
-  
-  .reservation-count {
-    background: #FF1414;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 999px;
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-  
-  .table-container {
-    flex: 1;
-    overflow: auto;
-  }
-  
+
   .modern-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 0.5rem;
+    font-size: 0.9rem;
   }
-  
-  .modern-table th {
-    padding: 1rem;
-    text-align: left;
-    color: #666;
-    font-weight: 500;
-    border-bottom: 2px solid #eee;
-  }
-  
-  .reservation-row {
-    transition: transform 0.2s ease;
-  }
-  
-  .reservation-row:hover {
-    transform: translateY(-2px);
-  }
-  
-  .reservation-row td {
-    padding: 1rem;
-    background: #f8f9fa;
-    border: none;
-  }
-  
-  .reservation-row td:first-child {
-    border-radius: 8px 0 0 8px;
-  }
-  
-  .reservation-row td:last-child {
-    border-radius: 0 8px 8px 0;
-  }
-  
   .vehicle-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: center;
   }
-  
+
   .vehicle-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    overflow: hidden;
+    width: 50px;
+    height: 50px;
   }
-  
-  .vehicle-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+
+  .price-info, .dates-info {
+    font-size: 0.8rem;
   }
-  
-  .vehicle-details {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-  
-  .vehicle-name {
-    font-weight: 600;
-    color: #1a1a1a;
-  }
-  
-  .reservation-id {
-    font-size: 0.875rem;
-    color: #666;
-  }
-  
+
   .status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    border-radius: 999px;
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-  
-  .status-badge.entretien {
-    background-color: #fef3c7;
-    color: #92400e;
-  }
-  
-  .status-badge.reserved {
-    background-color: #dcfce7;
-    color: #166534;
-  }
-  
-  .status-icon {
-    font-size: 1rem;
-  }
-  
-  .price-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  
-  .amount {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #FF1414;
-  }
-  
-  .period {
-    font-size: 0.875rem;
-    color: #666;
-  }
-  
-  .pagination {
-    display: flex;
-    align-items: center;
+    width: 100%;
     justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid #eee;
   }
-  
-  .pagination-btn {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    border-radius: 50%;
-    background: #FF1414;
-    color: white;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .pagination-btn:hover:not(.disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 20, 20, 0.2);
-  }
-  
-  .pagination-btn.disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: #e9ecef;
-  }
-  
-  .page-info {
-    font-size: 0.95rem;
-    color: #666;
-    font-weight: 500;
-  }
-  
-  @media (max-width: 768px) {
-    .user-reservations {
-      padding: 1rem;
-    }
-  
-    .vehicle-info {
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: center;
-    }
-  
-    .vehicle-image {
-      width: 100%;
-      height: 120px;
-    }
-  
-    .price-info {
-      align-items: flex-start;
-    }
-  
-    .status-badge {
-      width: 100%;
-      justify-content: center;
-    }
-  }
-  
-  
+}
+
+.reservation-row.hoverable {
+  position: relative;
+}
+
+.reservation-row.hoverable:hover td > * {
+  filter: blur(2px);
+}
+
+.info-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #FF1414;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 20;
+  filter: blur(0) !important;
+  width: auto;
+  border: none;
+  cursor: pointer;
+}
+
+.info-button svg {
+  font-size: 1.25rem;
+}
+
+.reservation-row.hoverable:hover .info-button {
+  opacity: 1;
+  pointer-events: auto;
+  filter: none !important;
+}
+
+.info-button:hover {
+  background: #e60000;
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+td {
+  position: relative;
+}
+
+.reservation-row td:nth-child(2) {
+  position: static;
+}
+

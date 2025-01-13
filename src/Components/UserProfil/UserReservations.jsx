@@ -1,15 +1,30 @@
 import React, { useState } from 'react';
-import { FaCarAlt, FaTools, FaCheckCircle, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaCarAlt, FaTools, FaCheckCircle, FaChevronLeft, FaChevronRight, FaInfoCircle } from 'react-icons/fa';
+import ReservationDetailsModal from './ReservationDetailsModal';
 import './userReservations.css';
 
 const UserReservations = ({ reservations }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedReservation, setSelectedReservation] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const reservationsPerPage = 3;
   
   const totalPages = Math.ceil(reservations.length / reservationsPerPage);
   const indexOfLastReservation = currentPage * reservationsPerPage;
   const indexOfFirstReservation = indexOfLastReservation - reservationsPerPage;
   const currentReservations = reservations.slice(indexOfFirstReservation, indexOfLastReservation);
+
+  const handleInfoClick = async (reservationId) => {
+    try {
+      const response = await fetch(`http://localhost:8082/api/reservation/reservationdetails/${reservationId}`);
+      const details = await response.json();
+      setSelectedReservation(details);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error('Error fetching reservation details:', error);
+      alert('Failed to fetch reservation details');
+    }
+  };
 
   const nextPage = () => {
     if (currentPage < totalPages) {
@@ -41,7 +56,10 @@ const UserReservations = ({ reservations }) => {
           </thead>
           <tbody>
             {currentReservations.map((reservation) => (
-              <tr key={reservation.id} className="reservation-row">
+              <tr 
+                key={reservation.id} 
+                className={`reservation-row ${reservation.status !== 'entretient' ? 'hoverable' : ''}`}
+              >
                 <td>
                   <div className="vehicle-info">
                     <div className="vehicle-image">
@@ -72,6 +90,15 @@ const UserReservations = ({ reservations }) => {
                       </>
                     )}
                   </span>
+                  {reservation.status !== 'entretient' && (
+                    <button
+                      className="info-button"
+                      onClick={() => handleInfoClick(reservation.id)}
+                    >
+                      <FaInfoCircle />
+                      INFOS
+                    </button>
+                  )}
                 </td>
                 <td>
                   <div className="price-info">
@@ -106,6 +133,12 @@ const UserReservations = ({ reservations }) => {
           </button>
         </div>
       )}
+
+      <ReservationDetailsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        details={selectedReservation}
+      />
     </div>
   );
 };
